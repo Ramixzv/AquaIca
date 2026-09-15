@@ -1,0 +1,355 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0">
+
+    <title>AquaIca | Evidencias</title>
+
+    <link
+        rel="stylesheet"
+        href="css/evidencias.css">
+
+</head>
+
+
+<body class="evidencias-body">
+
+
+    <!-- SIDEBAR -->
+
+    <aside class="sidebar">
+
+        <div class="sidebar-brand">
+
+            <div class="brand-logo">
+                A
+            </div>
+
+            <div>
+
+                <h2>AquaIca</h2>
+
+                <span>
+                    Sistema de Gestión
+                </span>
+
+            </div>
+
+        </div>
+
+
+        <nav class="sidebar-menu">
+
+            <a
+                href="dashboard.html"
+                class="menu-item">
+
+                <span>▣</span>
+
+                Dashboard
+
+            </a>
+
+
+            <a
+                href="reportes.html"
+                class="menu-item">
+
+                <span>▤</span>
+
+                Reportes
+
+            </a>
+
+
+            <a
+                href="asignaciones.html"
+                class="menu-item">
+
+                <span>✓</span>
+
+                Asignaciones
+
+            </a>
+
+
+            <a
+                href="seguimientos.html"
+                class="menu-item">
+
+                <span>↻</span>
+
+                Seguimientos
+
+            </a>
+
+
+            <a
+                href="evidencias.html"
+                class="menu-item active">
+
+                <span>▧</span>
+
+                Evidencias
+
+            </a>
+
+        </nav>
+
+
+        <div class="sidebar-bottom">
+
+            <button
+                id="logoutButton"
+                class="logout-button">
+
+                Cerrar sesión
+
+            </button>
+
+        </div>
+
+    </aside>
+
+
+
+    <!-- CONTENIDO -->
+
+    <main class="evidencias-main">
+
+
+        <!-- HEADER -->
+
+        <header class="evidencias-header">
+
+            <div>
+
+                <span class="header-subtitle">
+                    Gestión documental
+                </span>
+
+                <h1>
+                    Evidencias
+                </h1>
+
+            </div>
+
+
+            <div class="user-info">
+
+                <div class="user-avatar">
+
+                    <span id="userInitial">
+                        C
+                    </span>
+
+                </div>
+
+
+                <div>
+
+                    <strong id="usernameDisplay">
+                        Usuario
+                    </strong>
+
+                    <span id="roleDisplay">
+                        Usuario
+                    </span>
+
+                </div>
+
+            </div>
+
+        </header>
+
+
+
+        <!-- PRESENTACIÓN -->
+
+        <section class="evidencias-intro">
+
+            <div>
+
+                <span class="section-label">
+                    REGISTRO DOCUMENTAL
+                </span>
+
+                <h2>
+                    Evidencias de los reportes
+                </h2>
+
+                <p>
+                    Consulta las fotografías y archivos
+                    asociados a las incidencias registradas
+                    en AquaIca.
+                </p>
+
+            </div>
+
+        </section>
+
+
+
+        <!-- KPI -->
+
+        <section class="evidencias-stats">
+
+
+            <div class="evidencia-stat-card">
+
+                <div class="evidencia-stat-icon">
+                    ↗
+                </div>
+
+                <div>
+
+                    <span>
+                        Total de evidencias
+                    </span>
+
+                    <strong id="totalEvidencias">
+                        0
+                    </strong>
+
+                </div>
+
+            </div>
+
+
+
+            <div class="evidencia-stat-card">
+
+                <div class="evidencia-stat-icon">
+                    👤
+                </div>
+
+                <div>
+
+                    <span>
+                        De ciudadanos
+                    </span>
+
+                    <strong id="evidenciasCiudadano">
+                        0
+                    </strong>
+
+                </div>
+
+            </div>
+
+
+
+            <div class="evidencia-stat-card">
+
+                <div class="evidencia-stat-icon">
+                    ✓
+                </div>
+
+                <div>
+
+                    <span>
+                        Del personal técnico
+                    </span>
+
+                    <strong id="evidenciasTecnico">
+                        0
+                    </strong>
+
+                </div>
+
+            </div>
+
+
+        </section>
+
+
+
+
+        <section class="evidencias-content-card">
+
+
+            <div class="evidencias-section-header">
+
+                <div>
+
+                    <span class="section-label">
+                        ARCHIVOS REGISTRADOS
+                    </span>
+
+                    <h2>
+                        Evidencias recientes
+                    </h2>
+
+                    <p>
+                        Fotografías y archivos asociados
+                        a los reportes.
+                    </p>
+
+                </div>
+
+
+                <div class="evidencias-filter">
+
+                    <label for="filtroOrigen">
+                        Filtrar por origen
+                    </label>
+
+                    <select id="filtroOrigen">
+
+                        <option value="TODOS">
+                            Todos
+                        </option>
+
+                        <option value="CIUDADANO">
+                            Ciudadanos
+                        </option>
+
+                        <option value="TECNICO">
+                            Técnicos
+                        </option>
+
+                    </select>
+
+                </div>
+
+            </div>
+
+
+
+            <!-- CONTENEDOR -->
+
+            <div
+                id="evidenciasContainer"
+                class="evidencias-grid">
+
+                <div class="evidencias-loading">
+
+                    <div class="loading-spinner"></div>
+
+                    <p>
+                        Cargando evidencias...
+                    </p>
+
+                </div>
+
+            </div>
+
+
+        </section>
+
+
+    </main>
+
+
+
+    <script src="js/evidencias.js"></script>
+
+</body>
+
+</html>

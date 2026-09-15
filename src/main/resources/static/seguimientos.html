@@ -1,0 +1,453 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0">
+
+    <title>AquaIca | Seguimientos</title>
+
+    <!-- CSS GENERAL DEL SISTEMA -->
+    <link
+        rel="stylesheet"
+        href="css/style.css">
+
+    <!-- CSS EXCLUSIVO DE SEGUIMIENTOS -->
+    <link
+        rel="stylesheet"
+        href="css/seguimientos.css">
+
+</head>
+
+
+<body class="dashboard-body">
+
+
+    <!-- =====================================================
+         SIDEBAR
+         ===================================================== -->
+
+    <aside class="sidebar">
+
+        <div class="sidebar-brand">
+
+            <div class="brand-logo">
+                A
+            </div>
+
+            <div>
+
+                <h2>
+                    AquaIca
+                </h2>
+
+                <span>
+                    Sistema de Gestión
+                </span>
+
+            </div>
+
+        </div>
+
+
+        <nav class="sidebar-menu">
+
+
+            <!-- DASHBOARD -->
+
+            <a
+                href="dashboard.html"
+                class="menu-item">
+
+                <span>▣</span>
+
+                Dashboard
+
+            </a>
+
+
+            <!-- REPORTES -->
+
+            <a
+                href="reportes.html"
+                class="menu-item">
+
+                <span>▤</span>
+
+                Reportes
+
+            </a>
+
+
+            <!-- ASIGNACIONES -->
+
+            <a
+                href="asignaciones.html"
+                class="menu-item">
+
+                <span>✓</span>
+
+                Asignaciones
+
+            </a>
+
+
+            <!-- SEGUIMIENTOS -->
+
+            <a
+                href="seguimientos.html"
+                class="menu-item active">
+
+                <span>↻</span>
+
+                Seguimientos
+
+            </a>
+
+
+            <!-- EVIDENCIAS -->
+
+            <a
+                href="evidencias.html"
+                class="menu-item">
+
+                <span>▧</span>
+
+                Evidencias
+
+            </a>
+
+        </nav>
+
+
+        <!-- CERRAR SESIÓN -->
+
+        <div class="sidebar-bottom">
+
+            <button
+                id="logoutButton"
+                class="logout-button">
+
+                Cerrar sesión
+
+            </button>
+
+        </div>
+
+    </aside>
+
+
+
+    <!-- =====================================================
+         CONTENIDO PRINCIPAL
+         ===================================================== -->
+
+    <main class="dashboard-main">
+
+
+        <!-- =================================================
+             HEADER
+             ================================================= -->
+
+        <header class="dashboard-header">
+
+            <div>
+
+                <span class="header-subtitle">
+                    Gestión de actividad
+                </span>
+
+                <h1>
+                    Seguimientos
+                </h1>
+
+            </div>
+
+
+            <!-- INFORMACIÓN DEL USUARIO -->
+
+            <div class="user-info">
+
+                <div class="user-avatar">
+
+                    <span id="userInitial">
+                        C
+                    </span>
+
+                </div>
+
+
+                <div>
+
+                    <strong id="usernameDisplay">
+                        Usuario
+                    </strong>
+
+                    <span id="roleDisplay">
+                        Usuario
+                    </span>
+
+                </div>
+
+            </div>
+
+        </header>
+
+
+
+        <!-- =================================================
+             PRESENTACIÓN
+             ================================================= -->
+
+        <section class="seguimientos-intro">
+
+            <div>
+
+                <span class="seguimientos-tag">
+                    Historial de actividad
+                </span>
+
+                <h2>
+                    Actividad de los reportes
+                </h2>
+
+                <p>
+                    Consulta los cambios de estado y las
+                    acciones realizadas sobre los reportes
+                    registrados en AquaIca.
+                </p>
+
+            </div>
+
+        </section>
+
+
+
+        <section class="seguimientos-stats">
+
+
+            <div class="seguimiento-stat-card">
+
+                <div class="seguimiento-stat-icon">
+                    ↻
+                </div>
+
+                <div>
+
+                    <span>
+                        Total de actividades
+                    </span>
+
+                    <strong id="totalSeguimientos">
+                        0
+                    </strong>
+
+                </div>
+
+            </div>
+
+<div class="seguimiento-stat-card">
+
+    <div class="seguimiento-stat-icon">
+        ✓
+    </div>
+
+    <div>
+
+        <span>
+            Técnico asignado
+        </span>
+
+        <strong id="seguimientosAsignados">
+            0
+        </strong>
+
+    </div>
+
+</div>
+            <div class="seguimiento-stat-card">
+
+                <div class="seguimiento-stat-icon">
+                    !
+                </div>
+
+                <div>
+
+                    <span>
+                        En atención
+                    </span>
+
+                    <strong id="seguimientosAtencion">
+                        0
+                    </strong>
+
+                </div>
+
+            </div>
+
+
+            <!-- TRABAJO REALIZADO -->
+
+            <div class="seguimiento-stat-card">
+
+                <div class="seguimiento-stat-icon">
+                    ✓
+                </div>
+
+                <div>
+
+                    <span>
+                        Trabajo realizado
+                    </span>
+
+                    <strong id="seguimientosTrabajo">
+                        0
+                    </strong>
+
+                </div>
+
+            </div>
+
+
+            <!-- RESUELTOS -->
+
+            <div class="seguimiento-stat-card">
+
+                <div class="seguimiento-stat-icon">
+                    ✓
+                </div>
+
+                <div>
+
+                    <span>
+                        Resueltos
+                    </span>
+
+                    <strong id="seguimientosResueltos">
+                        0
+                    </strong>
+
+                </div>
+
+            </div>
+
+        </section>
+
+
+
+        <!-- =================================================
+             HISTORIAL
+             ================================================= -->
+
+        <section class="seguimientos-card">
+
+
+            <!-- CABECERA -->
+
+            <div class="seguimientos-card-header">
+
+                <div>
+
+                    <span class="seguimientos-section-tag">
+                        Registro de actividad
+                    </span>
+
+                    <h2>
+                        Historial de seguimientos
+                    </h2>
+
+                    <p>
+                        Actividad registrada recientemente
+                        en los reportes.
+                    </p>
+
+                </div>
+
+
+                <!-- FILTRO -->
+
+                <div class="seguimientos-filter">
+
+                    <label for="estadoFiltro">
+                        Filtrar por estado
+                    </label>
+
+                    <select id="estadoFiltro">
+
+                        <option value="">
+                            Todos los estados
+                        </option>
+
+                        <option value="TECNICO_ASIGNADO">
+                            Técnico asignado
+                        </option>
+
+                        <option value="EN_ATENCION">
+                            En atención
+                        </option>
+
+                        <option value="TRABAJO_REALIZADO">
+                            Trabajo realizado
+                        </option>
+
+                        <option value="RESUELTO">
+                            Resuelto
+                        </option>
+
+                    </select>
+
+                </div>
+
+            </div>
+
+
+
+            <!-- CONTENEDOR DEL HISTORIAL -->
+
+            <div
+                id="seguimientosContainer"
+                class="seguimientos-container">
+
+                <!--
+                    El contenido se cargará mediante
+                    seguimientos.js
+                -->
+
+                <div class="seguimientos-loading">
+
+                    <div class="loading-icon">
+                        ↻
+                    </div>
+
+                    <p>
+                        Cargando actividad...
+                    </p>
+
+                </div>
+
+            </div>
+
+
+        </section>
+
+
+    </main>
+
+
+
+    <!-- =====================================================
+         JAVASCRIPT
+         ===================================================== -->
+
+    <script src="js/api.js"></script>
+
+    <script src="js/seguimientos.js"></script>
+
+
+</body>
+
+</html>

@@ -1,0 +1,447 @@
+
+.login-body {
+
+    min-height: 100vh;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    padding: 30px;
+
+    background-image:
+        linear-gradient(
+            rgba(0, 90, 130, 0.18),
+            rgba(0, 90, 130, 0.18)
+        ),
+        url("../images/aquaica-login.png");
+
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    background-attachment: fixed;
+}
+
+.login-page {
+
+    width: 100%;
+    min-height: 100vh;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+
+.login-card {
+    width: 100%;
+    max-width: 470px;
+
+    padding: 42px 48px;
+
+    border-radius: 28px;
+
+    background:
+        linear-gradient(
+            145deg,
+            rgba(255, 255, 255, 0.94),
+            rgba(225, 247, 255, 0.90)
+        );
+
+    border: 1px solid rgba(255, 255, 255, 0.85);
+
+
+    box-shadow:
+        0 20px 60px rgba(0, 100, 150, 0.22),
+        0 0 35px rgba(0, 190, 230, 0.12);
+
+    position: relative;
+
+    overflow: hidden;
+}
+
+.login-card::after {
+
+    content: "";
+
+    position: absolute;
+
+    width: 260px;
+    height: 180px;
+
+    bottom: -110px;
+    left: -100px;
+
+    background:
+        radial-gradient(
+            circle,
+            rgba(0, 170, 220, 0.18),
+            rgba(0, 170, 220, 0)
+        );
+
+    border-radius: 50%;
+
+    pointer-events: none;
+}
+
+.login-page::before {
+
+    content: "";
+
+    position: fixed;
+
+    width: 18px;
+    height: 18px;
+
+    top: 18%;
+    right: 34%;
+
+    border-radius: 50%;
+
+    border: 2px solid rgba(0, 180, 230, 0.20);
+
+    box-shadow:
+        90px 40px 0 -5px rgba(0, 180, 230, 0.12),
+        -140px 300px 0 -3px rgba(0, 180, 230, 0.15),
+        170px 360px 0 -7px rgba(0, 180, 230, 0.10),
+        -100px 420px 0 -5px rgba(0, 180, 230, 0.12);
+
+    pointer-events: none;
+}
+
+.login-page::after {
+
+    content: "";
+
+    position: fixed;
+
+    width: 7px;
+    height: 7px;
+
+    top: 28%;
+    right: 30%;
+
+    border-radius: 50%;
+
+    background: rgba(255, 255, 255, 0.75);
+
+    box-shadow:
+        120px 70px 0 rgba(255, 255, 255, 0.55),
+        -170px 250px 0 rgba(255, 255, 255, 0.50),
+        150px 340px 0 rgba(255, 255, 255, 0.45);
+
+    filter: blur(1px);
+
+    pointer-events: none;
+}
+
+.login-card::before {
+
+    content: "";
+
+    position: absolute;
+
+    width: 220px;
+    height: 220px;
+
+    top: -110px;
+    right: -80px;
+
+    background:
+        radial-gradient(
+            circle,
+            rgba(0, 190, 240, 0.20),
+            rgba(0, 190, 240, 0)
+        );
+
+    border-radius: 50%;
+
+    pointer-events: none;
+}
+
+
+.login-brand {
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    margin-bottom: 30px;
+}
+
+.login-brand-text h1 {
+    margin: 0;
+    color: #0077b6;
+    font-size: 28px;
+}
+
+.login-brand-text span {
+    display: block;
+    margin-top: 3px;
+    color: #64748b;
+    font-size: 12px;
+}
+
+.login-logo {
+
+
+    width: 70px;
+    height: 70px;
+
+    object-fit: contain;
+}
+
+.login-header {
+
+    text-align: center;
+
+    margin-bottom: 30px;
+}
+
+
+.login-header h2 {
+
+    color: #123047;
+
+    font-size: 31px;
+
+    margin-bottom: 8px;
+}
+
+
+.login-header p {
+
+    color: #718096;
+
+    font-size: 14px;
+}
+
+
+.form-group {
+
+    margin-bottom: 21px;
+}
+
+
+.form-group label {
+
+    display: block;
+
+    margin-bottom: 8px;
+
+    color: #263b4d;
+
+    font-size: 14px;
+
+    font-weight: 600;
+}
+
+
+.form-group input {
+
+    width: 100%;
+    height: 52px;
+
+    padding: 0 16px;
+
+    border: 1px solid #d5e1e8;
+
+    border-radius: 11px;
+
+    outline: none;
+
+    background:  linear-gradient(
+        145deg,
+        rgba(255,255,255,0.94),
+        rgba(225,247,255,0.90)
+    );
+
+    color: #263b4d;
+
+    font-size: 15px;
+
+    transition: all 0.2s ease;
+}
+
+
+.form-group input::placeholder {
+
+    color: #9aaabd;
+}
+
+
+.form-group input:focus {
+
+    border-color: #0096c7;
+
+    box-shadow:
+        0 0 0 3px rgba(0, 150, 199, 0.12);
+}
+
+
+.login-button {
+
+    width: 100%;
+    height: 52px;
+
+    margin-top: 5px;
+
+    border: none;
+    border-radius: 11px;
+
+    background:
+        linear-gradient(
+            135deg,
+            #0077b6,
+            #0096c7
+        );
+
+    color: white;
+
+    font-size: 15px;
+    font-weight: 600;
+
+    cursor: pointer;
+
+    transition: all 0.2s ease;
+}
+
+
+.login-button:hover {
+
+    transform: translateY(-1px);
+
+    box-shadow:
+        0 9px 22px rgba(0, 119, 182, 0.25);
+}
+
+
+.login-button:active {
+
+    transform: translateY(0);
+}
+
+.login-message {
+
+    padding: 12px 14px;
+
+    margin-bottom: 15px;
+
+    border-radius: 9px;
+
+    background: #fff1f1;
+
+    border: 1px solid #ffd4d4;
+
+    color: #c53030;
+
+    font-size: 13px;
+}
+
+
+.register-link {
+
+    margin-top: 20px;
+
+    text-align: center;
+
+    font-size: 13px;
+
+    color: #718096;
+}
+
+
+.register-link a {
+
+    margin-left: 5px;
+
+    color: #0077b6;
+
+    font-weight: 600;
+
+    text-decoration: none;
+}
+
+
+.register-link a:hover {
+
+    text-decoration: underline;
+}
+
+
+.login-footer {
+
+    display: flex;
+
+    flex-direction: column;
+
+    align-items: center;
+
+    gap: 4px;
+
+    margin-top: 28px;
+
+    color: #8a9aaa;
+
+    font-size: 11px;
+}
+
+
+@media (max-width: 600px) {
+
+    .login-body {
+
+        padding: 20px;
+
+        background-position: center;
+    }
+
+
+    .login-card {
+
+        padding: 35px 25px;
+
+        border-radius: 22px;
+
+        max-width: 440px;
+    }
+
+
+    .login-brand {
+
+        margin-bottom: 25px;
+    }
+
+
+    .login-logo {
+
+        width: 220px;
+    }
+
+
+    .login-header h2 {
+
+        font-size: 28px;
+    }
+}
+
+
+@media (max-width: 400px) {
+
+    .login-body {
+
+        padding: 10px;
+    }
+
+
+    .login-card {
+
+        padding: 30px 20px;
+    }
+
+
+    .login-logo {
+
+        width: 200px;
+    }
+}

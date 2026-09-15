@@ -1,0 +1,354 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0">
+
+    <title>AquaIca | Mis asignaciones</title>
+
+    <link
+        rel="stylesheet"
+        href="css/style.css">
+
+           <link
+        rel="stylesheet"
+        href="css/dashboard.css">
+
+</head>
+
+
+<body class="dashboard-body">
+
+
+    <!-- SIDEBAR -->
+
+    <aside class="sidebar">
+
+        <div class="sidebar-brand">
+
+            <div class="brand-logo">
+                A
+            </div>
+
+            <div>
+
+                <h2>AquaIca</h2>
+
+                <span>
+                    Sistema de Gestión
+                </span>
+
+            </div>
+
+        </div>
+
+
+        <nav class="sidebar-menu">
+
+            <a
+                href="dashboard.html"
+                class="menu-item">
+
+                <span>▣</span>
+
+                Dashboard
+
+            </a>
+
+
+            <a
+                href="reportes.html"
+                class="menu-item">
+
+                <span>▤</span>
+
+                Reportes
+
+            </a>
+
+
+            <a
+                href="asignaciones.html"
+                class="menu-item active">
+
+                <span>✓</span>
+
+                Asignaciones
+
+            </a>
+
+
+            <a
+                href="seguimientos.html"
+                class="menu-item">
+
+                <span>↻</span>
+
+                Seguimientos
+
+            </a>
+
+
+            <a
+                href="evidencias.html"
+                class="menu-item">
+
+                <span>▧</span>
+
+                Evidencias
+
+            </a>
+
+        </nav>
+
+
+        <div class="sidebar-bottom">
+
+            <button
+                id="logoutButton"
+                class="logout-button">
+
+                Cerrar sesión
+
+            </button>
+
+        </div>
+
+    </aside>
+
+
+
+    <!-- CONTENIDO PRINCIPAL -->
+
+    <main class="dashboard-main">
+
+
+        <!-- HEADER -->
+
+        <header class="dashboard-header">
+
+            <div>
+
+                <span class="header-subtitle">
+
+                    Gestión de trabajo
+
+                </span>
+
+                <h1>
+
+                    Mis asignaciones
+
+                </h1>
+
+            </div>
+
+
+            <div class="user-info">
+
+                <div class="user-avatar">
+
+                    <span id="userInitial">
+                        C
+                    </span>
+
+                </div>
+
+
+                <div>
+
+                    <strong id="usernameDisplay">
+
+                        Usuario
+
+                    </strong>
+
+
+                    <span id="roleDisplay">
+
+                        Usuario
+
+                    </span>
+
+                </div>
+
+            </div>
+
+        </header>
+
+
+
+        <!-- PRESENTACIÓN -->
+
+        <section class="welcome-section">
+
+            <div>
+
+                <h2>
+
+                    Trabajos asignados
+
+                </h2>
+
+                <p>
+
+                    Aquí puedes consultar los reportes que tienes
+                    asignados y actualizar el estado de atención.
+
+                </p>
+
+            </div>
+
+        </section>
+
+
+
+        <!-- ESTADÍSTICAS -->
+
+        <section class="stats-grid">
+
+            <div class="stat-card">
+
+                <div class="stat-icon">
+                    ✓
+                </div>
+
+                <div>
+
+                    <span>
+                        Total de Asignaciones 
+                    </span>
+
+                    <strong id="totalAsignaciones">
+                        0
+                    </strong>
+
+                </div>
+
+            </div>
+
+
+            <div class="stat-card">
+
+                <div class="stat-icon">
+                    !
+                </div>
+
+                <div>
+
+                    <span>
+                        Pendientes
+                    </span>
+
+                    <strong id="asignacionesPendientes">
+                        0
+                    </strong>
+
+                </div>
+
+            </div>
+
+
+            <div class="stat-card">
+
+                <div class="stat-icon">
+                    ↻
+                </div>
+
+                <div>
+
+                    <span>
+                        En atención
+                    </span>
+
+                    <strong id="asignacionesAtencion">
+                        0
+                    </strong>
+
+                </div>
+
+            </div>
+
+
+            <div class="stat-card">
+
+                <div class="stat-icon">
+                    ✓
+                </div>
+
+                <div>
+
+                    <span>
+                        Finalizadas
+                    </span>
+
+                    <strong id="asignacionesFinalizadas">
+                        0
+                    </strong>
+
+                </div>
+
+            </div>
+
+        </section>
+
+
+
+        <!-- ASIGNACIONES -->
+
+        <section class="content-card">
+
+            <div class="section-header">
+
+                <div>
+
+                    <h2>
+                        Mis trabajos
+                    </h2>
+
+                    <p>
+                        Reportes asignados a tu cuenta
+                    </p>
+
+                </div>
+
+            </div>
+
+
+            <div
+                id="asignacionesContainer"
+                class="asignaciones-container">
+
+                <div class="asignaciones-loading">
+
+                    <span>
+                        🔄
+                    </span>
+
+                    <p>
+                        Cargando asignaciones...
+                    </p>
+
+                </div>
+
+            </div>
+
+        </section>
+
+
+    </main>
+
+
+
+    <script src="js/api.js"></script>
+
+    <script src="js/asignaciones.js"></script>
+
+</body>
+
+</html>

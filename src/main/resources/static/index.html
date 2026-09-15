@@ -1,0 +1,316 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Aqualca - Sistema de reportes y seguimiento de incidencias del servicio de agua potable.">
+    <title>Aqualca | Servicio de Agua</title>
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="css/index.css">
+</head>
+
+<body class="public-body">
+
+    <!-- HEADER -->
+    <header class="public-header">
+
+        <div class="public-brand">
+            <div class="public-logo">A</div>
+            <div class="brand-text">
+                <h2>Aqualca</h2>
+                <span>Servicio de agua</span>
+            </div>
+        </div>
+
+        <input type="checkbox" id="nav-toggle" class="nav-toggle">
+        <label for="nav-toggle" class="nav-toggle-label" aria-label="Abrir menú de navegación">
+            <span></span>
+            <span></span>
+            <span></span>
+        </label>
+
+        <nav class="public-nav">
+            <a href="#inicio" class="active-link">Inicio</a>
+            <a href="#como-funciona">¿Cómo funciona?</a>
+            <a href="mis-reportes.html">Mis reportes</a>
+            <a href="#ayuda">Ayuda</a>
+            <a href="login.html" class="personal-button">
+                <span class="btn-icon"><svg class="icon-svg" viewBox="0 0 24 24"><circle cx="12" cy="8" r="4"/><path d="M4 20c0-4 4-6 8-6s8 2 8 6"/></svg></span> Iniciar sesión
+            </a>
+        </nav>
+
+    </header>
+
+
+    <!-- MAIN CONTENT -->
+    <main>
+
+        <!-- HERO SECTION -->
+        <section id="inicio" class="hero-public">
+
+            <!-- burbujas decorativas fijas -->
+            <span class="deco-bubble b1" aria-hidden="true"></span>
+            <span class="deco-bubble b2" aria-hidden="true"></span>
+            <span class="deco-bubble b3" aria-hidden="true"></span>
+            <span class="deco-bubble b4" aria-hidden="true"></span>
+            <span class="deco-bubble b5" aria-hidden="true"></span>
+
+            <div class="hero-inner">
+
+                <div class="hero-content">
+
+                    <span class="hero-institution">
+                        Sistema de atención ciudadana
+                    </span>
+
+                    <h1>
+                        ¿Tienes un problema<br>
+                        con el servicio de agua?
+                    </h1>
+
+                    <p>
+                        Reporta fugas, cortes, baja presión y otros inconvenientes
+                        de manera rápida y sencilla.
+                    </p>
+
+                    <div class="hero-buttons">
+                        <a href="reporte.html" class="hero-button primary">
+                            <span class="btn-icon"><svg class="icon-svg" viewBox="0 0 24 24"><path d="M12 2C8 8 5 11.5 5 15a7 7 0 0014 0c0-3.5-3-7-7-13z"/></svg></span> Reportar un problema
+                        </a>
+                        <a href="#como-funciona" class="hero-button secondary">
+                            <span class="btn-icon"><svg class="icon-svg" viewBox="0 0 24 24" style="width:11px;height:11px"><path d="M6 4l14 8-14 8V4z" fill="currentColor" stroke="none"/></svg></span> ¿Cómo funciona?
+                        </a>
+                    </div>
+
+                    <p class="hero-check">
+                        <span class="check-icon"><svg class="icon-svg" viewBox="0 0 24 24"><path d="M4 12l5 5L20 6"/></svg></span>
+                        Tu reporte ayuda a mejorar el servicio para todos.
+                    </p>
+
+                </div>
+
+                
+
+            </div>
+
+            <!-- ola decorativa de transición -->
+            <svg class="hero-wave" viewBox="0 0 1440 110" preserveAspectRatio="none" aria-hidden="true">
+                <path d="M0,60 C240,110 480,10 720,45 C960,80 1200,20 1440,55 L1440,110 L0,110 Z"></path>
+            </svg>
+
+        </section>
+
+
+        <!-- SERVICES / FEATURES SECTION -->
+        <section class="services-section">
+
+            <div class="services-grid">
+
+                <div class="service-card card-blue">
+                    <div class="service-icon"><svg class="icon-svg" viewBox="0 0 24 24"><path d="M12 2C8 8 5 11.5 5 15a7 7 0 0014 0c0-3.5-3-7-7-13z"/></svg></div>
+                    <div class="service-content">
+                        <h3>1. Reporta tu incidencia</h3>
+                        <p>
+                            Registra el problema indicando el código de suministro,
+                            tipo de incidencia, descripción y ubicación.
+                        </p>
+                    </div>
+                    <div class="service-arrow">&rarr;</div>
+                </div>
+
+                <div class="service-card card-mint">
+                    <div class="service-icon"><svg class="icon-svg" viewBox="0 0 24 24"><path d="M12 21s7-6.5 7-12a7 7 0 10-14 0c0 5.5 7 12 7 12z"/><circle cx="12" cy="9" r="2.5"/></svg></div>
+                    <div class="service-content">
+                        <h3>2. Ubicación y evidencia</h3>
+                        <p>
+                            Georreferencia el lugar de la incidencia y adjunta
+                            fotografías que ayuden a evaluar el problema.
+                        </p>
+                    </div>
+                    <div class="service-arrow">&rarr;</div>
+                </div>
+
+                <div class="service-card card-lavender">
+                    <div class="service-icon"><svg class="icon-svg" viewBox="0 0 24 24"><path d="M4 20V10M12 20V4M20 20v-7"/></svg></div>
+                    <div class="service-content">
+                        <h3>3. Seguimiento del caso</h3>
+                        <p>
+                            Consulta el estado de tu reporte y conoce las acciones
+                            realizadas hasta su atención y resolución.
+                        </p>
+                    </div>
+                    <div class="service-arrow">&rarr;</div>
+                </div>
+
+            </div>
+
+        </section>
+
+
+        <!-- PROCESS SECTION -->
+        <section id="como-funciona" class="process-section">
+
+            <span class="deco-bubble b6" aria-hidden="true"></span>
+            <span class="deco-bubble b7" aria-hidden="true"></span>
+            <span class="deco-bubble b8" aria-hidden="true"></span>
+
+            <div class="process-intro">
+                <span>AQUALCA</span>
+                <h2>Atención más rápida y transparente</h2>
+                <p>Conoce cómo funciona nuestro proceso de atención ciudadana.</p>
+            </div>
+
+            <div class="process-steps">
+
+                <div class="process-step">
+                    <div class="step-number">PASO 01</div>
+                    <div class="step-icon icon-blue">	<svg class="icon-svg" viewBox="0 0 24 24"><rect x="5" y="4" width="14" height="17" rx="2"/><path d="M9 3.5h6v3H9zM9 11h6M9 15h4"/></svg></div>
+                    <h3>Registra tu caso</h3>
+                    <p>Completa los datos de ubicación y descripción del inconveniente.</p>
+                </div>
+
+                <div class="step-connector" aria-hidden="true">→</div>
+
+                <div class="process-step">
+                    <div class="step-number">PASO 02</div>
+                    <div class="step-icon icon-mint"><svg class="icon-svg" viewBox="0 0 24 24"><circle cx="11" cy="11" r="6"/><path d="M20 20l-4.3-4.3"/></svg></div>
+                    <h3>Validación y asignación</h3>
+                    <p>La incidencia es revisada y derivada al personal técnico correspondiente.</p>
+                </div>
+
+                <div class="step-connector" aria-hidden="true">→</div>
+
+                <div class="process-step">
+                    <div class="step-number">PASO 03</div>
+                    <div class="step-icon icon-lavender">	<svg class="icon-svg" viewBox="0 0 24 24"><path d="M14.7 6.3a4 4 0 00-5.6 5.1L4 16.5V20h3.5l5.1-5.1a4 4 0 005.1-5.6l-2.6 2.6-2-2 2.6-2.6z"/></svg></div>
+                    <h3>Atención y solución</h3>
+                    <p>El personal atiende el problema y registra las acciones realizadas para resolverlo.</p>
+                </div>
+
+            </div>
+
+        </section>
+
+
+        <!-- STATS SECTION -->
+        <section id="mis-reportes" class="stats-section">
+            <div class="stats-bar">
+
+                <div class="stat-item">
+                    <div class="stat-icon"><svg class="icon-svg" viewBox="0 0 24 24"><path d="M12 2C8 8 5 11.5 5 15a7 7 0 0014 0c0-3.5-3-7-7-13z"/></svg></div>
+                    <div class="stat-text">
+                        <strong>+1,250</strong>
+                        <span>Reportes atendidos este año</span>
+                    </div>
+                </div>
+
+                <div class="stat-item">
+                    <div class="stat-icon">	<svg class="icon-svg" viewBox="0 0 24 24"><circle cx="9" cy="8" r="3"/><path d="M2 20c0-3 3-5 7-5s7 2 7 5"/><circle cx="17" cy="9" r="2.5"/><path d="M16 13.2c2.5.3 4 1.8 4 3.8"/></svg></div>
+                    <div class="stat-text">
+                        <strong>98%</strong>
+                        <span>Incidencias resueltas satisfactoriamente</span>
+                    </div>
+                </div>
+
+                <div class="stat-item">
+                    <div class="stat-icon">	<svg class="icon-svg" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 3"/></svg></div>
+                    <div class="stat-text">
+                        <strong>24 h</strong>
+                        <span>Tiempo promedio de respuesta</span>
+                    </div>
+                </div>
+
+                <div class="stat-item">
+                    <div class="stat-icon"><svg class="icon-svg" viewBox="0 0 24 24"><path d="M12 3l7 3v6c0 5-3 8-7 9-4-1-7-4-7-9V6z"/><path d="M9 12l2 2 4-4"/></svg></div>
+                    <div class="stat-text">
+                        <strong>Compromiso</strong>
+                        <span>Trabajamos por un servicio eficiente y confiable</span>
+                    </div>
+                </div>
+
+            </div>
+        </section>
+
+
+        <!-- CTA SECTION -->
+        <section class="report-cta">
+
+            <span class="deco-bubble b9" aria-hidden="true"></span>
+            <span class="deco-bubble b10" aria-hidden="true"></span>
+
+            <div class="cta-left">
+                <div class="cta-avatar"><svg class="icon-svg" viewBox="0 0 24 24"><circle cx="12" cy="8" r="4"/><path d="M4 20c0-4 4-6 8-6s8 2 8 6"/></svg></div>
+                <div>
+                    <span>¿Necesitas ayuda?</span>
+                    <h2>Reporta tu incidencia ahora</h2>
+                    <p>El proceso es rápido, sencillo y tu reporte hace la diferencia.</p>
+                </div>
+            </div>
+
+            <a href="reporte.html" class="cta-button">
+                <span class="btn-icon">	<svg class="icon-svg" viewBox="0 0 24 24"><path d="M12 2C8 8 5 11.5 5 15a7 7 0 0014 0c0-3.5-3-7-7-13z"/></svg></span> Crear reporte
+            </a>
+
+        </section>
+
+    </main>
+
+
+    <!-- FOOTER -->
+    <footer id="ayuda" class="public-footer">
+
+        <svg class="footer-wave" viewBox="0 0 1440 60" preserveAspectRatio="none" aria-hidden="true">
+            <path d="M0,30 C240,60 480,0 720,25 C960,50 1200,10 1440,30 L1440,0 L0,0 Z"></path>
+        </svg>
+
+        <div class="footer-grid">
+
+            <div class="footer-col footer-brand-col">
+                <div class="footer-brand-head">
+                    <div class="public-logo small">A</div>
+                    <strong>Aqualca</strong>
+                </div>
+                <span>Sistema de gestión del servicio de agua</span>
+
+                <div class="footer-social">
+                    <a href="#" aria-label="Facebook"><svg class="icon-svg" viewBox="0 0 24 24" style="width:14px;height:14px"><path d="M15 8h2V5h-2c-2 0-3 1.2-3 3v2H10v3h2v7h3v-7h2.2l.8-3H15V8.5c0-.3.2-.5.5-.5z" fill="currentColor" stroke="none"/></svg></a>
+                    <a href="#" aria-label="Twitter">🐦</a>
+                    <a href="#" aria-label="Instagram"><svg class="icon-svg" viewBox="0 0 24 24" style="width:14px;height:14px"><rect x="4" y="4" width="16" height="16" rx="4"/><circle cx="12" cy="12" r="3.5"/><circle cx="16.5" cy="7.5" r="1"/></svg></a>
+                </div>
+            </div>
+
+            <div class="footer-col">
+                <h4>Atención ciudadana eficiente</h4>
+                <p>Mejoramos cada día para brindarte un servicio de calidad.</p>
+            </div>
+
+            <div class="footer-col">
+                <h4>Enlaces útiles</h4>
+                <a href="#como-funciona">¿Cómo funciona?</a>
+                <a href="#mis-reportes">Mis reportes</a>
+                <a href="#ayuda">Ayuda y soporte</a>
+                <a href="#">Política de privacidad</a>
+            </div>
+
+            <div class="footer-col">
+                <h4>Contáctanos</h4>
+                <span><svg class="icon-svg" viewBox="0 0 24 24" style="width:13px;height:13px"><path d="M5 4h4l2 5-2.5 1.5a11 11 0 005 5L15 13l5 2v4c0 1-1 2-2 2A16 16 0 013 6c0-1 1-2 2-2z"/></svg>(056) 123 456</span>
+                <span><svg class="icon-svg" viewBox="0 0 24 24" style="width:13px;height:13px"><rect x="3" y="5" width="18" height="14" rx="2"/><path d="M3 7l9 6 9-6"/></svg> contacto@aqualca.pe</span>
+                <span><svg class="icon-svg" viewBox="0 0 24 24"><path d="M12 21s7-6.5 7-12a7 7 0 10-14 0c0 5.5 7 12 7 12z"/><circle cx="12" cy="9" r="2.5"/></svg>Ica, Perú</span>
+            </div>
+
+        </div>
+
+        <div class="footer-bottom">
+            © 2026 Aqualca. Todos los derechos reservados.
+        </div>
+
+    </footer>
+
+</body>
+</html>

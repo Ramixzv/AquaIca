@@ -1,0 +1,667 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0">
+
+    <title>AquaIca | Detalle del reporte</title>
+
+
+    <link
+        rel="stylesheet"
+        href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css">
+
+    <link
+        rel="stylesheet"
+        href="css/style.css">
+
+</head>
+
+
+<body class="dashboard-body">
+
+    <aside class="sidebar">
+
+
+        <div class="sidebar-brand">
+
+            <div class="brand-logo">
+                A
+            </div>
+
+            <div>
+
+                <h2>
+                    AquaIca
+                </h2>
+
+                <span>
+                    Sistema de Gestión
+                </span>
+
+            </div>
+
+        </div>
+
+
+
+        <nav class="sidebar-menu">
+
+
+            <a
+                href="dashboard.html"
+                class="menu-item">
+
+                <span>▣</span>
+
+                Dashboard
+
+            </a>
+
+
+            <a
+                href="reportes.html"
+                class="menu-item active">
+
+                <span>▤</span>
+
+                Reportes
+
+            </a>
+
+
+            <a
+                href="asignaciones.html"
+                class="menu-item">
+
+                <span>✓</span>
+
+                Asignaciones
+
+            </a>
+
+
+            <a
+                href="seguimientos.html"
+                class="menu-item">
+
+                <span>↻</span>
+
+                Seguimientos
+
+            </a>
+
+
+            <a
+                href="evidencias.html"
+                class="menu-item">
+
+                <span>▧</span>
+
+                Evidencias
+
+            </a>
+
+
+        </nav>
+
+
+
+        <div class="sidebar-bottom">
+
+            <button
+                id="logoutButton"
+                class="logout-button">
+
+                Cerrar sesión
+
+            </button>
+
+        </div>
+
+
+    </aside>
+
+    <main class="dashboard-main">
+
+
+        <!-- HEADER -->
+
+        <header class="dashboard-header">
+
+
+            <div>
+
+                <span class="header-subtitle">
+                    Gestión de incidencias
+                </span>
+
+                <h1>
+                    Detalle del reporte
+                </h1>
+
+            </div>
+
+
+
+            <div class="user-info">
+
+
+                <div class="user-avatar">
+                    C
+                </div>
+
+
+                <div>
+
+                    <strong id="usernameDisplay">
+                        Usuario
+                    </strong>
+
+                    <span id="roleDisplay">
+                        Usuario
+                    </span>
+
+                </div>
+
+
+            </div>
+
+
+        </header>
+
+        <div class="detail-back">
+
+            <a
+                href="reportes.html"
+                class="back-button">
+
+                ← Volver a reportes
+
+            </a>
+
+        </div>
+
+        <section class="detail-header-card">
+
+
+            <div>
+
+                <span class="header-subtitle">
+                    Incidencia
+                </span>
+
+                <h2>
+                    Reporte
+                    <span id="reporteId">
+                        #--
+                    </span>
+                </h2>
+
+                <p id="tipoProblema">
+                    Cargando...
+                </p>
+
+            </div>
+
+
+            <div class="detail-status-container">
+
+                <span
+                    id="prioridadBadge"
+                    class="prioridad-badge">
+
+                    --
+
+                </span>
+
+
+                <span
+                    id="estadoBadge"
+                    class="estado-badge">
+
+                    --
+
+                </span>
+
+            </div>
+
+
+        </section>
+
+        <section class="detail-card">
+
+
+            <div class="detail-section-title">
+
+                <h2>
+                    Información del titular
+                </h2>
+
+                <p>
+                    Datos asociados al suministro registrado.
+                </p>
+
+            </div>
+
+
+
+            <div class="detail-grid">
+
+
+                <div class="detail-field">
+
+                    <span>
+                        Nombre del titular
+                    </span>
+
+                    <strong id="nombreTitular">
+                        --
+                    </strong>
+
+                </div>
+
+
+                <div class="detail-field">
+
+                    <span>
+                        DNI
+                    </span>
+
+                    <strong id="dni">
+                        --
+                    </strong>
+
+                </div>
+
+
+                <div class="detail-field">
+
+                    <span>
+                        Código de suministro
+                    </span>
+
+                    <strong id="codigoSuministro">
+                        --
+                    </strong>
+
+                </div>
+
+
+                <div class="detail-field detail-field-full">
+
+                    <span>
+                        Dirección
+                    </span>
+
+                    <strong id="direccion">
+                        --
+                    </strong>
+
+                </div>
+
+
+            </div>
+
+
+        </section>
+
+        <section class="detail-card">
+
+
+            <div class="detail-section-title">
+
+                <h2>
+                    Información del problema
+                </h2>
+
+                <p>
+                    Detalles proporcionados por el ciudadano.
+                </p>
+
+            </div>
+
+
+
+            <div class="problem-description">
+
+                <span>
+                    Descripción
+                </span>
+
+                <p id="descripcion">
+                    Cargando descripción...
+                </p>
+
+            </div>
+
+
+
+            <div class="detail-grid">
+
+
+                <div class="detail-field">
+
+                    <span>
+                        Tipo de problema
+                    </span>
+
+                    <strong id="tipoProblemaDetalle">
+                        --
+                    </strong>
+
+                </div>
+
+
+                <div class="detail-field">
+
+                    <span>
+                        Fecha de creación
+                    </span>
+
+                    <strong id="fechaCreacion">
+                        --
+                    </strong>
+
+                </div>
+
+
+            </div>
+
+
+        </section>
+
+        <section class="detail-card">
+
+
+            <div class="detail-section-title">
+
+                <h2>
+                    Ubicación del suministro
+                </h2>
+
+<section class="detail-card">
+
+    <div class="detail-section-title">
+
+        <h2>
+            Evidencias del reporte
+        </h2>
+
+        <p>
+            Archivos adjuntados como evidencia del problema.
+        </p>
+
+    </div>
+
+    <div
+        id="evidenciasContainer"
+        class="evidencias-container">
+
+        <p class="evidencias-cargando">
+            Cargando evidencias...
+        </p>
+
+    </div>
+
+</section>
+                <p>
+                    Coordenadas registradas para la incidencia.
+                </p>
+
+            </div>
+
+
+
+            <div class="location-info">
+
+
+                <div class="location-coordinate">
+
+                    <span>
+                        Latitud
+                    </span>
+
+                    <strong id="latitud">
+                        --
+                    </strong>
+
+                </div>
+
+
+                <div class="location-coordinate">
+
+                    <span>
+                        Longitud
+                    </span>
+
+                    <strong id="longitud">
+                        --
+                    </strong>
+
+                </div>
+
+
+            </div>
+
+
+
+        <div class="map-container">
+
+    <div id="mapaReporte"></div>
+
+</div>
+
+
+        </section>
+        
+        <!-- INFORME TÉCNICO -->
+<section class="informe-tecnico-section">
+
+    <div class="section-header">
+
+        <div>
+
+            <span class="section-kicker">
+                Atención técnica
+            </span>
+
+            <h2>
+                Informe técnico
+            </h2>
+
+            <p>
+                Resultado de la atención realizada por el personal técnico.
+            </p>
+
+        </div>
+
+    </div>
+
+
+    <div id="informeTecnicoContainer">
+
+        <div class="informe-tecnico-loading">
+
+            <span>📋</span>
+
+            <p>
+                Cargando informe técnico...
+            </p>
+
+        </div>
+
+    </div>
+
+</section>
+         <!-- SEGUIMIENTO DEL REPORTE -->
+<section class="seguimiento-section">
+
+    <div class="section-header">
+        <span class="section-tag">Seguimiento</span>
+
+        <h2>Estado de tu reporte</h2>
+
+        <p>
+            Consulta cómo avanza la atención de tu incidencia.
+        </p>
+    </div>
+
+    <div id="seguimientoTimeline" class="seguimiento-timeline">
+
+        <!-- Los seguimientos se cargarán aquí automáticamente -->
+
+        <div class="seguimiento-vacio">
+            <span>🔄</span>
+            <p>Cargando seguimiento...</p>
+        </div>
+
+    </div>
+
+</section>
+
+        <section class="detail-actions">
+
+
+            <button
+                id="asignarButton"
+                class="primary-button">
+
+                Asignar técnico
+            </button>
+
+
+        
+
+        </section>
+
+
+    </main>
+
+
+
+
+
+<div id="asignacionModal" class="modal-overlay">
+
+    <div class="modal-card">
+
+        <div class="modal-header">
+
+            <div>
+                <span class="modal-subtitle">
+                    Gestión de incidencia
+                </span>
+
+                <h2>
+                    Asignar técnico
+                </h2>
+            </div>
+
+            <button
+                type="button"
+                id="cerrarModal"
+                class="modal-close">
+
+                ×
+
+            </button>
+
+        </div>
+
+
+        <div class="modal-reporte-info">
+
+            <strong id="modalReporteId">
+                Reporte #--
+            </strong>
+
+            <span id="modalProblema">
+                --
+            </span>
+
+        </div>
+
+
+        <div class="modal-form-group">
+
+            <label for="tecnicoSelect">
+                Técnico
+            </label>
+
+            <select id="tecnicoSelect">
+
+                <option value="">
+                    Cargando técnicos...
+                </option>
+
+            </select>
+
+            <small>
+                Solo se muestran técnicos activos.
+            </small>
+
+        </div>
+
+
+        <div class="modal-form-group">
+
+            <label for="observacionesAsignacion">
+                Observaciones
+            </label>
+
+            <textarea
+                id="observacionesAsignacion"
+                rows="4"
+                placeholder="Agrega alguna indicación para el técnico..."></textarea>
+
+        </div>
+
+
+        <div
+            id="asignacionMensaje"
+            class="asignacion-mensaje">
+        </div>
+
+
+        <div class="modal-actions">
+
+            <button
+                type="button"
+                id="cancelarModal"
+                class="secondary-button">
+
+                Cancelar
+
+            </button>
+
+
+            <button
+                type="button"
+                id="confirmarAsignacion"
+                class="primary-button">
+
+                Asignar técnico
+
+            </button>
+
+        </div>
+
+    </div>
+
+</div>
+
+    <script src="js/api.js"></script>
+
+    <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+
+    <script src="js/reporte-detalle.js"></script>
+
+</body>
+
+</html>

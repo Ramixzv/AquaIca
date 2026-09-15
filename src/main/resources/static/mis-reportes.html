@@ -1,0 +1,350 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0">
+
+    <title>AquaIca | Mis reportes</title>
+
+    <link
+        rel="stylesheet"
+        href="css/mis-reportes.css">
+
+</head>
+
+
+<body class="mis-reportes-body">
+
+
+    <!-- HEADER -->
+
+    <header class="mr-header">
+
+        <div class="mr-brand">
+
+            <div class="mr-logo">
+                A
+            </div>
+
+            <div>
+
+                <h2>
+                    AquaIca
+                </h2>
+
+                <span>
+                    Atención ciudadana
+                </span>
+
+            </div>
+
+        </div>
+
+
+        <nav class="mr-nav">
+
+            <a href="index.html">
+                Inicio
+            </a>
+
+            <a href="reporte.html">
+                Nuevo reporte
+            </a>
+
+            <a
+                href="mis-reportes.html"
+                class="active">
+
+                Mis reportes
+
+            </a>
+
+        </nav>
+
+    </header>
+
+
+
+    <!-- CONTENIDO -->
+
+    <main class="mr-main">
+
+
+        <!-- INTRODUCCIÓN -->
+
+        <section class="mr-intro">
+
+            <div>
+
+                <span class="mr-subtitle">
+                    Área ciudadana
+                </span>
+
+                <h1>
+                    Consulta tus reportes
+                </h1>
+
+                <p>
+                    Ingresa el código de tu suministro
+                    para consultar las incidencias
+                    registradas.
+                </p>
+
+            </div>
+
+
+            <a
+                href="reporte.html"
+                class="new-report-button">
+
+                + Nuevo reporte
+
+            </a>
+
+        </section>
+
+
+
+        <!-- BUSCADOR -->
+
+        <section class="mr-search-card">
+
+            <div class="mr-search-icon">
+                💧
+            </div>
+
+
+            <div class="mr-search-content">
+
+                <h2>
+                    Buscar mis reportes
+                </h2>
+
+                <p>
+                    Utiliza el código que aparece
+                    en tu recibo de agua.
+                </p>
+
+
+                <div class="mr-search-form">
+
+                    <input
+                        type="text"
+                        id="codigoSuministro"
+                        placeholder="Ej. 000123456"
+                        maxlength="20"
+                        autocomplete="off">
+
+
+                    <button
+                        type="button"
+                        id="buscarReportesButton">
+
+                        🔍 Consultar
+
+                    </button>
+
+                </div>
+
+
+                <small>
+                    No necesitas iniciar sesión.
+                    Solo utiliza tu código de suministro.
+                </small>
+
+
+                <div
+                    id="busquedaMensaje"
+                    class="busqueda-mensaje">
+                </div>
+
+            </div>
+
+        </section>
+
+
+
+        <!-- INFORMACIÓN DEL SUMINISTRO -->
+
+        <section
+            id="suministroInfo"
+            class="suministro-info"
+            style="display: none;">
+
+            <div>
+
+                <span>
+                    Titular
+                </span>
+
+                <strong id="nombreTitular">
+                    -
+                </strong>
+
+            </div>
+
+
+            <div>
+
+                <span>
+                    DNI
+                </span>
+
+                <strong id="dniTitular">
+                    -
+                </strong>
+
+            </div>
+
+
+            <div>
+
+                <span>
+                    Dirección
+                </span>
+
+                <strong id="direccionSuministro">
+                    -
+                </strong>
+
+            </div>
+
+        </section>
+
+
+
+        <!-- ESTADÍSTICAS -->
+
+        <section
+            id="mrStats"
+            class="mr-stats"
+            style="display: none;">
+
+
+            <div class="mr-stat-card">
+
+                <span>
+                    Total de reportes
+                </span>
+
+                <strong id="totalReportes">
+                    0
+                </strong>
+
+            </div>
+
+
+            <div class="mr-stat-card">
+
+                <span>
+                    Pendientes
+                </span>
+
+                <strong id="reportesPendientes">
+                    0
+                </strong>
+
+            </div>
+
+
+            <div class="mr-stat-card">
+
+                <span>
+                    En proceso
+                </span>
+
+                <strong id="reportesProceso">
+                    0
+                </strong>
+
+            </div>
+
+
+            <div class="mr-stat-card">
+
+                <span>
+                    Resueltos
+                </span>
+
+                <strong id="reportesResueltos">
+                    0
+                </strong>
+
+            </div>
+
+
+        </section>
+
+
+
+        <!-- HISTORIAL -->
+
+        <section
+            id="mrHistorial"
+            class="mr-content-card"
+            style="display: none;">
+
+
+            <div class="mr-section-header">
+
+                <div>
+
+                    <h2>
+                        Historial de incidencias
+                    </h2>
+
+                    <p>
+                        Reportes registrados con
+                        tu suministro.
+                    </p>
+
+                </div>
+
+            </div>
+
+
+            <div
+                id="misReportesContainer"
+                class="mis-reportes-container">
+
+
+                <div class="mr-empty">
+
+                    <div class="mr-empty-icon">
+                        📄
+                    </div>
+
+                    <h3>
+                        Consulta tus reportes
+                    </h3>
+
+                    <p>
+                        Ingresa tu código de suministro
+                        para comenzar.
+                    </p>
+
+                </div>
+
+            </div>
+
+
+        </section>
+
+
+    </main>
+
+
+
+    <script src="js/api.js"></script>
+
+    <script src="js/mis-reportes.js"></script>
+
+
+</body>
+
+</html>
