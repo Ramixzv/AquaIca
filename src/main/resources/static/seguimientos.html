@@ -11,10 +11,18 @@
 
     <title>AquaIca | Seguimientos</title>
 
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+
     <!-- CSS GENERAL DEL SISTEMA -->
     <link
         rel="stylesheet"
         href="css/style.css">
+
+    <link
+        rel="stylesheet"
+        href="css/dashboard.css">
 
     <!-- CSS EXCLUSIVO DE SEGUIMIENTOS -->
     <link
@@ -25,6 +33,14 @@
 
 
 <body class="dashboard-body">
+
+    <div class="dashboard-bg-decor" aria-hidden="true">
+        <span class="deco-bubble db1"></span>
+        <span class="deco-bubble db2"></span>
+        <span class="deco-bubble db3"></span>
+        <span class="deco-bubble db4"></span>
+        <span class="deco-bubble db5"></span>
+    </div>
 
 
     <!-- =====================================================
@@ -63,7 +79,9 @@
                 href="dashboard.html"
                 class="menu-item">
 
-                <span>▣</span>
+                <span class="menu-icon">
+                    <svg class="icon-svg" viewBox="0 0 24 24"><rect x="3" y="3" width="7" height="9" rx="2"/><rect x="14" y="3" width="7" height="5" rx="2"/><rect x="14" y="12" width="7" height="9" rx="2"/><rect x="3" y="16" width="7" height="5" rx="2"/></svg>
+                </span>
 
                 Dashboard
 
@@ -76,7 +94,9 @@
                 href="reportes.html"
                 class="menu-item">
 
-                <span>▤</span>
+                <span class="menu-icon">
+                    <svg class="icon-svg" viewBox="0 0 24 24"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><path d="M14 2v6h6"/><path d="M9 13h6M9 17h6"/></svg>
+                </span>
 
                 Reportes
 
@@ -89,7 +109,9 @@
                 href="asignaciones.html"
                 class="menu-item">
 
-                <span>✓</span>
+                <span class="menu-icon">
+                    <svg class="icon-svg" viewBox="0 0 24 24"><path d="M9 12l2 2 4-4"/><circle cx="12" cy="12" r="9"/></svg>
+                </span>
 
                 Asignaciones
 
@@ -102,7 +124,9 @@
                 href="seguimientos.html"
                 class="menu-item active">
 
-                <span>↻</span>
+                <span class="menu-icon">
+                    <svg class="icon-svg" viewBox="0 0 24 24"><path d="M3 12a9 9 0 1 1 3 6.7"/><path d="M3 21v-6h6"/></svg>
+                </span>
 
                 Seguimientos
 
@@ -115,7 +139,9 @@
                 href="evidencias.html"
                 class="menu-item">
 
-                <span>▧</span>
+                <span class="menu-icon">
+                    <svg class="icon-svg" viewBox="0 0 24 24"><rect x="3" y="3" width="18" height="18" rx="3"/><circle cx="9" cy="9" r="2"/><path d="M21 15l-5-5L5 21"/></svg>
+                </span>
 
                 Evidencias
 
@@ -172,7 +198,7 @@
 
             <div class="user-info">
 
-                <div class="user-avatar">
+                <div class="user-avatar" id="userAvatar">
 
                     <span id="userInitial">
                         C
@@ -230,10 +256,10 @@
         <section class="seguimientos-stats">
 
 
-            <div class="seguimiento-stat-card">
+            <div class="seguimiento-stat-card stat-total">
 
-                <div class="seguimiento-stat-icon">
-                    ↻
+                <div class="seguimiento-stat-icon icon-total">
+                    <svg class="icon-svg" viewBox="0 0 24 24"><path d="M3 12a9 9 0 1 1 3 6.7"/><path d="M3 21v-6h6"/></svg>
                 </div>
 
                 <div>
@@ -250,10 +276,10 @@
 
             </div>
 
-<div class="seguimiento-stat-card">
+<div class="seguimiento-stat-card stat-asignado">
 
-    <div class="seguimiento-stat-icon">
-        ✓
+    <div class="seguimiento-stat-icon icon-asignado">
+        <svg class="icon-svg" viewBox="0 0 24 24"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
     </div>
 
     <div>
@@ -269,10 +295,10 @@
     </div>
 
 </div>
-            <div class="seguimiento-stat-card">
+            <div class="seguimiento-stat-card stat-atencion">
 
-                <div class="seguimiento-stat-icon">
-                    !
+                <div class="seguimiento-stat-icon icon-atencion">
+                    <svg class="icon-svg" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 3"/></svg>
                 </div>
 
                 <div>
@@ -292,10 +318,10 @@
 
             <!-- TRABAJO REALIZADO -->
 
-            <div class="seguimiento-stat-card">
+            <div class="seguimiento-stat-card stat-trabajo">
 
-                <div class="seguimiento-stat-icon">
-                    ✓
+                <div class="seguimiento-stat-icon icon-trabajo">
+                    <svg class="icon-svg" viewBox="0 0 24 24"><path d="M14.7 6.3a1 1 0 0 0 0 1.4l1.6 1.6a1 1 0 0 0 1.4 0l3.77-3.77a6 6 0 0 1-7.94 7.94l-6.91 6.91a2.12 2.12 0 0 1-3-3l6.91-6.91a6 6 0 0 1 7.94-7.94z"/></svg>
                 </div>
 
                 <div>
@@ -315,10 +341,10 @@
 
             <!-- RESUELTOS -->
 
-            <div class="seguimiento-stat-card">
+            <div class="seguimiento-stat-card stat-resuelto">
 
-                <div class="seguimiento-stat-icon">
-                    ✓
+                <div class="seguimiento-stat-icon icon-resuelto">
+                    <svg class="icon-svg" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M8 12.5l2.5 2.5L16 9.5"/></svg>
                 </div>
 
                 <div>
@@ -357,6 +383,7 @@
                     </span>
 
                     <h2>
+                        <svg class="icon-svg" viewBox="0 0 24 24" style="width:18px;height:18px;vertical-align:-3px;margin-right:6px;color:#0077b6"><path d="M3 12a9 9 0 1 1 3 6.7"/><path d="M3 21v-6h6"/></svg>
                         Historial de seguimientos
                     </h2>
 
@@ -420,7 +447,7 @@
                 <div class="seguimientos-loading">
 
                     <div class="loading-icon">
-                        ↻
+                        <svg class="icon-svg" viewBox="0 0 24 24"><path d="M3 12a9 9 0 1 1 3 6.7"/><path d="M3 21v-6h6"/></svg>
                     </div>
 
                     <p>

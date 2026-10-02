@@ -921,3 +921,104 @@
     }
 
 }
+
+
+/* =========================================================
+   COLORES DE LOS KPI (igual estilo que Dashboard/Asignaciones)
+   ========================================================= */
+
+.seguimiento-stat-card {
+    position: relative;
+    overflow: hidden;
+}
+
+.seguimiento-stat-card::before {
+    content: "";
+    position: absolute;
+    left: 0;
+    top: 0;
+    bottom: 0;
+    width: 4px;
+    background: #cbd5e0;
+}
+
+.stat-total::before    { background: linear-gradient(180deg, #0077b6, #00a6d6); }
+.stat-asignado::before { background: linear-gradient(180deg, #7c3aed, #a78bfa); }
+.stat-atencion::before { background: linear-gradient(180deg, #f59e0b, #fbbf24); }
+.stat-trabajo::before  { background: linear-gradient(180deg, #0ea5a4, #2dd4bf); }
+.stat-resuelto::before { background: linear-gradient(180deg, #10b981, #34d399); }
+
+.icon-total    { background: linear-gradient(135deg, #e6f6fb, #d5f0fa); color: #0077b6; }
+.icon-asignado { background: linear-gradient(135deg, #f1eaff, #e4d9fd); color: #7c3aed; }
+.icon-atencion { background: linear-gradient(135deg, #fff3e0, #ffe8c2); color: #d97706; }
+.icon-trabajo  { background: linear-gradient(135deg, #e2fbf7, #cdf5ed); color: #0d9488; }
+.icon-resuelto { background: linear-gradient(135deg, #e2fbf0, #cbf7e2); color: #059669; }
+
+
+/* =========================================================
+   TARJETAS DEL HISTORIAL CON MÁS VIDA
+   ========================================================= */
+
+.seguimiento-global-content {
+    border-left: 4px solid #cbd5e0;
+}
+
+.seguimiento-global-item.estado-asignado .seguimiento-global-content {
+    border-left-color: #7c3aed;
+    background: linear-gradient(120deg, #faf8ff, #ffffff 45%);
+}
+
+.seguimiento-global-item.estado-atencion .seguimiento-global-content {
+    border-left-color: #f59e0b;
+    background: linear-gradient(120deg, #fffaf0, #ffffff 45%);
+}
+
+.seguimiento-global-item.estado-trabajo .seguimiento-global-content {
+    border-left-color: #0ea5a4;
+    background: linear-gradient(120deg, #f0fdfa, #ffffff 45%);
+}
+
+.seguimiento-global-item.estado-resuelto .seguimiento-global-content {
+    border-left-color: #10b981;
+    background: linear-gradient(120deg, #f0fdf6, #ffffff 45%);
+}
+
+.seguimiento-global-item.estado-asignado .seguimiento-global-icon {
+    background: linear-gradient(135deg, #f1eaff, #e4d9fd);
+    color: #7c3aed;
+    box-shadow: 0 0 0 1px #d9c9fb;
+}
+
+.seguimiento-global-item.estado-atencion .seguimiento-global-icon {
+    background: linear-gradient(135deg, #fff3e0, #ffe8c2);
+    color: #d97706;
+    box-shadow: 0 0 0 1px #f3d69b;
+}
+
+.seguimiento-global-item.estado-trabajo .seguimiento-global-icon {
+    background: linear-gradient(135deg, #e2fbf7, #cdf5ed);
+    color: #0d9488;
+    box-shadow: 0 0 0 1px #a8ebe1;
+}
+
+.seguimiento-global-item.estado-resuelto .seguimiento-global-icon {
+    background: linear-gradient(135deg, #e2fbf0, #cbf7e2);
+    color: #059669;
+    box-shadow: 0 0 0 1px #9fe6c0;
+}
+
+.seguimiento-global-icon .icon-svg {
+    width: 17px;
+    height: 17px;
+}
+
+.loading-icon .icon-svg,
+.vacio-icon .icon-svg {
+    width: 20px;
+    height: 20px;
+}
+
+.personal-mini-icon {
+    background: linear-gradient(135deg, #0077b6, #00a6d6);
+    color: white;
+}

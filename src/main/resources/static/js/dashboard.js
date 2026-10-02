@@ -3,6 +3,9 @@ document.addEventListener("DOMContentLoaded", () => {
     const usernameDisplay =
         document.getElementById("usernameDisplay");
 
+    const userAvatar =
+        document.getElementById("userAvatar");
+
     const roleDisplay =
         document.getElementById("roleDisplay");
 
@@ -38,6 +41,31 @@ document.addEventListener("DOMContentLoaded", () => {
 
     if (rol) {
         roleDisplay.textContent = rol;
+    }
+
+    if (userAvatar && username) {
+
+        userAvatar.textContent = username.charAt(0).toUpperCase();
+
+        const paletaAvatares = [
+            ["#0077b6", "#00a6d6"],
+            ["#14b8a6", "#0ea5b7"],
+            ["#7c3aed", "#a78bfa"],
+            ["#f59e0b", "#f97316"],
+            ["#059669", "#10b981"],
+            ["#ec4899", "#f472b6"]
+        ];
+
+        let hash = 0;
+        for (let i = 0; i < username.length; i++) {
+            hash = username.charCodeAt(i) + ((hash << 5) - hash);
+        }
+
+        const [colorA, colorB] =
+            paletaAvatares[Math.abs(hash) % paletaAvatares.length];
+
+        userAvatar.style.background =
+            `linear-gradient(135deg, ${colorA}, ${colorB})`;
     }
 
     function inicializarMapa() {
@@ -502,8 +530,14 @@ filtroTipoProblema.addEventListener(
 
         const fila = document.createElement("tr");
 
+        const prioridadClase =
+            `prioridad-${(reporte.prioridad ?? "").toLowerCase()}`;
+
+        const estadoClase =
+            `estado-${(reporte.estado ?? "").toLowerCase()}`;
+
         fila.innerHTML = `
-            <td>#${reporte.reporteId}</td>
+            <td><strong>#${reporte.reporteId}</strong></td>
 
             <td>
                 ${reporte.codigoSuministro ?? "-"}
@@ -514,11 +548,15 @@ filtroTipoProblema.addEventListener(
             </td>
 
             <td>
-                ${reporte.prioridad ?? "-"}
+                <span class="prioridad-badge ${prioridadClase}">
+                    ${reporte.prioridad ?? "-"}
+                </span>
             </td>
 
             <td>
-                ${reporte.estado ?? "-"}
+                <span class="estado-badge ${estadoClase}">
+                    ${(reporte.estado ?? "-").replaceAll("_", " ")}
+                </span>
             </td>
         `;
 

@@ -117,16 +117,17 @@ public class InformeTecnicoService {
 
 
         Asignacion asignacion =
-                asignacionRepository
-                        .findByReporteIdAndPersonalId(
-                                reporteId,
-                                personalId
+        asignacionRepository
+                .findFirstByReporteIdAndPersonalIdAndEstado(
+                        reporteId,
+                        personalId,
+                        "EN_ATENCION"
+                )
+                .orElseThrow(() ->
+                        new RuntimeException(
+                                "No tienes una asignación activa para este reporte"
                         )
-                        .orElseThrow(() ->
-                                new RuntimeException(
-                                        "No tienes una asignación para este reporte"
-                                )
-                        );
+                );
 
         if (!"EN_ATENCION".equalsIgnoreCase(
                 asignacion.getEstado())) {
@@ -138,7 +139,7 @@ public class InformeTecnicoService {
 
 
         if (informeTecnicoRepository
-                .findByReporteId(reporteId)
+                .findByAsignacionId(asignacion.getId())
                 .isPresent()) {
 
             throw new RuntimeException(
@@ -178,6 +179,7 @@ public class InformeTecnicoService {
                 new InformeTecnico();
 
         informe.setReporte(reporte);
+        informe.setAsignacion(asignacion);
         informe.setPersonal(personal);
 
         informe.setDiagnostico(
@@ -251,18 +253,53 @@ if ("SOLUCIONADO".equalsIgnoreCase(resultado)) {
     );
 }
 
+if ("NO_RESUELTO".equalsIgnoreCase(resultado)
+||"NO_SOLUCIONADO".equalsIgnoreCase(resultado) ) {
+
+    reporte.setEstado("NO_RESUELTO");
+
+    asignacion.setEstado("FINALIZADA");
+
+    reporteRepository.save(reporte);
+    asignacionRepository.save(asignacion);
+
+
+    Seguimiento seguimientoNoResuelto =
+            new Seguimiento();
+
+    seguimientoNoResuelto.setReporte(reporte);
+
+    seguimientoNoResuelto.setPersonal(personal);
+
+    seguimientoNoResuelto.setEstado("NO_RESUELTO");
+
+    seguimientoNoResuelto.setComentario(
+            "La incidencia no pudo ser solucionada y requiere una nueva intervención."
+    );
+
+    seguimientoNoResuelto.setFechaCreacion(
+            LocalDateTime.now()
+    );
+
+    seguimientoRepository.save(
+            seguimientoNoResuelto
+    );
+}
+
 
 
         return new InformeTecnicoResponseDTO(
-                guardado.getId(),
-                reporte.getId(),
-                personal.getId(),
-                personal.getNombre(),
-                guardado.getDiagnostico(),
-                guardado.getTrabajoRealizado(),
-                guardado.getResultado(),
-                guardado.getFechaCreacion()
-        );
+        guardado.getId(),
+        reporte.getId(),
+        asignacion.getId(),
+        personal.getId(),
+        personal.getNombre(),
+        guardado.getDiagnostico(),
+        guardado.getTrabajoRealizado(),
+        guardado.getResultado(),
+        guardado.getFechaCreacion()
+);
+        
     }
 
 
@@ -270,24 +307,50 @@ if ("SOLUCIONADO".equalsIgnoreCase(resultado)) {
             Long reporteId) {
 
         InformeTecnico informe =
-                informeTecnicoRepository
-                        .findByReporteId(reporteId)
-                        .orElseThrow(() ->
-                                new RuntimeException(
-                                        "Este reporte no tiene informe técnico"
-                                )
-                        );
+        informeTecnicoRepository
+                .findFirstByReporteIdOrderByFechaCreacionDesc(reporteId)
+                .orElseThrow(() ->
+                        new RuntimeException(
+                                "Este reporte no tiene informe técnico"
+                        )
+                );
 
 
         return new InformeTecnicoResponseDTO(
-                informe.getId(),
-                informe.getReporte().getId(),
-                informe.getPersonal().getId(),
-                informe.getPersonal().getNombre(),
-                informe.getDiagnostico(),
-                informe.getTrabajoRealizado(),
-                informe.getResultado(),
-                informe.getFechaCreacion()
-        );
-    }
+        informe.getId(),
+        informe.getReporte().getId(),
+        informe.getAsignacion().getId(),
+        informe.getPersonal().getId(),
+        informe.getPersonal().getNombre(),
+        informe.getDiagnostico(),
+        informe.getTrabajoRealizado(),
+        informe.getResultado(),
+        informe.getFechaCreacion()
+                );
+        }
+
+        public InformeTecnicoResponseDTO obtenerInformePorAsignacion(
+        Long asignacionId) {
+
+    InformeTecnico informe =
+            informeTecnicoRepository
+                    .findByAsignacionId(asignacionId)
+                    .orElseThrow(() ->
+                            new RuntimeException(
+                                    "Esta asignación no tiene informe técnico"
+                            )
+                    );
+
+    return new InformeTecnicoResponseDTO(
+            informe.getId(),
+            informe.getReporte().getId(),
+            informe.getAsignacion().getId(),
+            informe.getPersonal().getId(),
+            informe.getPersonal().getNombre(),
+            informe.getDiagnostico(),
+            informe.getTrabajoRealizado(),
+            informe.getResultado(),
+            informe.getFechaCreacion()
+    );
 }
+        }

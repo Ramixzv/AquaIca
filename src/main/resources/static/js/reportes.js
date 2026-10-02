@@ -3,6 +3,9 @@ document.addEventListener("DOMContentLoaded", () => {
     const usernameDisplay =
         document.getElementById("usernameDisplay");
 
+    const userAvatar =
+        document.getElementById("userAvatar");
+
     const roleDisplay =
         document.getElementById("roleDisplay");
 
@@ -40,6 +43,60 @@ document.addEventListener("DOMContentLoaded", () => {
     if (rol) {
         roleDisplay.textContent = rol;
     }
+
+    if (userAvatar && username) {
+
+        userAvatar.textContent = username.charAt(0).toUpperCase();
+
+        const paletaAvatares = [
+            ["#0077b6", "#00a6d6"],
+            ["#14b8a6", "#0ea5b7"],
+            ["#7c3aed", "#a78bfa"],
+            ["#f59e0b", "#f97316"],
+            ["#059669", "#10b981"],
+            ["#ec4899", "#f472b6"]
+        ];
+
+        let hash = 0;
+        for (let i = 0; i < username.length; i++) {
+            hash = username.charCodeAt(i) + ((hash << 5) - hash);
+        }
+
+        const [colorA, colorB] =
+            paletaAvatares[Math.abs(hash) % paletaAvatares.length];
+
+        userAvatar.style.background =
+            `linear-gradient(135deg, ${colorA}, ${colorB})`;
+    }
+
+
+    function actualizarColorSelect(select, prefijo) {
+
+        select.classList.forEach(clase => {
+
+            if (clase.startsWith(prefijo)) {
+                select.classList.remove(clase);
+            }
+
+        });
+
+        if (select.value) {
+            select.classList.add(
+                `${prefijo}${select.value.toLowerCase()}`
+            );
+        }
+    }
+
+    actualizarColorSelect(filtroEstado, "sel-");
+    actualizarColorSelect(filtroPrioridad, "sel-");
+
+    filtroEstado.addEventListener("change", () => {
+        actualizarColorSelect(filtroEstado, "sel-");
+    });
+
+    filtroPrioridad.addEventListener("change", () => {
+        actualizarColorSelect(filtroPrioridad, "sel-");
+    });
 
 
     let reportes = [];

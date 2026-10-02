@@ -106,4 +106,22 @@ public ResponseEntity<List<ReporteResponseDTO>> obtenerMisReportes() {
     );
 }
 
+@GetMapping("/publico/{id}")
+public ResponseEntity<ReporteResponseDTO> obtenerReportePublico(
+        @PathVariable Long id,
+        @RequestParam String codigo) {
+
+    return reporteService.obtenerReportePublico(id, codigo)
+            .map(ResponseEntity::ok)
+            .orElseGet(() -> ResponseEntity.notFound().build());
+}
+
+
+@PostMapping("/{id}/reabrir")
+public ResponseEntity<Reporte> reabrirCaso(@PathVariable Long id) {
+
+    Reporte reporte = reporteService.reabrirCaso(id);
+
+    return ResponseEntity.ok(reporte);
+}
 }

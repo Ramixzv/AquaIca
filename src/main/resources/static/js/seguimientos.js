@@ -11,65 +11,73 @@ let todosLosSeguimientos = [];
 
 function cargarUsuario() {
 
-    const usuarioGuardado =
-        localStorage.getItem("usuario");
+    const username =
+        localStorage.getItem("username");
 
-    if (!usuarioGuardado) {
-        return;
+    const rol =
+        localStorage.getItem("rol");
+
+    const usernameDisplay =
+        document.getElementById("usernameDisplay");
+
+    const roleDisplay =
+        document.getElementById("roleDisplay");
+
+    const userInitial =
+        document.getElementById("userInitial");
+
+    const userAvatar =
+        document.getElementById("userAvatar");
+
+
+    if (usernameDisplay) {
+
+        usernameDisplay.textContent =
+            username || "Usuario";
+
     }
 
-    try {
 
-        const usuario =
-            JSON.parse(usuarioGuardado);
+    if (roleDisplay) {
 
-        const usernameDisplay =
-            document.getElementById("usernameDisplay");
+        roleDisplay.textContent =
+            rol || "Usuario";
 
-        const roleDisplay =
-            document.getElementById("roleDisplay");
-
-        const userInitial =
-            document.getElementById("userInitial");
+    }
 
 
-        if (usernameDisplay) {
+    if (userInitial) {
 
-            usernameDisplay.textContent =
-                usuario.username ||
-                usuario.nombre ||
-                "Usuario";
+        const nombre =
+            username || "U";
 
+        userInitial.textContent =
+            nombre.charAt(0).toUpperCase();
+
+    }
+
+
+    if (userAvatar && username) {
+
+        const paletaAvatares = [
+            ["#0077b6", "#00a6d6"],
+            ["#14b8a6", "#0ea5b7"],
+            ["#7c3aed", "#a78bfa"],
+            ["#f59e0b", "#f97316"],
+            ["#059669", "#10b981"],
+            ["#ec4899", "#f472b6"]
+        ];
+
+        let hash = 0;
+        for (let i = 0; i < username.length; i++) {
+            hash = username.charCodeAt(i) + ((hash << 5) - hash);
         }
 
+        const [colorA, colorB] =
+            paletaAvatares[Math.abs(hash) % paletaAvatares.length];
 
-        if (roleDisplay) {
-
-            roleDisplay.textContent =
-                usuario.rol ||
-                "Usuario";
-
-        }
-
-
-        if (userInitial) {
-
-            const nombre =
-                usuario.nombre ||
-                usuario.username ||
-                "U";
-
-            userInitial.textContent =
-                nombre.charAt(0).toUpperCase();
-
-        }
-
-    } catch (error) {
-
-        console.error(
-            "Error al cargar usuario:",
-            error
-        );
+        userAvatar.style.background =
+            `linear-gradient(135deg, ${colorA}, ${colorB})`;
 
     }
 
@@ -137,7 +145,7 @@ async function cargarSeguimientos() {
             <div class="seguimientos-vacio">
 
                 <div class="vacio-icon">
-                    !
+                    <svg class="icon-svg" viewBox="0 0 24 24"><path d="M12 9v4"/><path d="M12 17h.01"/><circle cx="12" cy="12" r="9"/></svg>
                 </div>
 
                 <h3>
@@ -258,7 +266,7 @@ function mostrarSeguimientos(
             <div class="seguimientos-vacio">
 
                 <div class="vacio-icon">
-                    ↻
+                    <svg class="icon-svg" viewBox="0 0 24 24"><path d="M3 12a9 9 0 1 1 3 6.7"/><path d="M3 21v-6h6"/></svg>
                 </div>
 
                 <h3>
@@ -466,7 +474,7 @@ function obtenerInformacionEstado(
 
                 titulo: "Asignación registrada",
 
-                icono: "✓",
+                icono: '<svg class="icon-svg" viewBox="0 0 24 24"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>',
 
                 clase: "estado-asignado"
 
@@ -481,7 +489,7 @@ function obtenerInformacionEstado(
 
                 titulo: "Reporte en atención",
 
-                icono: "↻",
+                icono: '<svg class="icon-svg" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 3"/></svg>',
 
                 clase: "estado-atencion"
 
@@ -496,7 +504,7 @@ function obtenerInformacionEstado(
 
                 titulo: "Trabajo registrado",
 
-                icono: "✓",
+                icono: '<svg class="icon-svg" viewBox="0 0 24 24"><path d="M14.7 6.3a1 1 0 0 0 0 1.4l1.6 1.6a1 1 0 0 0 1.4 0l3.77-3.77a6 6 0 0 1-7.94 7.94l-6.91 6.91a2.12 2.12 0 0 1-3-3l6.91-6.91a6 6 0 0 1 7.94-7.94z"/></svg>',
 
                 clase: "estado-trabajo"
 
@@ -511,7 +519,7 @@ function obtenerInformacionEstado(
 
                 titulo: "Reporte solucionado",
 
-                icono: "✓",
+                icono: '<svg class="icon-svg" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M8 12.5l2.5 2.5L16 9.5"/></svg>',
 
                 clase: "estado-resuelto"
 
@@ -529,7 +537,7 @@ function obtenerInformacionEstado(
 
                 titulo: "Actividad registrada",
 
-                icono: "•",
+                icono: '<svg class="icon-svg" viewBox="0 0 24 24"><circle cx="12" cy="12" r="3"/></svg>',
 
                 clase: "estado-default"
 
@@ -665,7 +673,15 @@ if (logoutButton) {
             );
 
             localStorage.removeItem(
-                "usuario"
+                "username"
+            );
+
+            localStorage.removeItem(
+                "rol"
+            );
+
+            localStorage.removeItem(
+                "personalId"
             );
 
             window.location.href =

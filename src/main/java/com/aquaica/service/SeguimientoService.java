@@ -125,5 +125,23 @@ public class SeguimientoService {
     return seguimientoRepository
             .obtenerTodosLosSeguimientos();
 }
+public List<SeguimientoResponseDTO> obtenerSeguimientosPublico(
+        Long reporteId,
+        String codigo) {
 
+    Reporte reporte = reporteRepository.findById(reporteId)
+            .orElseThrow(() -> new RuntimeException("Reporte no encontrado"));
+
+    String codigoReporte = reporte.getSuministroId() != null
+            ? reporte.getSuministroId().getCodigoSuministro()
+            : null;
+
+    if (codigoReporte == null ||
+            !codigoReporte.equalsIgnoreCase(codigo.trim())) {
+
+        throw new RuntimeException("Reporte no encontrado");
+    }
+
+    return seguimientoRepository.obtenerSeguimientosPorReporte(reporteId);
+}
 }

@@ -1,3 +1,4 @@
+let codigoConsultadoActual = "";
 document.addEventListener("DOMContentLoaded", () => {
 
     const inputCodigo = document.getElementById("codigoSuministro");
@@ -25,6 +26,7 @@ async function buscarReportes() {
     const mensaje = document.getElementById("busquedaMensaje");
 
     const codigo = inputCodigo.value.trim();
+    codigoConsultadoActual = codigo;
 
     if (!codigo) {
 
@@ -337,26 +339,16 @@ function crearTarjetaReporte(reporte) {
 
             <div class="reporte-card-actions">
 
-                <button
-                    type="button"
-                    class="secondary-button"
-                    onclick="verReporte(${reporte.reporteId})">
+    <button
+        type="button"
+        class="primary-button"
+        onclick="verSeguimiento(${reporte.reporteId})">
 
-                    Ver reporte
+        Ver detalle
 
-                </button>
+    </button>
 
-
-                <button
-                    type="button"
-                    class="primary-button"
-                    onclick="verSeguimiento(${reporte.reporteId})">
-
-                    Ver seguimiento
-
-                </button>
-
-            </div>
+</div>
 
         </article>
     `;
@@ -469,18 +461,12 @@ function ocultarResultados() {
 
 }
 
-function verReporte(reporteId) {
-
-    window.location.href =
-        `reporte-detalle.html?id=${reporteId}`;
-
-}
 
 
 function verSeguimiento(reporteId) {
 
     window.location.href =
-        `seguimiento.html?id=${reporteId}`;
+        `seguimiento.html?id=${reporteId}&codigo=${encodeURIComponent(codigoConsultadoActual)}`;
 
 }
 

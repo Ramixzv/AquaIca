@@ -10,6 +10,9 @@ document.addEventListener("DOMContentLoaded", () => {
     const userInitial =
         document.getElementById("userInitial");
 
+    const userAvatar =
+        document.getElementById("userAvatar");
+
     const container =
         document.getElementById(
             "asignacionesContainer"
@@ -58,6 +61,29 @@ document.addEventListener("DOMContentLoaded", () => {
             username
                 .charAt(0)
                 .toUpperCase();
+
+        if (userAvatar) {
+
+            const paletaAvatares = [
+                ["#0077b6", "#00a6d6"],
+                ["#14b8a6", "#0ea5b7"],
+                ["#7c3aed", "#a78bfa"],
+                ["#f59e0b", "#f97316"],
+                ["#059669", "#10b981"],
+                ["#ec4899", "#f472b6"]
+            ];
+
+            let hash = 0;
+            for (let i = 0; i < username.length; i++) {
+                hash = username.charCodeAt(i) + ((hash << 5) - hash);
+            }
+
+            const [colorA, colorB] =
+                paletaAvatares[Math.abs(hash) % paletaAvatares.length];
+
+            userAvatar.style.background =
+                `linear-gradient(135deg, ${colorA}, ${colorB})`;
+        }
 
     }
 
@@ -237,10 +263,16 @@ asignaciones.forEach(asignacion => {
 
 
         for (const asignacion of asignaciones) {
-            const tieneInforme =
-    asignacion.estado === "EN_ATENCION"
-        ? await tieneInformeTecnico(asignacion.reporteId)
-        : false;
+
+    const tieneInforme =
+        asignacion.estado === "EN_ATENCION"
+            ? await tieneInformeTecnico(asignacion.id)
+            : false;
+
+    const bitacoras =
+        asignacion.estado === "EN_ATENCION" && rol === "TECNICO"
+            ? await obtenerBitacoras(asignacion.id)
+            : [];
 
                 const tarjeta =
                     document.createElement(
@@ -322,6 +354,77 @@ asignaciones.forEach(asignacion => {
 
                     </div>
 
+                    ${
+    asignacion.estado === "EN_ATENCION"
+        ?
+        `
+        <div class="bitacoras-section">
+
+            <div class="bitacoras-header">
+
+                <div>
+                    <h3>📝 Bitácora de atención</h3>
+
+                    <p>
+                        Actualizaciones realizadas durante la atención
+                    </p>
+                </div>
+
+                <button
+                    class="secondary-button"
+                    onclick="mostrarFormularioBitacora(
+                        ${asignacion.reporteId},
+                        ${asignacion.id}
+                    )">
+
+                    + Nueva bitácora
+
+                </button>
+
+            </div>
+
+            <div class="bitacoras-list">
+
+                ${
+                    bitacoras.length > 0
+                        ?
+                        bitacoras.map(bitacora => `
+                            
+                            <div class="bitacora-item">
+
+                                <div class="bitacora-fecha">
+                                    🕐 ${formatearFecha(
+                                        bitacora.fechaCreacion
+                                    )}
+                                </div>
+
+                                <strong>
+                                    ${bitacora.personalNombre}
+                                </strong>
+
+                                <p>
+                                    ${bitacora.descripcion}
+                                </p>
+
+                            </div>
+
+                        `).join("")
+                        :
+                        `
+                        <div class="bitacora-vacia">
+                            No hay actualizaciones registradas todavía.
+                        </div>
+                        `
+                }
+
+            </div>
+
+        </div>
+        `
+        :
+        ""
+}
+
 
                     <div class="asignacion-actions">
 
@@ -378,7 +481,8 @@ asignaciones.forEach(asignacion => {
                 <button
                     class="primary-button"
                     onclick="mostrarFormularioInforme(
-                        ${asignacion.reporteId}
+                        ${asignacion.reporteId},
+                        ${asignacion.id}
                     )">
 
                     📝 Registrar informe
@@ -431,11 +535,11 @@ ${
         };
     
     window.mostrarFormularioInforme =
-    function(reporteId) {
+    function(reporteId, asignacionId) {
 
         const formularioExistente =
             document.getElementById(
-                `formularioInforme-${reporteId}`
+                `formularioInforme-${asignacionId}`
             );
 
         if (formularioExistente) {
@@ -445,7 +549,7 @@ ${
 
         const tarjeta =
             document.querySelector(
-                `.asignacion-card:has(button[onclick*="${reporteId}"])`
+                `.asignacion-card:has(button[onclick*="${asignacionId}"])`
             );
 
 
@@ -463,7 +567,7 @@ ${
             document.createElement("div");
 
         formulario.id =
-            `formularioInforme-${reporteId}`;
+            `formularioInforme-${asignacionId}`;
 
         formulario.className =
             "formulario-informe";
@@ -491,7 +595,7 @@ ${
                 </label>
 
                 <textarea
-                    id="diagnostico-${reporteId}"
+                    id="diagnostico-${asignacionId}"
                     placeholder="Describe el problema encontrado..."
                     rows="4"
                     required>
@@ -507,7 +611,7 @@ ${
                 </label>
 
                 <textarea
-                    id="trabajo-${reporteId}"
+                    id="trabajo-${asignacionId}"
                     placeholder="Describe las acciones realizadas..."
                     rows="4"
                     required>
@@ -523,7 +627,7 @@ ${
                 </label>
 
                 <select
-                    id="resultado-${reporteId}">
+                    id="resultado-${asignacionId}">
 
                     <option value="">
                         Seleccionar resultado
@@ -551,7 +655,7 @@ ${
                 <button
                     type="button"
                     class="secondary-button"
-                    onclick="cerrarFormularioInforme(${reporteId})">
+                    onclick="cerrarFormularioInforme(${asignacionId})">
 
                     Cancelar
 
@@ -561,7 +665,7 @@ ${
                 <button
                     type="button"
                     class="primary-button"
-                    onclick="guardarInforme(${reporteId})">
+                    onclick="guardarInforme(${reporteId}, ${asignacionId})">
 
                     💾 Guardar informe
 
@@ -783,12 +887,12 @@ window.cerrarFormularioEvidencia =
 
     };
 
-async function tieneInformeTecnico(reporteId) {
+async function tieneInformeTecnico(asignacionId) {
 
     try {
 
         await apiFetch(
-            `/api/reportes/${reporteId}/informe-tecnico`
+            `/api/reportes/asignacion/${asignacionId}/informe-tecnico`
         );
 
         return true;
@@ -800,24 +904,243 @@ async function tieneInformeTecnico(reporteId) {
     }
 }
 
+async function obtenerBitacoras(asignacionId) {
+
+    try {
+
+        const bitacoras =
+            await apiFetch(
+                `/api/bitacoras/asignacion/${asignacionId}`
+            );
+
+        return bitacoras || [];
+
+    } catch (error) {
+
+        console.error(
+            "Error al obtener bitácoras:",
+            error
+        );
+
+        return [];
+    }
+}
+
+window.mostrarFormularioBitacora =
+    function(reporteId, asignacionId) {
+
+        const formularioExistente =
+            document.getElementById(
+                `formularioBitacora-${asignacionId}`
+            );
+
+        if (formularioExistente) {
+            return;
+        }
+
+        const tarjeta =
+            document.querySelector(
+                `.asignacion-card:has(button[onclick*="${asignacionId}"])`
+            );
+
+        if (!tarjeta) {
+
+            console.error(
+                "No se encontró la tarjeta de la asignación:",
+                asignacionId
+            );
+
+            return;
+        }
+
+        const formulario =
+            document.createElement("div");
+
+        formulario.id =
+            `formularioBitacora-${asignacionId}`;
+
+        formulario.className =
+            "formulario-bitacora";
+
+        formulario.innerHTML = `
+
+            <div class="formulario-bitacora-header">
+
+                <h3>
+                    📝 Nueva bitácora
+                </h3>
+
+                <span>
+                    Reporte #${reporteId}
+                </span>
+
+            </div>
+
+            <div class="formulario-bitacora-campo">
+
+                <label>
+                    Actualización de atención
+                </label>
+
+                <textarea
+                    id="descripcionBitacora-${asignacionId}"
+                    placeholder="Describe lo realizado, encontrado o actualizado durante la atención..."
+                    rows="4"
+                    required>
+                </textarea>
+
+            </div>
+
+            <div class="formulario-bitacora-actions">
+
+                <button
+                    type="button"
+                    class="secondary-button"
+                    onclick="cerrarFormularioBitacora(
+                        ${asignacionId}
+                    )">
+
+                    Cancelar
+
+                </button>
+
+                <button
+                    type="button"
+                    class="primary-button"
+                    onclick="guardarBitacora(
+                        ${reporteId},
+                        ${asignacionId}
+                    )">
+
+                    💾 Guardar bitácora
+
+                </button>
+
+            </div>
+
+        `;
+
+        tarjeta.appendChild(formulario);
+    };
+
+    window.guardarBitacora =
+    async function(reporteId, asignacionId) {
+
+        const textarea =
+            document.getElementById(
+                `descripcionBitacora-${asignacionId}`
+            );
+
+        const descripcion =
+            textarea.value.trim();
+
+        if (!descripcion) {
+
+            alert(
+                "Debes ingresar una descripción."
+            );
+
+            return;
+        }
+
+        if (!personalId) {
+
+            alert(
+                "No se encontró el personal autenticado."
+            );
+
+            return;
+        }
+
+        try {
+
+            const parametros =
+                new URLSearchParams();
+
+            parametros.append(
+                "reporteId",
+                reporteId
+            );
+
+            parametros.append(
+                "asignacionId",
+                asignacionId
+            );
+
+            parametros.append(
+                "personalId",
+                personalId
+            );
+
+            parametros.append(
+                "descripcion",
+                descripcion
+            );
+
+            const bitacora =
+                await apiFetch(
+                    `/api/bitacoras?${parametros.toString()}`,
+                    {
+                        method: "POST"
+                    }
+                );
+
+            console.log(
+                "Bitácora registrada:",
+                bitacora
+            );
+
+            alert(
+                "La bitácora se registró correctamente."
+            );
+
+            cargarAsignaciones();
+
+        } catch (error) {
+
+            console.error(
+                "Error al registrar bitácora:",
+                error
+            );
+
+            alert(
+                error.message ||
+                "No se pudo registrar la bitácora."
+            );
+        }
+    };
+
+    window.cerrarFormularioBitacora =
+    function(asignacionId) {
+
+        const formulario =
+            document.getElementById(
+                `formularioBitacora-${asignacionId}`
+            );
+
+        if (formulario) {
+            formulario.remove();
+        }
+    };
+
 window.guardarInforme =
-    async function(reporteId) {
+    async function(reporteId, asignacionId) {
 
         const diagnostico =
             document.getElementById(
-                `diagnostico-${reporteId}`
+                `diagnostico-${asignacionId}`
             ).value.trim();
 
 
         const trabajoRealizado =
             document.getElementById(
-                `trabajo-${reporteId}`
+                `trabajo-${asignacionId}`
             ).value.trim();
 
 
         const resultado =
             document.getElementById(
-                `resultado-${reporteId}`
+                `resultado-${asignacionId}`
             ).value;
 
 

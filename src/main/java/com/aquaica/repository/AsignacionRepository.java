@@ -58,6 +58,12 @@ public interface AsignacionRepository extends JpaRepository<Asignacion, Long> {
     Optional<Asignacion> findByReporteIdAndPersonalId(
         Long reporteId,
         Long personalId
+);  
+
+    Optional<Asignacion> findFirstByReporteIdAndPersonalIdAndEstado(
+    Long reporteId,
+    Long personalId,
+    String estado
 );
 
 }

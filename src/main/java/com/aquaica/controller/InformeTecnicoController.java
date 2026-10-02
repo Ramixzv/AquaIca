@@ -51,4 +51,14 @@ public class InformeTecnicoController {
                         .obtenerInformePorReporte(reporteId)
         );
     }
+
+    @GetMapping("/asignacion/{asignacionId}/informe-tecnico")
+public ResponseEntity<InformeTecnicoResponseDTO> obtenerInformePorAsignacion(
+        @PathVariable Long asignacionId) {
+
+    return ResponseEntity.ok(
+            informeTecnicoService
+                    .obtenerInformePorAsignacion(asignacionId)
+    );
+}
 }

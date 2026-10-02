@@ -2,32 +2,23 @@ package com.aquaica.dto;
 
 import java.time.LocalDateTime;
 
-public class InformeTecnicoResponseDTO {
+public class BitacoraResponseDTO {
 
     private Long id;
     private Long reporteId;
     private Long asignacionId;
     private Long personalId;
     private String personalNombre;
-    private String diagnostico;
-    private String trabajoRealizado;
-    private String resultado;
+    private String descripcion;
     private LocalDateTime fechaCreacion;
 
-
-    public InformeTecnicoResponseDTO() {
-    }
-
-
-    public InformeTecnicoResponseDTO(
+    public BitacoraResponseDTO(
             Long id,
             Long reporteId,
             Long asignacionId,
             Long personalId,
             String personalNombre,
-            String diagnostico,
-            String trabajoRealizado,
-            String resultado,
+            String descripcion,
             LocalDateTime fechaCreacion) {
 
         this.id = id;
@@ -35,52 +26,33 @@ public class InformeTecnicoResponseDTO {
         this.asignacionId = asignacionId;
         this.personalId = personalId;
         this.personalNombre = personalNombre;
-        this.diagnostico = diagnostico;
-        this.trabajoRealizado = trabajoRealizado;
-        this.resultado = resultado;
+        this.descripcion = descripcion;
         this.fechaCreacion = fechaCreacion;
     }
-
 
     public Long getId() {
         return id;
     }
 
-
     public Long getReporteId() {
         return reporteId;
     }
-
 
     public Long getAsignacionId() {
         return asignacionId;
     }
 
-
     public Long getPersonalId() {
         return personalId;
     }
-
 
     public String getPersonalNombre() {
         return personalNombre;
     }
 
-
-    public String getDiagnostico() {
-        return diagnostico;
+    public String getDescripcion() {
+        return descripcion;
     }
-
-
-    public String getTrabajoRealizado() {
-        return trabajoRealizado;
-    }
-
-
-    public String getResultado() {
-        return resultado;
-    }
-
 
     public LocalDateTime getFechaCreacion() {
         return fechaCreacion;

@@ -47,6 +47,9 @@ document.addEventListener("DOMContentLoaded", () => {
     const usernameDisplay =
         document.getElementById("usernameDisplay");
 
+    const userAvatar =
+        document.getElementById("userAvatar");
+
     const roleDisplay =
         document.getElementById("roleDisplay");
 
@@ -63,6 +66,31 @@ document.addEventListener("DOMContentLoaded", () => {
 
     if (rol) {
         roleDisplay.textContent = rol;
+    }
+
+    if (userAvatar && username) {
+
+        userAvatar.textContent = username.charAt(0).toUpperCase();
+
+        const paletaAvatares = [
+            ["#0077b6", "#00a6d6"],
+            ["#14b8a6", "#0ea5b7"],
+            ["#7c3aed", "#a78bfa"],
+            ["#f59e0b", "#f97316"],
+            ["#059669", "#10b981"],
+            ["#ec4899", "#f472b6"]
+        ];
+
+        let hash = 0;
+        for (let i = 0; i < username.length; i++) {
+            hash = username.charCodeAt(i) + ((hash << 5) - hash);
+        }
+
+        const [colorA, colorB] =
+            paletaAvatares[Math.abs(hash) % paletaAvatares.length];
+
+        userAvatar.style.background =
+            `linear-gradient(135deg, ${colorA}, ${colorB})`;
     }
 
     const parametros =
@@ -101,6 +129,11 @@ document.addEventListener("DOMContentLoaded", () => {
         document.getElementById(
             "asignarButton"
         );
+
+    const reabrirButton =
+    document.getElementById(
+        "reabrirButton"
+    );
 
     const cerrarModal =
         document.getElementById(
@@ -397,7 +430,7 @@ document.addEventListener("DOMContentLoaded", () => {
             <div class="informe-tecnico-vacio">
 
                 <div class="informe-vacio-icon">
-                    📋
+                    <svg class="icon-svg" viewBox="0 0 24 24" style="width:28px;height:28px;"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><path d="M14 2v6h6"/><path d="M9 13h6M9 17h6"/></svg>
                 </div>
 
                 <h3>
@@ -425,105 +458,254 @@ document.addEventListener("DOMContentLoaded", () => {
 
     try {
 
-        const seguimientos =
-            await apiFetch(
+        const [seguimientos, bitacoras] = await Promise.all([
+
+            apiFetch(
                 `/api/reportes/${id}/seguimientos`
-            );
+            ),
+
+            apiFetch(
+                `/api/bitacoras/reporte/${id}`
+            )
+
+        ]);
 
         console.log(
             "Seguimientos recibidos:",
             seguimientos
         );
 
+        console.log(
+            "Bitácoras recibidas:",
+            bitacoras
+        );
+
+
+        // ==============================
+        // CONVERTIR SEGUIMIENTOS
+        // ==============================
+
+        const eventosSeguimiento =
+            (seguimientos || []).map(seguimiento => ({
+
+                tipo: "SEGUIMIENTO",
+
+                fechaCreacion:
+                    seguimiento.fechaCreacion,
+
+                estado:
+                    seguimiento.estado,
+
+                comentario:
+                    seguimiento.comentario,
+
+                personalNombre:
+                    seguimiento.nombrePersonal
+
+            }));
+
+
+        // ==============================
+        // CONVERTIR BITÁCORAS
+        // ==============================
+
+        const eventosBitacora =
+            (bitacoras || []).map(bitacora => ({
+
+                tipo: "BITACORA",
+
+                fechaCreacion:
+                    bitacora.fechaCreacion,
+
+                descripcion:
+                    bitacora.descripcion,
+
+                personalNombre:
+                    bitacora.personalNombre
+
+            }));
+
+
+        // ==============================
+        // UNIR TODO
+        // ==============================
+
+        const eventos = [
+
+            ...eventosSeguimiento,
+
+            ...eventosBitacora
+
+        ];
+
+
         timeline.innerHTML = "";
 
-        if (!seguimientos || seguimientos.length === 0) {
+
+        if (eventos.length === 0) {
 
             timeline.innerHTML = `
+
                 <div class="seguimiento-vacio">
-                    <span>📋</span>
+
+                    <svg
+                        class="icon-svg"
+                        viewBox="0 0 24 24"
+                        style="width:24px;height:24px;color:#0077b6;"
+                    >
+                        <path d="M3 12a9 9 0 1 1 3 6.7"/>
+                        <path d="M3 21v-6h6"/>
+                    </svg>
+
                     <p>
                         Este reporte todavía no tiene actualizaciones.
                     </p>
+
                 </div>
+
             `;
 
             return;
         }
 
-        seguimientos.forEach((seguimiento, indice) => {
 
-            const item =
-                document.createElement("div");
+        // ==============================
+        // ORDEN CRONOLÓGICO
+        // ==============================
 
-            item.className =
-                "seguimiento-item";
+        const ordenados =
+            [...eventos].sort(
+                (a, b) =>
+                    new Date(a.fechaCreacion) -
+                    new Date(b.fechaCreacion)
+            );
 
-            item.innerHTML = `
 
-                <div class="seguimiento-punto">
-                    ${indice === seguimientos.length - 1 ? "●" : "✓"}
-                </div>
 
-                <div class="seguimiento-contenido">
 
-                    <div class="seguimiento-header">
+        ordenados.forEach(
+            (evento, indice) => {
 
-                        <strong>
-                            ${formatearEstado(
-                                seguimiento.estado
-                            )}
-                        </strong>
+                const item =
+                    document.createElement("div");
 
-                        <span>
-                            ${formatearFecha(
-                                seguimiento.fechaCreacion
-                            )}
-                        </span>
+                item.className =
+                    "seguimiento-item";
+
+
+                const esActual =
+                    indice === ordenados.length - 1;
+
+
+                // ICONO
+
+                const icono =
+                    evento.tipo === "BITACORA"
+
+                        ? "📝"
+
+                        : (
+                            esActual
+                                ? "●"
+                                : "✓"
+                        );
+
+
+                // TITULO
+
+                const titulo =
+                    evento.tipo === "BITACORA"
+
+                        ? "Actualización del técnico"
+
+                        : formatearEstado(
+                            evento.estado
+                        );
+
+
+                // DESCRIPCION
+
+                const descripcionEvento =
+                    evento.tipo === "BITACORA"
+
+                        ? evento.descripcion || ""
+
+                        : evento.comentario || "";
+
+
+                item.innerHTML = `
+
+                    <div class="seguimiento-punto">
+                        ${icono}
+                    </div>
+
+
+                    <div class="seguimiento-contenido">
+
+                        <div class="seguimiento-header">
+
+                            <strong>
+                                ${titulo}
+                            </strong>
+
+                            <span>
+                                ${formatearFecha(
+                                    evento.fechaCreacion
+                                )}
+                            </span>
+
+                        </div>
+
+
+                        <p>
+                            ${descripcionEvento}
+                        </p>
+
+
+                        ${
+                            evento.personalNombre
+                                ? `
+                                    <small>
+                                        Actualizado por:
+                                        ${evento.personalNombre}
+                                    </small>
+                                `
+                                : ""
+                        }
 
                     </div>
 
-                    <p>
-                        ${seguimiento.comentario || ""}
-                    </p>
+                `;
 
-                    ${
-                        seguimiento.nombrePersonal
-                        ? `
-                            <small>
-                                Actualizado por:
-                                ${seguimiento.nombrePersonal}
-                            </small>
-                        `
-                        : ""
-                    }
 
-                </div>
+                timeline.appendChild(item);
 
-            `;
+            }
+        );
 
-            timeline.appendChild(item);
-
-        });
 
     } catch (error) {
 
         console.error(
-            "Error al cargar seguimientos:",
+            "Error al cargar seguimientos y bitácoras:",
             error
         );
 
+
         timeline.innerHTML = `
+
             <div class="seguimiento-vacio error">
 
                 <span>⚠️</span>
 
                 <p>
-                    No se pudieron cargar los seguimientos.
+                    No se pudieron cargar las actualizaciones.
                 </p>
 
             </div>
+
         `;
+
     }
 }
 
@@ -656,6 +838,15 @@ function formatearFecha(fecha) {
             reporte.estado
         );
 
+        if (
+        rol === "ADMIN" &&
+        reporte.estado === "NO_RESUELTO"
+        ) {
+        reabrirButton.style.display = "inline-flex";
+        } else {
+        reabrirButton.style.display = "none";
+        }
+
 
         // Información para el modal
 
@@ -666,6 +857,63 @@ function formatearFecha(fecha) {
         modalProblema.textContent =
             `${problemaFormateado} • ${reporte.prioridad ?? "-"}`;
     }
+
+    reabrirButton.addEventListener("click", async () => {
+
+    const confirmar = confirm(
+        "¿Deseas reabrir este caso para una nueva intervención?"
+    );
+
+    if (!confirmar) {
+        return;
+    }
+
+    try {
+
+        reabrirButton.disabled = true;
+        reabrirButton.textContent = "Reabriendo...";
+
+        await apiFetch(
+            `/api/reportes/${id}/reabrir`,
+            {
+                method: "POST"
+            }
+        );
+
+        alert(
+            "El caso fue reabierto correctamente."
+        );
+
+        await cargarReporte();
+
+        // Recargar asignaciones y seguimientos
+        if (typeof cargarAsignaciones === "function") {
+            await cargarAsignaciones();
+        }
+
+        if (typeof cargarSeguimientos === "function") {
+            await cargarSeguimientos();
+        }
+
+    } catch (error) {
+
+        console.error(
+            "Error al reabrir caso:",
+            error
+        );
+
+        alert(
+            error.message ||
+            "No se pudo reabrir el caso."
+        );
+
+    } finally {
+
+        reabrirButton.disabled = false;
+        reabrirButton.innerHTML = `<svg class="icon-svg" viewBox="0 0 24 24" style="width:14px;height:14px;vertical-align:-2px;margin-right:5px;"><path d="M3 12a9 9 0 1 1 3 6.7"/><path d="M3 21v-6h6"/></svg>Reabrir caso`;
+    }
+
+});
 
     async function cargarEvidencias() {
 
@@ -688,7 +936,7 @@ function formatearFecha(fecha) {
             evidenciasContainer.innerHTML = `
                 <div class="sin-evidencias">
 
-                    <span>📷</span>
+                    <svg class="icon-svg" viewBox="0 0 24 24" style="width:26px;height:26px;"><path d="M23 19a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h4l2-3h6l2 3h4a2 2 0 0 1 2 2z"/><circle cx="12" cy="13" r="4"/></svg>
 
                     <p>
                         Este reporte no tiene evidencias adjuntas.
@@ -778,7 +1026,7 @@ function formatearFecha(fecha) {
 
                     <div class="evidencia-nombre">
 
-                        📎 ${evidencia.nombreArchivo}
+                        <svg class="icon-svg" viewBox="0 0 24 24" style="width:12px;height:12px;vertical-align:-1px;margin-right:4px;"><path d="M21.44 11.05l-9.19 9.19a5 5 0 0 1-7.07-7.07l9.19-9.19a3.5 3.5 0 0 1 4.95 4.95l-9.2 9.19a1.5 1.5 0 0 1-2.12-2.12l8.49-8.48"/></svg>${evidencia.nombreArchivo}
 
                     </div>
 

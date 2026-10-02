@@ -51,4 +51,19 @@ public class SeguimientoController {
                 )
         );
     }
+
+@GetMapping("/publico/{reporteId}/seguimientos")
+public ResponseEntity<List<SeguimientoResponseDTO>> obtenerSeguimientosPublico(
+        @PathVariable Long reporteId,
+        @RequestParam String codigo) {
+
+    try {
+        return ResponseEntity.ok(
+                seguimientoService.obtenerSeguimientosPublico(reporteId, codigo)
+        );
+    } catch (RuntimeException e) {
+        return ResponseEntity.notFound().build();
+    }
+}
+
 }

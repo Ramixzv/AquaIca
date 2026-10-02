@@ -4,43 +4,41 @@
 <head>
 
     <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Aqualca - Consulta el estado de tus reportes del servicio de agua.">
 
-    <meta
-        name="viewport"
-        content="width=device-width, initial-scale=1.0">
+    <title>Aqualca | Mis reportes</title>
 
-    <title>AquaIca | Mis reportes</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700;800&display=swap" rel="stylesheet">
 
-    <link
-        rel="stylesheet"
-        href="css/mis-reportes.css">
+    <link rel="stylesheet" href="css/mis-reportes.css">
 
 </head>
 
 
 <body class="mis-reportes-body">
 
+    <div class="mr-bg-decor" aria-hidden="true">
+        <span class="deco-bubble mb1"></span>
+        <span class="deco-bubble mb2"></span>
+        <span class="deco-bubble mb3"></span>
+        <span class="deco-bubble mb4"></span>
+        <span class="deco-bubble mb5"></span>
+        <span class="deco-bubble mb6"></span>
+    </div>
 
-    <!-- HEADER -->
 
     <header class="mr-header">
 
         <div class="mr-brand">
 
-            <div class="mr-logo">
-                A
-            </div>
+            <div class="mr-logo">A</div>
 
             <div>
-
-                <h2>
-                    AquaIca
-                </h2>
-
-                <span>
-                    Atención ciudadana
-                </span>
-
+                <h2>Aqualca</h2>
+                <span>Atención ciudadana</span>
             </div>
 
         </div>
@@ -48,21 +46,9 @@
 
         <nav class="mr-nav">
 
-            <a href="index.html">
-                Inicio
-            </a>
-
-            <a href="reporte.html">
-                Nuevo reporte
-            </a>
-
-            <a
-                href="mis-reportes.html"
-                class="active">
-
-                Mis reportes
-
-            </a>
+            <a href="index.html">Inicio</a>
+            <a href="reporte.html">Nuevo reporte</a>
+            <a href="mis-reportes.html" class="active">Mis reportes</a>
 
         </nav>
 
@@ -70,65 +56,46 @@
 
 
 
-    <!-- CONTENIDO -->
-
     <main class="mr-main">
 
-
-        <!-- INTRODUCCIÓN -->
 
         <section class="mr-intro">
 
             <div>
 
-                <span class="mr-subtitle">
-                    Área ciudadana
-                </span>
+                <span class="mr-subtitle">Área ciudadana</span>
 
-                <h1>
-                    Consulta tus reportes
-                </h1>
+                <h1>Consulta tus reportes</h1>
 
                 <p>
                     Ingresa el código de tu suministro
-                    para consultar las incidencias
-                    registradas.
+                    para consultar las incidencias registradas.
                 </p>
 
             </div>
 
 
-            <a
-                href="reporte.html"
-                class="new-report-button">
-
-                + Nuevo reporte
-
+            <a href="reporte.html" class="new-report-button">
+                <svg class="icon-svg" viewBox="0 0 24 24" style="width:14px;height:14px"><path d="M12 5v14M5 12h14"/></svg>
+                Nuevo reporte
             </a>
 
         </section>
 
 
 
-        <!-- BUSCADOR -->
-
         <section class="mr-search-card">
 
             <div class="mr-search-icon">
-                💧
+                <svg class="icon-svg" viewBox="0 0 24 24"><path d="M12 2C8 8 5 11.5 5 15a7 7 0 0014 0c0-3.5-3-7-7-13z"/></svg>
             </div>
 
 
             <div class="mr-search-content">
 
-                <h2>
-                    Buscar mis reportes
-                </h2>
+                <h2>Buscar mis reportes</h2>
 
-                <p>
-                    Utiliza el código que aparece
-                    en tu recibo de agua.
-                </p>
+                <p>Utiliza el código que aparece en tu recibo de agua.</p>
 
 
                 <div class="mr-search-form">
@@ -141,12 +108,9 @@
                         autocomplete="off">
 
 
-                    <button
-                        type="button"
-                        id="buscarReportesButton">
-
-                        🔍 Consultar
-
+                    <button type="button" id="buscarReportesButton">
+                        <svg class="icon-svg" viewBox="0 0 24 24" style="width:15px;height:15px"><circle cx="11" cy="11" r="6"/><path d="M20 20l-4.3-4.3"/></svg>
+                        Consultar
                     </button>
 
                 </div>
@@ -158,10 +122,7 @@
                 </small>
 
 
-                <div
-                    id="busquedaMensaje"
-                    class="busqueda-mensaje">
-                </div>
+                <div id="busquedaMensaje" class="busqueda-mensaje"></div>
 
             </div>
 
@@ -169,49 +130,21 @@
 
 
 
-        <!-- INFORMACIÓN DEL SUMINISTRO -->
-
-        <section
-            id="suministroInfo"
-            class="suministro-info"
-            style="display: none;">
+        <section id="suministroInfo" class="suministro-info" style="display: none;">
 
             <div>
-
-                <span>
-                    Titular
-                </span>
-
-                <strong id="nombreTitular">
-                    -
-                </strong>
-
+                <span>Titular</span>
+                <strong id="nombreTitular">-</strong>
             </div>
 
-
             <div>
-
-                <span>
-                    DNI
-                </span>
-
-                <strong id="dniTitular">
-                    -
-                </strong>
-
+                <span>DNI</span>
+                <strong id="dniTitular">-</strong>
             </div>
 
-
             <div>
-
-                <span>
-                    Dirección
-                </span>
-
-                <strong id="direccionSuministro">
-                    -
-                </strong>
-
+                <span>Dirección</span>
+                <strong id="direccionSuministro">-</strong>
             </div>
 
         </section>
@@ -220,63 +153,47 @@
 
         <!-- ESTADÍSTICAS -->
 
-        <section
-            id="mrStats"
-            class="mr-stats"
-            style="display: none;">
-
+        <section id="mrStats" class="mr-stats" style="display: none;">
 
             <div class="mr-stat-card">
-
-                <span>
-                    Total de reportes
-                </span>
-
-                <strong id="totalReportes">
-                    0
-                </strong>
-
+                <div class="mr-stat-icon icon-primary">
+                    <svg class="icon-svg" viewBox="0 0 24 24"><path d="M4 20V10M12 20V4M20 20v-7"/></svg>
+                </div>
+                <div>
+                    <span>Total de reportes</span>
+                    <strong id="totalReportes">0</strong>
+                </div>
             </div>
-
 
             <div class="mr-stat-card">
-
-                <span>
-                    Pendientes
-                </span>
-
-                <strong id="reportesPendientes">
-                    0
-                </strong>
-
+                <div class="mr-stat-icon icon-warning">
+                    <svg class="icon-svg" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 3"/></svg>
+                </div>
+                <div>
+                    <span>Pendientes</span>
+                    <strong id="reportesPendientes">0</strong>
+                </div>
             </div>
-
 
             <div class="mr-stat-card">
-
-                <span>
-                    En proceso
-                </span>
-
-                <strong id="reportesProceso">
-                    0
-                </strong>
-
+                <div class="mr-stat-icon icon-blue">
+                    <svg class="icon-svg" viewBox="0 0 24 24"><path d="M4 4v5h5M20 20v-5h-5"/><path d="M5.5 9A7 7 0 0119 12M18.5 15A7 7 0 015 12"/></svg>
+                </div>
+                <div>
+                    <span>En proceso</span>
+                    <strong id="reportesProceso">0</strong>
+                </div>
             </div>
-
 
             <div class="mr-stat-card">
-
-                <span>
-                    Resueltos
-                </span>
-
-                <strong id="reportesResueltos">
-                    0
-                </strong>
-
+                <div class="mr-stat-icon icon-success">
+                    <svg class="icon-svg" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M8 12l3 3 5-5"/></svg>
+                </div>
+                <div>
+                    <span>Resueltos</span>
+                    <strong id="reportesResueltos">0</strong>
+                </div>
             </div>
-
 
         </section>
 
@@ -284,54 +201,33 @@
 
         <!-- HISTORIAL -->
 
-        <section
-            id="mrHistorial"
-            class="mr-content-card"
-            style="display: none;">
-
+        <section id="mrHistorial" class="mr-content-card" style="display: none;">
 
             <div class="mr-section-header">
 
                 <div>
-
-                    <h2>
-                        Historial de incidencias
-                    </h2>
-
-                    <p>
-                        Reportes registrados con
-                        tu suministro.
-                    </p>
-
+                    <h2>Historial de incidencias</h2>
+                    <p>Reportes registrados con tu suministro.</p>
                 </div>
 
             </div>
 
 
-            <div
-                id="misReportesContainer"
-                class="mis-reportes-container">
-
+            <div id="misReportesContainer" class="mis-reportes-container">
 
                 <div class="mr-empty">
 
                     <div class="mr-empty-icon">
-                        📄
+                        <svg class="icon-svg" viewBox="0 0 24 24" style="width:26px;height:26px"><rect x="6" y="3" width="12" height="18" rx="2"/><path d="M9 8h6M9 12h6M9 16h3"/></svg>
                     </div>
 
-                    <h3>
-                        Consulta tus reportes
-                    </h3>
+                    <h3>Consulta tus reportes</h3>
 
-                    <p>
-                        Ingresa tu código de suministro
-                        para comenzar.
-                    </p>
+                    <p>Ingresa tu código de suministro para comenzar.</p>
 
                 </div>
 
             </div>
-
 
         </section>
 
@@ -341,7 +237,6 @@
 
 
     <script src="js/api.js"></script>
-
     <script src="js/mis-reportes.js"></script>
 
 

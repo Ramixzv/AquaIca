@@ -59,12 +59,17 @@ public class SecurityConfig {
 
             .authorizeHttpRequests(auth -> auth
 
-            .requestMatchers("/error").permitAll()
+
+                // ==========================================
+                // ERRORES
+                // ==========================================
+
+                .requestMatchers("/error").permitAll()
 
 
-                /* =========================================
-                   ARCHIVOS HTML PÚBLICOS
-                   ========================================= */
+                // ==========================================
+                // PÁGINAS Y RECURSOS PÚBLICOS
+                // ==========================================
 
                 .requestMatchers(
                     "/",
@@ -77,6 +82,7 @@ public class SecurityConfig {
                     "/asignaciones.html",
                     "/mis-reportes.html",
                     "/seguimientos.html",
+                    "/seguimiento.html",
                     "/evidencias.html",
                     "/css/**",
                     "/js/**",
@@ -85,31 +91,31 @@ public class SecurityConfig {
                 ).permitAll()
 
 
-                /* =========================================
-                   AUTENTICACIÓN
-                   ========================================= */
+                // ==========================================
+                // AUTENTICACIÓN
+                // ==========================================
 
                 .requestMatchers(
                     "/api/auth/**"
                 ).permitAll()
 
 
-                /* =========================================
-                   CREAR REPORTE
-                   ========================================= */
+                // ==========================================
+                // CREAR REPORTE CIUDADANO
+                // ==========================================
 
                 .requestMatchers(
                     HttpMethod.POST,
                     "/api/reportes"
                 ).permitAll()
 
+                .requestMatchers(HttpMethod.POST, "/api/reportes/*/reabrir")
+                .hasRole("ADMIN")
 
-                /* =========================================
-                   MIS REPORTES
-                   
-                   IMPORTANTE:
-                   ESTA REGLA VA ANTES DE /api/reportes/*
-                   ========================================= */
+
+                // ==========================================
+                // MIS REPORTES - USUARIO AUTENTICADO
+                // ==========================================
 
                 .requestMatchers(
                     HttpMethod.GET,
@@ -117,18 +123,38 @@ public class SecurityConfig {
                 ).authenticated()
 
 
-                /* =========================================
-                   USUARIOS
-                   ========================================= */
+                // ==========================================
+                // CONSULTA PÚBLICA POR CÓDIGO DE SUMINISTRO
+                // ==========================================
+
+                .requestMatchers(
+                    HttpMethod.GET,
+                    "/api/reportes/suministro/**"
+                ).permitAll()
+
+
+                // ==========================================
+                // CONSULTA PÚBLICA DE REPORTE
+                // ==========================================
+
+                .requestMatchers(
+                    HttpMethod.GET,
+                    "/api/reportes/publico/**"
+                ).permitAll()
+
+
+                // ==========================================
+                // USUARIOS
+                // ==========================================
 
                 .requestMatchers(
                     "/api/usuarios/**"
                 ).hasRole("ADMIN")
 
 
-                /* =========================================
-                   PERSONAL
-                   ========================================= */
+                // ==========================================
+                // PERSONAL / ASIGNACIONES
+                // ==========================================
 
                 .requestMatchers(
                     HttpMethod.GET,
@@ -148,9 +174,9 @@ public class SecurityConfig {
                 )
 
 
-                /* =========================================
-                   LISTAR TODOS LOS REPORTES
-                   ========================================= */
+                // ==========================================
+                // REPORTES - ADMIN / SOPORTE / TECNICO
+                // ==========================================
 
                 .requestMatchers(
                     HttpMethod.GET,
@@ -162,22 +188,9 @@ public class SecurityConfig {
                 )
 
 
-                /* =========================================
-                   REPORTES POR SUMINISTRO
-                   ========================================= */
-
-                .requestMatchers(
-                    HttpMethod.GET,
-                    "/api/reportes/suministro/**"
-                ).hasAnyRole(
-                    "ADMIN",
-                    "SOPORTE"
-                )
-
-
-                /* =========================================
-                   EVIDENCIAS
-                   ========================================= */
+                // ==========================================
+                // EVIDENCIAS DE REPORTES
+                // ==========================================
 
                 .requestMatchers(
                     HttpMethod.GET,
@@ -202,9 +215,13 @@ public class SecurityConfig {
 
 
                 .requestMatchers(
-    HttpMethod.GET,
-    "/api/evidencias"
-).hasAnyRole("ADMIN", "SOPORTE", "TECNICO")
+                    HttpMethod.GET,
+                    "/api/evidencias"
+                ).hasAnyRole(
+                    "ADMIN",
+                    "SOPORTE",
+                    "TECNICO"
+                )
 
 
                 .requestMatchers(
@@ -217,10 +234,11 @@ public class SecurityConfig {
                 )
 
 
-                /* =========================================
-                   SEGUIMIENTOS
-                   ========================================= */
+                // ==========================================
+                // SEGUIMIENTOS
+                // ==========================================
 
+                // Seguimiento interno
                 .requestMatchers(
                     HttpMethod.GET,
                     "/api/reportes/*/seguimientos"
@@ -231,6 +249,7 @@ public class SecurityConfig {
                 )
 
 
+                // Crear seguimiento
                 .requestMatchers(
                     HttpMethod.POST,
                     "/api/reportes/*/seguimientos"
@@ -239,14 +258,22 @@ public class SecurityConfig {
                     "SOPORTE",
                     "TECNICO"
                 )
-                .requestMatchers(
-    HttpMethod.GET,
-    "/api/seguimientos"
-).hasAnyRole("ADMIN", "SOPORTE", "TECNICO")
 
-                /* =========================================
-                   ASIGNACIONES
-                   ========================================= */
+
+                // Todos los seguimientos
+                .requestMatchers(
+                    HttpMethod.GET,
+                    "/api/seguimientos"
+                ).hasAnyRole(
+                    "ADMIN",
+                    "SOPORTE",
+                    "TECNICO"
+                )
+
+
+                // ==========================================
+                // ASIGNACIONES
+                // ==========================================
 
                 .requestMatchers(
                     HttpMethod.POST,
@@ -276,10 +303,45 @@ public class SecurityConfig {
                     "TECNICO"
                 )
 
+                // ==========================================
+// BITÁCORAS
+// ==========================================
 
-                /* =========================================
-                   INFORME TÉCNICO
-                   ========================================= */
+// Registrar bitácora
+.requestMatchers(
+    HttpMethod.POST,
+    "/api/bitacoras"
+).hasRole("TECNICO")
+
+.requestMatchers(
+    HttpMethod.GET,
+    "/api/bitacoras/publico/**"
+).permitAll()
+
+// Consultar bitácoras de un reporte
+.requestMatchers(
+    HttpMethod.GET,
+    "/api/bitacoras/reporte/**"
+).hasAnyRole(
+    "ADMIN",
+    "SOPORTE",
+    "TECNICO"
+)
+
+// Consultar bitácoras de una asignación
+.requestMatchers(
+    HttpMethod.GET,
+    "/api/bitacoras/asignacion/**"
+).hasAnyRole(
+    "ADMIN",
+    "SOPORTE",
+    "TECNICO"
+)
+
+
+                // ==========================================
+                // INFORME TÉCNICO
+                // ==========================================
 
                 .requestMatchers(
                     HttpMethod.POST,
@@ -301,9 +363,9 @@ public class SecurityConfig {
                 )
 
 
-                /* =========================================
-                   SUMINISTROS
-                   ========================================= */
+                // ==========================================
+                // SUMINISTROS
+                // ==========================================
 
                 .requestMatchers(
                     HttpMethod.GET,
@@ -311,12 +373,9 @@ public class SecurityConfig {
                 ).permitAll()
 
 
-                /* =========================================
-                   REPORTE INDIVIDUAL
-                   
-                   ESTA REGLA ES GENÉRICA Y VA DESPUÉS
-                   DE /mis-reportes
-                   ========================================= */
+                // ==========================================
+                // REPORTE INDIVIDUAL
+                // ==========================================
 
                 .requestMatchers(
                     HttpMethod.GET,
@@ -328,9 +387,9 @@ public class SecurityConfig {
                 )
 
 
-                /* =========================================
-                   CUALQUIER OTRA PETICIÓN
-                   ========================================= */
+                // ==========================================
+                // CUALQUIER OTRA PETICIÓN
+                // ==========================================
 
                 .anyRequest().authenticated()
 

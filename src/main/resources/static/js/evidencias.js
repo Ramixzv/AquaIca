@@ -86,6 +86,11 @@ function cargarUsuario() {
             "userInitial"
         );
 
+    const avatarElement =
+        document.getElementById(
+            "userAvatar"
+        );
+
 
     usernameElement.textContent =
         username;
@@ -99,6 +104,31 @@ function cargarUsuario() {
         username
             .charAt(0)
             .toUpperCase();
+
+
+    if (avatarElement) {
+
+        const paletaAvatares = [
+            ["#0077b6", "#00a6d6"],
+            ["#14b8a6", "#0ea5b7"],
+            ["#7c3aed", "#a78bfa"],
+            ["#f59e0b", "#f97316"],
+            ["#059669", "#10b981"],
+            ["#ec4899", "#f472b6"]
+        ];
+
+        let hash = 0;
+        for (let i = 0; i < username.length; i++) {
+            hash = username.charCodeAt(i) + ((hash << 5) - hash);
+        }
+
+        const [colorA, colorB] =
+            paletaAvatares[Math.abs(hash) % paletaAvatares.length];
+
+        avatarElement.style.background =
+            `linear-gradient(135deg, ${colorA}, ${colorB})`;
+
+    }
 }
 
 async function cargarEvidencias() {
@@ -237,7 +267,7 @@ function mostrarEvidencias(
             <div class="evidencias-empty">
 
                 <div class="empty-icon">
-                    ▧
+                    <svg class="icon-svg" viewBox="0 0 24 24"><rect x="3" y="3" width="18" height="18" rx="3"/><circle cx="9" cy="9" r="2"/><path d="M21 15l-5-5L5 21"/></svg>
                 </div>
 
                 <h3>
@@ -352,7 +382,7 @@ function crearTarjetaEvidencia(
             <div class="file-preview">
 
                 <span class="file-icon">
-                    ▧
+                    <svg class="icon-svg" viewBox="0 0 24 24"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><path d="M14 2v6h6"/><path d="M9 13h6M9 17h6"/></svg>
                 </span>
 
                 <span>
@@ -528,7 +558,7 @@ async function cargarImagen(
             <div class="file-preview error">
 
                 <span class="file-icon">
-                    !
+                    <svg class="icon-svg" viewBox="0 0 24 24"><path d="M12 9v4"/><path d="M12 17h.01"/><circle cx="12" cy="12" r="9"/></svg>
                 </span>
 
                 <span>
@@ -701,7 +731,7 @@ function mostrarError(
         <div class="evidencias-empty">
 
             <div class="empty-icon">
-                !
+                <svg class="icon-svg" viewBox="0 0 24 24"><path d="M12 9v4"/><path d="M12 17h.01"/><circle cx="12" cy="12" r="9"/></svg>
             </div>
 
             <h3>
