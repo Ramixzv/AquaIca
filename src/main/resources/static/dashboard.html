@@ -1,0 +1,300 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AquaIca | Dashboard</title>
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="css/dashboard.css">
+    <link rel="stylesheet" href="css/sidebar-pro.css">
+    <link rel="stylesheet" href="css/dashboard-pro.css">
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css">
+</head>
+
+<body class="dashboard-body">
+
+    <div class="dashboard-bg-decor" aria-hidden="true">
+        <span class="deco-bubble db1"></span>
+        <span class="deco-bubble db2"></span>
+        <span class="deco-bubble db3"></span>
+        <span class="deco-bubble db4"></span>
+        <span class="deco-bubble db5"></span>
+    </div>
+
+    <aside class="sidebar sidebar-pro">
+
+        <div class="sidebar-brand">
+            <div class="brand-logo"><img src="images/logo-aquaica.png" alt="Logo Aqualca"></div>
+            <div>
+                <h2>AquaIca</h2>
+                <span>Sistema de Gestión</span>
+            </div>
+        </div>
+
+        <nav class="sidebar-menu" id="sidebarMenu"></nav>
+
+        <div class="sidebar-bottom">
+            <button id="logoutButton" class="logout-button">Cerrar sesión</button>
+        </div>
+
+    </aside>
+
+    <script src="js/menu.js"></script>
+
+
+    <main class="dashboard-main dp-main">
+
+        <!-- ================= CABECERA ================= -->
+        <header class="dp-top">
+
+            <div class="dp-titulo">
+                <span>Panel administrativo</span>
+                <h1>Dashboard</h1>
+            </div>
+
+            <div class="dp-acciones">
+
+                <div class="dp-campana" id="campanaWrap">
+                    <button type="button" class="dp-campana-btn" id="campanaBtn" aria-label="Notificaciones" aria-haspopup="true" aria-expanded="false">
+                        <svg class="dp-ico" viewBox="0 0 24 24"><path d="M6 8a6 6 0 0 1 12 0c0 7 3 9 3 9H3s3-2 3-9"/><path d="M10.3 21a1.94 1.94 0 0 0 3.4 0"/></svg>
+                        <span class="dp-badge" id="campanaBadge" hidden>0</span>
+                    </button>
+
+                    <div class="dp-menu dp-menu-notif" id="campanaMenu">
+                        <h4>Notificaciones</h4>
+                        <div id="campanaLista"></div>
+                    </div>
+                </div>
+
+                <div class="dp-usuario" id="usuarioWrap">
+                    <button type="button" class="dp-usuario-btn" id="usuarioBtn" aria-haspopup="true" aria-expanded="false">
+                        <span class="user-avatar" id="userAvatar">U</span>
+                        <span class="dp-usuario-txt">
+                            <strong id="usernameDisplay">Usuario</strong>
+                            <small id="roleDisplay">Usuario</small>
+                        </span>
+                        <svg class="dp-ico chev" viewBox="0 0 24 24"><path d="m6 9 6 6 6-6"/></svg>
+                    </button>
+
+                    <div class="dp-menu" id="usuarioMenu">
+                        <button type="button" id="logoutMenu">
+                            <svg class="dp-ico" viewBox="0 0 24 24"><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"/><path d="m16 17 5-5-5-5M21 12H9"/></svg>
+                            Cerrar sesión
+                        </button>
+                    </div>
+                </div>
+
+            </div>
+
+        </header>
+
+
+        <!-- ================= BANNER CON IMAGEN ================= -->
+        <section class="dp-banner">
+            <div class="dp-banner-texto">
+                <h2 id="bannerTitulo">Bienvenido, Administrador</h2>
+                <p>Gestiona los reportes, solicitudes y operaciones del servicio de agua de manera rápida y eficiente.</p>
+            </div>
+        </section>
+
+
+        <!-- ================= KPIs ================= -->
+        <section class="dp-kpis" id="kpis">
+
+            <article class="dp-kpi k-azul">
+                <div class="dp-kpi-ico">
+                    <svg class="dp-ico" viewBox="0 0 24 24"><path d="M12 2.7s6 6.1 6 10.3a6 6 0 0 1-12 0c0-4.2 6-10.3 6-10.3z"/></svg>
+                </div>
+                <svg class="dp-kpi-barras" viewBox="0 0 24 24"><rect x="3" y="12" width="4" height="9" rx="1"/><rect x="10" y="6" width="4" height="15" rx="1"/><rect x="17" y="9" width="4" height="12" rx="1"/></svg>
+                <div class="dp-kpi-cuerpo">
+                    <span>Total de reportes</span>
+                    <strong id="totalReportes">0</strong>
+                    <em id="deltaTotal" class="dp-delta"></em>
+                    <small id="subTotal">Reportes registrados</small>
+                </div>
+            </article>
+
+            <article class="dp-kpi k-naranja">
+                <div class="dp-kpi-ico">
+                    <svg class="dp-ico" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/></svg>
+                </div>
+                <svg class="dp-kpi-barras" viewBox="0 0 24 24"><rect x="3" y="12" width="4" height="9" rx="1"/><rect x="10" y="6" width="4" height="15" rx="1"/><rect x="17" y="9" width="4" height="12" rx="1"/></svg>
+                <div class="dp-kpi-cuerpo">
+                    <span>Pendientes</span>
+                    <strong id="reportesPendientes">0</strong>
+                    <em id="deltaPendientes" class="dp-delta"></em>
+                    <small>Requieren atención</small>
+                </div>
+            </article>
+
+            <article class="dp-kpi k-celeste">
+                <div class="dp-kpi-ico">
+                    <svg class="dp-ico" viewBox="0 0 24 24"><path d="M3 12a9 9 0 1 1 3 6.7"/><path d="M3 21v-6h6"/></svg>
+                </div>
+                <svg class="dp-kpi-barras" viewBox="0 0 24 24"><rect x="3" y="12" width="4" height="9" rx="1"/><rect x="10" y="6" width="4" height="15" rx="1"/><rect x="17" y="9" width="4" height="12" rx="1"/></svg>
+                <div class="dp-kpi-cuerpo">
+                    <span>En proceso</span>
+                    <strong id="reportesProceso">0</strong>
+                    <em id="deltaProceso" class="dp-delta"></em>
+                    <small>Asignados a técnicos</small>
+                </div>
+            </article>
+
+            <article class="dp-kpi k-verde">
+                <div class="dp-kpi-ico">
+                    <svg class="dp-ico" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M8 12.5l2.5 2.5L16 9.5"/></svg>
+                </div>
+                <svg class="dp-kpi-barras" viewBox="0 0 24 24"><rect x="3" y="12" width="4" height="9" rx="1"/><rect x="10" y="6" width="4" height="15" rx="1"/><rect x="17" y="9" width="4" height="12" rx="1"/></svg>
+                <div class="dp-kpi-cuerpo">
+                    <span>Resueltos</span>
+                    <strong id="reportesResueltos">0</strong>
+                    <em id="deltaResueltos" class="dp-delta"></em>
+                    <small>Casos solucionados</small>
+                </div>
+            </article>
+
+            <article class="dp-kpi k-morado" id="kpiSolicitudes">
+                <div class="dp-kpi-ico">
+                    <svg class="dp-ico" viewBox="0 0 24 24"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87M16 3.13a4 4 0 0 1 0 7.75"/></svg>
+                </div>
+                <svg class="dp-kpi-barras" viewBox="0 0 24 24"><rect x="3" y="12" width="4" height="9" rx="1"/><rect x="10" y="6" width="4" height="15" rx="1"/><rect x="17" y="9" width="4" height="12" rx="1"/></svg>
+                <div class="dp-kpi-cuerpo">
+                    <span>Solicitudes</span>
+                    <strong id="totalSolicitudes">0</strong>
+                    <em id="deltaSolicitudes" class="dp-delta"></em>
+                    <small id="subSolicitudes">Nuevas solicitudes</small>
+                </div>
+            </article>
+
+        </section>
+
+
+        <!-- ================= MAPA + DONA ================= -->
+        <section class="dp-fila dp-fila-mapa">
+
+            <div class="dp-card">
+
+                <header class="dp-card-cab">
+                    <div class="dp-cab-ico c-azul">
+                        <svg class="dp-ico" viewBox="0 0 24 24"><path d="M20 10c0 6-8 12-8 12s-8-6-8-12a8 8 0 0 1 16 0z"/><circle cx="12" cy="10" r="3"/></svg>
+                    </div>
+                    <div class="dp-cab-txt">
+                        <h3>Mapa de incidencias</h3>
+                        <p>Visualiza la distribución de los reportes y su nivel de incidencia.</p>
+                    </div>
+                    <div class="dp-filtros">
+                        <select id="filtroPeriodoMapa" aria-label="Periodo">
+                            <option value="TODO">Todo el tiempo</option>
+                            <option value="30">Últimos 30 días</option>
+                            <option value="7">Últimos 7 días</option>
+                        </select>
+                        <select id="filtroTipoProblema" aria-label="Tipo de problema">
+                            <option value="TODOS">Todos los problemas</option>
+                        </select>
+                    </div>
+                </header>
+
+                <div class="dp-mapa">
+                    <div id="mapaIncidencias"></div>
+
+                    <div class="dp-leyenda">
+                        <span><i class="alta"></i>Alta</span>
+                        <span><i class="media"></i>Media</span>
+                        <span><i class="baja"></i>Baja</span>
+                    </div>
+                </div>
+
+            </div>
+
+
+            <div class="dp-card">
+
+                <header class="dp-card-cab">
+                    <div class="dp-cab-ico c-azul">
+                        <svg class="dp-ico" viewBox="0 0 24 24"><path d="M21.2 15.9A10 10 0 1 1 8 2.8"/><path d="M22 12A10 10 0 0 0 12 2v10z"/></svg>
+                    </div>
+                    <div class="dp-cab-txt">
+                        <h3>Reportes por tipo</h3>
+                        <p>Distribución de problemas.</p>
+                    </div>
+                    <div class="dp-filtros">
+                        <select id="filtroPeriodoDona" aria-label="Periodo de la gráfica">
+                            <option value="TODO">Todo el tiempo</option>
+                            <option value="30">Últimos 30 días</option>
+                            <option value="7">Últimos 7 días</option>
+                        </select>
+                    </div>
+                </header>
+
+                <div class="dp-dona" id="dona">
+                    <div class="dp-vacio-mini">Cargando gráfica...</div>
+                </div>
+
+            </div>
+
+        </section>
+
+
+        <!-- ================= TABLAS ================= -->
+        <section class="dp-fila dp-fila-tablas" id="filaTablas">
+
+            <div class="dp-card">
+                <header class="dp-card-cab">
+                    <div class="dp-cab-ico c-azul">
+                        <svg class="dp-ico" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/></svg>
+                    </div>
+                    <div class="dp-cab-txt"><h3>Reportes recientes</h3></div>
+                    <a href="reportes.html" class="dp-btn-ver">Ver todos</a>
+                </header>
+
+                <div class="dp-tabla">
+                    <div class="dp-th t-rep"><span>ID</span><span>Tipo de problema</span><span>Ubicación</span><span>Estado</span></div>
+                    <div id="tablaReportes"><div class="dp-vacio-mini">Cargando...</div></div>
+                </div>
+            </div>
+
+            <div class="dp-card">
+                <header class="dp-card-cab">
+                    <div class="dp-cab-ico c-azul">
+                        <svg class="dp-ico" viewBox="0 0 24 24"><path d="M9 12l2 2 4-4"/><circle cx="12" cy="12" r="9"/></svg>
+                    </div>
+                    <div class="dp-cab-txt"><h3>Asignaciones activas</h3></div>
+                    <a href="asignaciones.html" class="dp-btn-ver">Ver todas</a>
+                </header>
+
+                <div class="dp-tabla">
+                    <div class="dp-th t-asi"><span>Técnico</span><span>Tarea</span><span>Prioridad</span></div>
+                    <div id="tablaAsignaciones"><div class="dp-vacio-mini">Cargando...</div></div>
+                </div>
+            </div>
+
+            <div class="dp-card" id="cardSolicitudes">
+                <header class="dp-card-cab">
+                    <div class="dp-cab-ico c-azul">
+                        <svg class="dp-ico" viewBox="0 0 24 24"><path d="M14 3H7a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V8z"/><path d="M14 3v5h5M9 13h6M9 17h6"/></svg>
+                    </div>
+                    <div class="dp-cab-txt"><h3>Solicitudes recientes</h3></div>
+                </header>
+
+                <div class="dp-tabla">
+                    <div class="dp-th t-sol"><span>ID</span><span>Tipo de solicitud</span><span>Estado</span></div>
+                    <div id="tablaSolicitudes"><div class="dp-vacio-mini">Cargando...</div></div>
+                </div>
+            </div>
+
+        </section>
+
+    </main>
+
+    <script src="js/api.js"></script>
+    <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+    <script src="js/dashboard.js"></script>
+</body>
+
+</html>

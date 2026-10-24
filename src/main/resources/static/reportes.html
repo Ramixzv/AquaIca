@@ -1,0 +1,274 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AquaIca | Reportes</title>
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="css/dashboard.css">
+    <link rel="stylesheet" href="css/sidebar-pro.css">
+    <link rel="stylesheet" href="css/dashboard-pro.css">
+    <link rel="stylesheet" href="css/panel-comun.css">
+    <link rel="stylesheet" href="css/reportes-pro.css">
+</head>
+
+<body class="dashboard-body">
+
+    <div class="dashboard-bg-decor" aria-hidden="true">
+        <span class="deco-bubble db1"></span>
+        <span class="deco-bubble db2"></span>
+        <span class="deco-bubble db3"></span>
+        <span class="deco-bubble db4"></span>
+        <span class="deco-bubble db5"></span>
+    </div>
+
+    <aside class="sidebar sidebar-pro">
+
+        <div class="sidebar-brand">
+            <div class="brand-logo"><img src="images/logo-aquaica.png" alt="Logo Aqualca"></div>
+            <div>
+                <h2>AquaIca</h2>
+                <span>Sistema de Gestión</span>
+            </div>
+        </div>
+
+        <nav class="sidebar-menu" id="sidebarMenu"></nav>
+
+        <div class="sidebar-bottom">
+            <button id="logoutButton" class="logout-button">Cerrar sesión</button>
+        </div>
+
+    </aside>
+
+    <script src="js/menu.js"></script>
+
+
+    <main class="dashboard-main dp-main">
+
+        <!-- ================= CABECERA ================= -->
+        <header class="dp-top">
+
+            <div class="dp-titulo">
+                <span>Gestión de incidencias</span>
+                <h1>Reportes</h1>
+            </div>
+
+            <div class="dp-acciones">
+
+                <div class="dp-campana">
+                    <button type="button" class="dp-campana-btn" id="campanaBtn" aria-label="Notificaciones" aria-haspopup="true" aria-expanded="false">
+                        <svg class="dp-ico" viewBox="0 0 24 24"><path d="M6 8a6 6 0 0 1 12 0c0 7 3 9 3 9H3s3-2 3-9"/><path d="M10.3 21a1.94 1.94 0 0 0 3.4 0"/></svg>
+                        <span class="dp-badge" id="campanaBadge" hidden>0</span>
+                    </button>
+
+                    <div class="dp-menu dp-menu-notif" id="campanaMenu">
+                        <h4>Notificaciones</h4>
+                        <div id="campanaLista"></div>
+                    </div>
+                </div>
+
+                <div class="dp-usuario">
+                    <button type="button" class="dp-usuario-btn" id="usuarioBtn" aria-haspopup="true" aria-expanded="false">
+                        <span class="user-avatar" id="userAvatar">U</span>
+                        <span class="dp-usuario-txt">
+                            <strong id="usernameDisplay">Usuario</strong>
+                            <small id="roleDisplay">Usuario</small>
+                        </span>
+                        <svg class="dp-ico chev" viewBox="0 0 24 24"><path d="m6 9 6 6 6-6"/></svg>
+                    </button>
+
+                    <div class="dp-menu" id="usuarioMenu">
+                        <button type="button" id="logoutMenu">
+                            <svg class="dp-ico" viewBox="0 0 24 24"><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"/><path d="m16 17 5-5-5-5M21 12H9"/></svg>
+                            Cerrar sesión
+                        </button>
+                    </div>
+                </div>
+
+            </div>
+
+        </header>
+
+
+        <!-- ================= BANNER CON IMAGEN ================= -->
+        <section class="rp-banner">
+
+            <div class="rp-banner-texto">
+                <h2>Gestión de reportes</h2>
+                <p>Consulta y administra las incidencias registradas por los ciudadanos.</p>
+            </div>
+
+            <div class="rp-total">
+                <svg class="dp-ico" viewBox="0 0 24 24"><path d="M3 3v18h18"/><rect x="7" y="12" width="3" height="6" rx="1"/><rect x="13" y="8" width="3" height="10" rx="1"/></svg>
+                <span>Total</span>
+                <strong id="cantidadReportes">0 reportes</strong>
+            </div>
+
+        </section>
+
+
+        <!-- ================= KPIs: TOTAL Y POR TIPO ================= -->
+        <section class="rp-kpis" id="kpis">
+
+            <article class="rp-kpi k-azul" data-tipo="" tabindex="0" role="button" aria-label="Ver todos los reportes">
+                <div class="rp-kpi-top">
+                    <div class="rp-kpi-ico"><svg class="dp-ico" viewBox="0 0 24 24"><path d="M3 3v18h18"/><rect x="7" y="12" width="3" height="6" rx="1"/><rect x="13" y="8" width="3" height="10" rx="1"/></svg></div>
+                    <strong id="kpiTotal">0</strong>
+                </div>
+                <span class="rp-kpi-label">Total de reportes</span>
+                <small id="kpiTotalSub">Todos los tipos</small>
+                <i class="rp-barra"><b style="width:100%"></b></i>
+            </article>
+
+            <article class="rp-kpi k-celeste" data-tipo="FUGA_AGUA" tabindex="0" role="button" aria-label="Filtrar por fuga de agua">
+                <div class="rp-kpi-top">
+                    <div class="rp-kpi-ico"><svg class="dp-ico" viewBox="0 0 24 24"><path d="M12 2.7s6 6.1 6 10.3a6 6 0 0 1-12 0c0-4.2 6-10.3 6-10.3z"/></svg></div>
+                    <strong data-cuenta="FUGA_AGUA">0</strong>
+                </div>
+                <span class="rp-kpi-label">Fuga de agua</span>
+                <small data-pct="FUGA_AGUA">0% del total</small>
+                <i class="rp-barra"><b data-barra="FUGA_AGUA" style="width:0"></b></i>
+            </article>
+
+            <article class="rp-kpi k-rojo" data-tipo="CORTE_AGUA" tabindex="0" role="button" aria-label="Filtrar por corte de agua">
+                <div class="rp-kpi-top">
+                    <div class="rp-kpi-ico"><svg class="dp-ico" viewBox="0 0 24 24"><path d="M12 3v9"/><path d="M6.3 6.3a8 8 0 1 0 11.4 0"/></svg></div>
+                    <strong data-cuenta="CORTE_AGUA">0</strong>
+                </div>
+                <span class="rp-kpi-label">Corte de agua</span>
+                <small data-pct="CORTE_AGUA">0% del total</small>
+                <i class="rp-barra"><b data-barra="CORTE_AGUA" style="width:0"></b></i>
+            </article>
+
+            <article class="rp-kpi k-naranja" data-tipo="BAJA_PRESION" tabindex="0" role="button" aria-label="Filtrar por baja presión">
+                <div class="rp-kpi-top">
+                    <div class="rp-kpi-ico"><svg class="dp-ico" viewBox="0 0 24 24"><path d="M12 14l4-4"/><path d="M3.3 17a9 9 0 1 1 17.4 0"/></svg></div>
+                    <strong data-cuenta="BAJA_PRESION">0</strong>
+                </div>
+                <span class="rp-kpi-label">Baja presión</span>
+                <small data-pct="BAJA_PRESION">0% del total</small>
+                <i class="rp-barra"><b data-barra="BAJA_PRESION" style="width:0"></b></i>
+            </article>
+
+            <article class="rp-kpi k-morado" data-tipo="FACTURACION" tabindex="0" role="button" aria-label="Filtrar por facturación">
+                <div class="rp-kpi-top">
+                    <div class="rp-kpi-ico"><svg class="dp-ico" viewBox="0 0 24 24"><path d="M6 3h12v18l-3-2-3 2-3-2-3 2z"/><path d="M9 8h6M9 12h6"/></svg></div>
+                    <strong data-cuenta="FACTURACION">0</strong>
+                </div>
+                <span class="rp-kpi-label">Facturación</span>
+                <small data-pct="FACTURACION">0% del total</small>
+                <i class="rp-barra"><b data-barra="FACTURACION" style="width:0"></b></i>
+            </article>
+
+            <article class="rp-kpi k-verde" data-tipo="OTRO" tabindex="0" role="button" aria-label="Filtrar por otros problemas">
+                <div class="rp-kpi-top">
+                    <div class="rp-kpi-ico"><svg class="dp-ico" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M8 12h.01M12 12h.01M16 12h.01"/></svg></div>
+                    <strong data-cuenta="OTRO">0</strong>
+                </div>
+                <span class="rp-kpi-label">Otros problemas</span>
+                <small data-pct="OTRO">0% del total</small>
+                <i class="rp-barra"><b data-barra="OTRO" style="width:0"></b></i>
+            </article>
+
+        </section>
+
+
+        <!-- ================= FILTROS ================= -->
+        <section class="dp-card rp-filtros">
+
+            <div class="rp-campo rp-buscar">
+                <label for="buscarReporte">Buscar reporte</label>
+                <div class="rp-input">
+                    <svg class="dp-ico" viewBox="0 0 24 24"><circle cx="11" cy="11" r="7"/><path d="m21 21-4.3-4.3"/></svg>
+                    <input type="text" id="buscarReporte" placeholder="ID, titular o suministro...">
+                </div>
+            </div>
+
+            <div class="rp-campo">
+                <label for="filtroEstado">Estado</label>
+                <select id="filtroEstado" class="rp-select">
+                    <option value="">Todos</option>
+                    <option value="PENDIENTE">Pendiente</option>
+                    <option value="EN_PROCESO">En proceso</option>
+                    <option value="RESUELTO">Resuelto</option>
+                </select>
+            </div>
+
+            <div class="rp-campo">
+                <label for="filtroPrioridad">Prioridad</label>
+                <select id="filtroPrioridad" class="rp-select">
+                    <option value="">Todas</option>
+                    <option value="ALTA">Alta</option>
+                    <option value="MEDIA">Media</option>
+                    <option value="BAJA">Baja</option>
+                </select>
+            </div>
+
+            <div class="rp-campo">
+                <label for="filtroProblema">Problema</label>
+                <select id="filtroProblema" class="rp-select">
+                    <option value="">Todos</option>
+                    <option value="FUGA_AGUA">Fuga de agua</option>
+                    <option value="CORTE_AGUA">Corte de agua</option>
+                    <option value="BAJA_PRESION">Baja presión</option>
+                    <option value="FACTURACION">Facturación</option>
+                    <option value="OTRO">Otro</option>
+                </select>
+            </div>
+
+            <button type="button" class="rp-limpiar" id="btnLimpiar" title="Quitar todos los filtros">
+                <svg class="dp-ico" viewBox="0 0 24 24"><path d="M3 12a9 9 0 1 1 3 6.7"/><path d="M3 21v-6h6"/></svg>
+                Limpiar
+            </button>
+
+        </section>
+
+
+        <!-- ================= TABLA ================= -->
+        <section class="dp-card rp-tabla-card">
+
+            <header class="dp-card-cab">
+                <div class="dp-cab-ico c-azul">
+                    <svg class="dp-ico" viewBox="0 0 24 24"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><path d="M14 2v6h6M9 13h6M9 17h6"/></svg>
+                </div>
+                <div class="dp-cab-txt">
+                    <h3>Incidencias registradas</h3>
+                    <p id="resumenFiltro">Lista de reportes registrados</p>
+                </div>
+            </header>
+
+            <div class="pc-tabla-wrap">
+                <table class="pc-tabla">
+                    <thead>
+                        <tr>
+                            <th>ID</th>
+                            <th>Titular</th>
+                            <th>Suministro</th>
+                            <th>Problema</th>
+                            <th>Prioridad</th>
+                            <th>Estado</th>
+                            <th>Fecha</th>
+                        </tr>
+                    </thead>
+                    <tbody id="reportesTable">
+                        <tr><td colspan="7" class="pc-vacio">Cargando reportes...</td></tr>
+                    </tbody>
+                </table>
+            </div>
+
+        </section>
+
+    </main>
+
+    <script src="js/api.js"></script>
+    <script src="js/panel-comun.js"></script>
+    <script src="js/reportes.js"></script>
+</body>
+
+</html>

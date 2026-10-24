@@ -1,0 +1,615 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Aqualca | Portal Ciudadano</title>
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css">
+    <link rel="stylesheet" href="css/ciudadano.css">
+</head>
+
+<body>
+
+<div class="portal">
+
+    <!-- =====================================================
+         MENÚ LATERAL
+         ===================================================== -->
+
+    <aside class="p-sidebar" id="sidebar">
+
+        <a href="#inicio" class="p-brand">
+            <img src="images/logo-aquaica.png" alt="Logo Aqualca">
+            <div>
+                <strong>Aqualca</strong>
+                <span>Portal Ciudadano</span>
+            </div>
+        </a>
+
+        <nav class="p-nav" id="portalNav">
+
+            <a href="#inicio" class="p-link" data-vista="inicio">
+                <svg class="ico" viewBox="0 0 24 24"><path d="M3 10.5 12 3l9 7.5"/><path d="M5 9.5V21h14V9.5"/><path d="M10 21v-6h4v6"/></svg>
+                <span>Inicio</span>
+            </a>
+
+            <a href="#solicitar" class="p-link" data-vista="solicitar">
+                <svg class="ico" viewBox="0 0 24 24"><path d="M14 3H7a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V8z"/><path d="M14 3v5h5"/><path d="M12 12v5M9.5 14.5h5"/></svg>
+                <span>Solicitar servicio</span>
+            </a>
+
+            <a href="#solicitudes" class="p-link" data-vista="solicitudes">
+                <svg class="ico" viewBox="0 0 24 24"><rect x="4" y="3" width="16" height="18" rx="2"/><path d="M8 8h8M8 12h8M8 16h5"/></svg>
+                <span>Mis solicitudes</span>
+            </a>
+
+            <a href="#suministros" class="p-link" data-vista="suministros">
+                <svg class="ico" viewBox="0 0 24 24"><path d="M12 2.7s6 6.1 6 10.3a6 6 0 0 1-12 0c0-4.2 6-10.3 6-10.3z"/></svg>
+                <span>Mis suministros</span>
+            </a>
+
+            <a href="#consumo" class="p-link" data-vista="consumo">
+                <svg class="ico" viewBox="0 0 24 24"><path d="M4 20V10M10 20V4M16 20v-7M22 20H2"/></svg>
+                <span>Mi consumo</span>
+            </a>
+
+            <a href="#reportes" class="p-link" data-vista="reportes">
+                <svg class="ico" viewBox="0 0 24 24"><path d="M10.3 3.9 1.8 18a2 2 0 0 0 1.7 3h17a2 2 0 0 0 1.7-3L13.7 3.9a2 2 0 0 0-3.4 0z"/><path d="M12 9v4M12 17h.01"/></svg>
+                <span>Mis reportes</span>
+            </a>
+
+            <div class="p-link p-link-off" aria-disabled="true">
+                <svg class="ico" viewBox="0 0 24 24"><rect x="2" y="5" width="20" height="14" rx="2"/><path d="M2 10h20M6 15h4"/></svg>
+                <span>Recibos y pagos</span>
+                <em>Próximamente</em>
+            </div>
+
+            <hr>
+
+            <a href="#perfil" class="p-link" data-vista="perfil">
+                <svg class="ico" viewBox="0 0 24 24"><circle cx="12" cy="8" r="4"/><path d="M4 21c0-4.4 3.6-7 8-7s8 2.6 8 7"/></svg>
+                <span>Mi perfil</span>
+            </a>
+
+            <a href="#ayuda" class="p-link" data-vista="ayuda">
+                <svg class="ico" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M9.1 9a3 3 0 0 1 5.8 1c0 2-3 2.5-3 4.5M12 17.5h.01"/></svg>
+                <span>Ayuda</span>
+            </a>
+
+        </nav>
+
+        <div class="p-sidebar-foot">
+            <svg class="p-olas" viewBox="0 0 280 150" preserveAspectRatio="none" aria-hidden="true">
+                <path d="M0 90C50 60 90 130 150 100S240 50 280 85V150H0Z" fill="rgba(255,255,255,.16)"/>
+                <path d="M0 115C60 85 110 150 170 120S250 85 280 110V150H0Z" fill="rgba(255,255,255,.14)"/>
+                <circle cx="118" cy="62" r="17" fill="rgba(255,255,255,.28)"/>
+                <circle cx="168" cy="95" r="8" fill="rgba(255,255,255,.3)"/>
+                <circle cx="40" cy="80" r="6" fill="rgba(255,255,255,.28)"/>
+            </svg>
+            <p><strong>Agua para todos</strong><span>Ica, un futuro sostenible</span></p>
+        </div>
+
+    </aside>
+
+    <div class="p-backdrop" id="backdrop"></div>
+
+
+    <!-- =====================================================
+         CONTENIDO
+         ===================================================== -->
+
+    <div class="p-content">
+
+        <header class="p-top">
+
+            <button type="button" class="p-menu-btn" id="menuBtn" aria-label="Abrir menú">
+                <svg class="ico" viewBox="0 0 24 24"><path d="M4 6h16M4 12h16M4 18h16"/></svg>
+            </button>
+
+            <div class="p-saludo">
+                <span id="topKicker">Portal ciudadano</span>
+                <h1 id="topTitulo">Hola 👋</h1>
+                <p id="topSub">Gestiona tus servicios de agua desde un solo lugar.</p>
+            </div>
+
+            <div class="p-user" id="userMenu">
+                <button type="button" class="p-user-btn" id="userBtn" aria-haspopup="true" aria-expanded="false">
+                    <span class="p-avatar" id="userAvatar">C</span>
+                    <span class="p-user-txt">
+                        <strong id="userName">Ciudadano</strong>
+                        <small>CIUDADANO</small>
+                    </span>
+                    <svg class="ico chev" viewBox="0 0 24 24"><path d="m6 9 6 6 6-6"/></svg>
+                </button>
+
+                <div class="p-dropdown" id="userDropdown">
+                    <a href="#perfil">
+                        <svg class="ico" viewBox="0 0 24 24"><circle cx="12" cy="8" r="4"/><path d="M4 21c0-4.4 3.6-7 8-7s8 2.6 8 7"/></svg>
+                        Mi perfil
+                    </a>
+                    <button type="button" id="logoutBtn">
+                        <svg class="ico" viewBox="0 0 24 24"><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"/><path d="m16 17 5-5-5-5M21 12H9"/></svg>
+                        Cerrar sesión
+                    </button>
+                </div>
+            </div>
+
+        </header>
+
+        <main class="p-main">
+
+            <div class="p-aviso" id="avisoCarga" hidden></div>
+
+
+            <!-- ================= INICIO ================= -->
+            <section class="vista" id="vista-inicio">
+
+                <div class="hero">
+                    <div class="hero-texto">
+                        <h2>Tu servicio de agua,<br>más cerca</h2>
+                        <p>Realiza solicitudes, consulta el estado de tus trámites y reporta incidencias.</p>
+
+                        <div class="hero-botones">
+                            <a href="#solicitar" class="btn-hero blanco">
+                                <svg class="ico" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9" fill="#0a74c9" stroke="none"/><path d="M12 8v8M8 12h8" stroke="#fff"/></svg>
+                                Solicitar nuevo servicio
+                                <svg class="ico flecha" viewBox="0 0 24 24"><path d="m9 6 6 6-6 6"/></svg>
+                            </a>
+
+                            <a href="reporte.html" class="btn-hero borde">
+                                <svg class="ico" viewBox="0 0 24 24"><path d="M10.3 3.9 1.8 18a2 2 0 0 0 1.7 3h17a2 2 0 0 0 1.7-3L13.7 3.9a2 2 0 0 0-3.4 0z"/><path d="M12 9v4M12 17h.01"/></svg>
+                                Reportar incidencia
+                                <svg class="ico flecha" viewBox="0 0 24 24"><path d="m9 6 6 6-6 6"/></svg>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+
+
+                <div class="kpis">
+
+                    <article class="kpi kpi-azul">
+                        <div class="kpi-ico">
+                            <svg class="ico" viewBox="0 0 24 24"><path d="M14 3H7a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V8z"/><path d="M14 3v5h5M9 13h6M9 17h6"/></svg>
+                        </div>
+                        <div>
+                            <span>Solicitudes activas</span>
+                            <strong id="kpiSolicitudes">0</strong>
+                            <small>Trámites en proceso</small>
+                        </div>
+                    </article>
+
+                    <article class="kpi kpi-rojo">
+                        <div class="kpi-ico">
+                            <svg class="ico" viewBox="0 0 24 24"><path d="M10.3 3.9 1.8 18a2 2 0 0 0 1.7 3h17a2 2 0 0 0 1.7-3L13.7 3.9a2 2 0 0 0-3.4 0z"/><path d="M12 9v4M12 17h.01"/></svg>
+                        </div>
+                        <div>
+                            <span>Reportes enviados</span>
+                            <strong id="kpiReportes">0</strong>
+                            <small>Incidencias registradas</small>
+                        </div>
+                    </article>
+
+                    <article class="kpi kpi-naranja">
+                        <div class="kpi-ico">
+                            <svg class="ico" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/></svg>
+                        </div>
+                        <div>
+                            <span>Pendientes de atención</span>
+                            <strong id="kpiPendientes">0</strong>
+                            <small>A la espera de respuesta</small>
+                        </div>
+                    </article>
+
+                    <article class="kpi kpi-verde">
+                        <div class="kpi-ico">
+                            <svg class="ico" viewBox="0 0 24 24"><path d="M6 3h12v18l-3-2-3 2-3-2-3 2z"/><path d="M9 8h6M9 12h6"/></svg>
+                        </div>
+                        <div>
+                            <span>Recibos disponibles</span>
+                            <strong>0</strong>
+                            <small>Próximamente</small>
+                        </div>
+                    </article>
+
+                </div>
+
+
+                <div class="inicio-grid">
+
+                    <section class="tarjeta">
+
+                        <header class="tarjeta-cab">
+                            <div class="cab-ico azul">
+                                <svg class="ico" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/></svg>
+                            </div>
+                            <div>
+                                <h3>Actividad reciente</h3>
+                                <p>Últimos trámites y reportes registrados en tu cuenta.</p>
+                            </div>
+                            <button type="button" class="btn-ver" id="btnVerTodas">
+                                Ver todas
+                                <svg class="ico" viewBox="0 0 24 24"><path d="m9 6 6 6-6 6"/></svg>
+                            </button>
+                        </header>
+
+                        <div id="actividad"></div>
+
+                    </section>
+
+                    <section class="tarjeta">
+
+                        <header class="tarjeta-cab">
+                            <div class="cab-ico azul">
+                                <svg class="ico" viewBox="0 0 24 24"><rect x="3" y="3" width="7" height="7" rx="1.5"/><rect x="14" y="3" width="7" height="7" rx="1.5"/><rect x="3" y="14" width="7" height="7" rx="1.5"/><rect x="14" y="14" width="7" height="7" rx="1.5"/></svg>
+                            </div>
+                            <div>
+                                <h3>Accesos rápidos</h3>
+                                <p>Realiza tus trámites y consultas de manera rápida.</p>
+                            </div>
+                        </header>
+
+                        <div class="accesos">
+
+                            <a href="#solicitar" class="acceso">
+                                <span class="acceso-ico azul"><svg class="ico" viewBox="0 0 24 24"><path d="M12 2.7s6 6.1 6 10.3a6 6 0 0 1-12 0c0-4.2 6-10.3 6-10.3z"/></svg></span>
+                                <span class="acceso-txt"><strong>Solicitar conexión</strong><small>Registra una nueva solicitud de servicio.</small></span>
+                                <svg class="ico flecha" viewBox="0 0 24 24"><path d="m9 6 6 6-6 6"/></svg>
+                            </a>
+
+                            <a href="reporte.html" class="acceso">
+                                <span class="acceso-ico rojo"><svg class="ico" viewBox="0 0 24 24"><path d="M10.3 3.9 1.8 18a2 2 0 0 0 1.7 3h17a2 2 0 0 0 1.7-3L13.7 3.9a2 2 0 0 0-3.4 0z"/><path d="M12 9v4M12 17h.01"/></svg></span>
+                                <span class="acceso-txt"><strong>Reportar problema</strong><small>Informa fugas, cortes u otras incidencias.</small></span>
+                                <svg class="ico flecha" viewBox="0 0 24 24"><path d="m9 6 6 6-6 6"/></svg>
+                            </a>
+
+                            <a href="#solicitudes" class="acceso">
+                                <span class="acceso-ico verde"><svg class="ico" viewBox="0 0 24 24"><path d="M14 3H7a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V8z"/><path d="M14 3v5h5M9 13h6M9 17h6"/></svg></span>
+                                <span class="acceso-txt"><strong>Consultar mis solicitudes</strong><small>Revisa el estado de tus trámites.</small></span>
+                                <svg class="ico flecha" viewBox="0 0 24 24"><path d="m9 6 6 6-6 6"/></svg>
+                            </a>
+
+                        </div>
+
+                    </section>
+
+                </div>
+
+            </section>
+
+
+            <!-- ================= SOLICITAR SERVICIO ================= -->
+            <section class="vista" id="vista-solicitar" hidden>
+
+                <div class="alerta-tramite" id="alertaTramite" hidden>
+                    <svg class="ico" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M12 8v4M12 16h.01"/></svg>
+                    <div>
+                        <strong>Ya tienes una solicitud en trámite</strong>
+                        <p>Mientras se atiende no puedes registrar otra. Puedes seguir su avance en <a href="#solicitudes">Mis solicitudes</a>.</p>
+                    </div>
+                </div>
+
+                <div class="solicitar-grid">
+
+                    <section class="tarjeta">
+
+                        <header class="tarjeta-cab">
+                            <div class="cab-ico azul">
+                                <svg class="ico" viewBox="0 0 24 24"><path d="M14 3H7a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V8z"/><path d="M14 3v5h5"/><path d="M12 12v5M9.5 14.5h5"/></svg>
+                            </div>
+                            <div>
+                                <h3>Solicitar nueva conexión</h3>
+                                <p>Completa los datos del predio donde necesitas el servicio.</p>
+                            </div>
+                        </header>
+
+                        <form id="formSolicitud" class="form" novalidate>
+
+                            <div class="campo">
+                                <label for="solDireccion">Dirección del predio *</label>
+                                <input id="solDireccion" maxlength="200" placeholder="Ej. Av. Los Maestros 485, Ica" required>
+                                <small class="contador"><span id="cntDireccion">0</span>/200</small>
+                            </div>
+
+                            <div class="campo">
+                                <label for="solReferencia">Referencia</label>
+                                <input id="solReferencia" maxlength="250" placeholder="Ej. Frente a la bodega Don Pepe">
+                                <small class="contador"><span id="cntReferencia">0</span>/250</small>
+                            </div>
+
+                            <div class="campo">
+                                <label for="solDescripcion">Detalles de tu solicitud</label>
+                                <textarea id="solDescripcion" maxlength="1000" rows="4" placeholder="Cuéntanos para qué usarás el servicio, tipo de vivienda u otra información útil."></textarea>
+                                <small class="contador"><span id="cntDescripcion">0</span>/1000</small>
+                            </div>
+
+                            <div class="campo">
+                                <label>Ubicación en el mapa <em>(opcional)</em></label>
+
+                                <div class="mapa-busca">
+                                    <input id="solBuscar" placeholder="Busca una dirección en el mapa...">
+                                    <button type="button" class="btn-suave" id="btnBuscarMapa">
+                                        <svg class="ico" viewBox="0 0 24 24"><circle cx="11" cy="11" r="7"/><path d="m21 21-4.3-4.3"/></svg>
+                                        Buscar
+                                    </button>
+                                    <button type="button" class="btn-suave" id="btnMiUbicacion">
+                                        <svg class="ico" viewBox="0 0 24 24"><circle cx="12" cy="12" r="3"/><path d="M12 2v3M12 19v3M2 12h3M19 12h3"/><circle cx="12" cy="12" r="8"/></svg>
+                                        Mi ubicación
+                                    </button>
+                                </div>
+
+                                <p class="ayuda">Haz clic en el mapa o arrastra el marcador para señalar el predio.</p>
+                                <div id="solMapa"></div>
+                                <p class="coords" id="solCoords">Sin ubicación seleccionada.</p>
+                            </div>
+
+                            <p class="form-error" id="solError" role="alert"></p>
+
+                            <div class="form-acciones">
+                                <button type="button" class="btn-sec" id="btnLimpiar">Limpiar</button>
+                                <button type="submit" class="btn-prim" id="btnEnviarSolicitud">
+                                    <svg class="ico" viewBox="0 0 24 24"><path d="m22 2-7 20-4-9-9-4z"/><path d="M22 2 11 13"/></svg>
+                                    Enviar solicitud
+                                </button>
+                            </div>
+
+                        </form>
+
+                    </section>
+
+                    <aside class="tarjeta lateral">
+
+                        <header class="tarjeta-cab">
+                            <div class="cab-ico verde">
+                                <svg class="ico" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M9 12l2 2 4-4"/></svg>
+                            </div>
+                            <div>
+                                <h3>¿Cómo funciona?</h3>
+                                <p>Así avanza tu solicitud.</p>
+                            </div>
+                        </header>
+
+                        <ol class="pasos">
+                            <li><span>1</span><div><strong>Pendiente</strong><small>Recibimos tu solicitud.</small></div></li>
+                            <li><span>2</span><div><strong>En evaluación</strong><small>Revisamos los datos del predio.</small></div></li>
+                            <li><span>3</span><div><strong>Aprobada</strong><small>Tu solicitud fue aceptada.</small></div></li>
+                            <li><span>4</span><div><strong>En instalación</strong><small>Un equipo instala tu conexión.</small></div></li>
+                            <li><span>5</span><div><strong>Activada</strong><small>Ya cuentas con el servicio.</small></div></li>
+                        </ol>
+
+                        <p class="nota">Solo puedes tener una solicitud en trámite a la vez. Si algo falta, el personal puede marcarla como <strong>Observada</strong> y dejarte indicaciones.</p>
+
+                    </aside>
+
+                </div>
+
+            </section>
+
+
+            <!-- ================= MIS SOLICITUDES ================= -->
+            <section class="vista" id="vista-solicitudes" hidden>
+
+                <section class="tarjeta">
+
+                    <header class="tarjeta-cab">
+                        <div class="cab-ico azul">
+                            <svg class="ico" viewBox="0 0 24 24"><rect x="4" y="3" width="16" height="18" rx="2"/><path d="M8 8h8M8 12h8M8 16h5"/></svg>
+                        </div>
+                        <div>
+                            <h3>Mis solicitudes de servicio</h3>
+                            <p>Consulta el estado de tus trámites y cancélalos si aún es posible.</p>
+                        </div>
+                        <a href="#solicitar" class="btn-prim chico">
+                            <svg class="ico" viewBox="0 0 24 24"><path d="M12 5v14M5 12h14"/></svg>
+                            Nueva solicitud
+                        </a>
+                    </header>
+
+                    <div class="chips" id="chipsSolicitudes"></div>
+                    <div id="listaSolicitudes"></div>
+
+                </section>
+
+            </section>
+
+
+            <!-- ================= MIS REPORTES ================= -->
+            <section class="vista" id="vista-reportes" hidden>
+
+                <section class="tarjeta">
+
+                    <header class="tarjeta-cab">
+                        <div class="cab-ico rojo">
+                            <svg class="ico" viewBox="0 0 24 24"><path d="M10.3 3.9 1.8 18a2 2 0 0 0 1.7 3h17a2 2 0 0 0 1.7-3L13.7 3.9a2 2 0 0 0-3.4 0z"/><path d="M12 9v4M12 17h.01"/></svg>
+                        </div>
+                        <div>
+                            <h3>Mis reportes</h3>
+                            <p>Problemas que has comunicado y su estado de atención.</p>
+                        </div>
+                        <a href="reporte.html" class="btn-prim chico">
+                            <svg class="ico" viewBox="0 0 24 24"><path d="M12 5v14M5 12h14"/></svg>
+                            Nuevo reporte
+                        </a>
+                    </header>
+
+                    <div class="chips" id="chipsReportes"></div>
+                    <div id="listaReportes"></div>
+
+                </section>
+
+            </section>
+
+
+                        <!-- ================= MIS SUMINISTROS ================= -->
+
+            <section class="vista" id="vista-suministros" hidden>
+                <section class="tarjeta">
+                    <header class="tarjeta-cab">
+                        <div class="cab-ico "><svg class="ico" viewBox="0 0 24 24"><path d="M12 2.7s6 6.1 6 10.3a6 6 0 0 1-12 0c0-4.2 6-10.3 6-10.3z"/></svg></div>
+                        <div>
+                            <h3>Mis suministros</h3>
+                            <p>Tus conexiones de agua y el código que usas para reportar problemas.</p>
+                        </div>
+                    </header>
+                    <div id="listaSuministros"></div>
+                </section>
+            </section>
+
+
+            <!-- ================= MI CONSUMO ================= -->
+
+            <section class="vista" id="vista-consumo" hidden>
+                <section class="tarjeta">
+                    <header class="tarjeta-cab">
+                        <div class="cab-ico "><svg class="ico" viewBox="0 0 24 24"><path d="M4 20V10M10 20V4M16 20v-7M22 20H2"/></svg></div>
+                        <div>
+                            <h3>Mi consumo</h3>
+                            <p>Lo que consumió tu medidor mes a mes, en metros cúbicos (m³).</p>
+                        </div>
+                    </header>
+                    <div class="cons-sel" id="consumoSelector" hidden>
+                        <label for="selSuministro">Suministro</label>
+                        <select id="selSuministro"></select>
+                    </div>
+                    <div id="consumoContenido"></div>
+                </section>
+            </section>
+
+
+            <!-- ================= MI PERFIL ================= -->
+            <section class="vista" id="vista-perfil" hidden>
+
+                <section class="tarjeta perfil">
+
+                    <div class="perfil-cab">
+                        <div class="perfil-avatar" id="perfilAvatar">C</div>
+                        <div>
+                            <h3 id="perfilNombre">—</h3>
+                            <span class="pill pill-verde" id="perfilEstado">—</span>
+                        </div>
+                    </div>
+
+                    <dl class="perfil-datos">
+                        <div><dt>DNI</dt><dd id="perfilDni">—</dd></div>
+                        <div><dt>Teléfono</dt><dd id="perfilTelefono">—</dd></div>
+                        <div><dt>Correo electrónico</dt><dd id="perfilEmail">—</dd></div>
+                        <div><dt>Usuario</dt><dd id="perfilUsuario">—</dd></div>
+                        <div><dt>Cliente desde</dt><dd id="perfilDesde">—</dd></div>
+                    </dl>
+
+                    <p class="nota">Si necesitas corregir tus datos personales, comunícate con la central de atención de Aqualca.</p>
+
+                </section>
+
+            </section>
+
+
+            <!-- ================= AYUDA ================= -->
+            <section class="vista" id="vista-ayuda" hidden>
+
+                <div class="ayuda-grid">
+
+                    <section class="tarjeta">
+
+                        <header class="tarjeta-cab">
+                            <div class="cab-ico azul">
+                                <svg class="ico" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M9.1 9a3 3 0 0 1 5.8 1c0 2-3 2.5-3 4.5M12 17.5h.01"/></svg>
+                            </div>
+                            <div>
+                                <h3>Preguntas frecuentes</h3>
+                                <p>Respuestas rápidas a las dudas más comunes.</p>
+                            </div>
+                        </header>
+
+                        <div class="faq">
+                            <details open>
+                                <summary>¿Cómo solicito una nueva conexión de agua?</summary>
+                                <p>Entra a <a href="#solicitar">Solicitar servicio</a>, indica la dirección del predio y envía el formulario. Verás el avance en <a href="#solicitudes">Mis solicitudes</a>.</p>
+                            </details>
+                            <details>
+                                <summary>¿Puedo tener más de una solicitud a la vez?</summary>
+                                <p>No. Solo puedes tener una solicitud en trámite. Podrás registrar otra cuando la actual esté activada, rechazada o cancelada.</p>
+                            </details>
+                            <details>
+                                <summary>¿Cuándo puedo cancelar una solicitud?</summary>
+                                <p>Mientras esté <strong>Pendiente</strong> u <strong>Observada</strong>. Después de pasar a evaluación ya no se puede cancelar desde el portal.</p>
+                            </details>
+                            <details>
+                                <summary>¿Cómo reporto una fuga o un corte?</summary>
+                                <p>Usa el botón <a href="reporte.html">Reportar incidencia</a> e indica tu código de suministro. Luego podrás ver su avance en <a href="#reportes">Mis reportes</a>.</p>
+                            </details>
+                            <details>
+                                <summary>¿Qué significa que mi solicitud esté “Observada”?</summary>
+                                <p>El personal encontró algo por corregir y dejó indicaciones en la solicitud. Revísalas y comunícate con nosotros.</p>
+                            </details>
+                        </div>
+
+                    </section>
+
+                    <aside class="tarjeta lateral">
+                        <header class="tarjeta-cab">
+                            <div class="cab-ico verde">
+                                <svg class="ico" viewBox="0 0 24 24"><path d="M22 16.9v3a2 2 0 0 1-2.2 2 19.8 19.8 0 0 1-8.6-3.1 19.5 19.5 0 0 1-6-6A19.8 19.8 0 0 1 2.1 4.2 2 2 0 0 1 4.1 2h3a2 2 0 0 1 2 1.7c.1 1 .4 1.9.7 2.8a2 2 0 0 1-.5 2.1L8 9.9a16 16 0 0 0 6 6l1.3-1.3a2 2 0 0 1 2.1-.4c.9.3 1.8.6 2.8.7a2 2 0 0 1 1.7 2z"/></svg>
+                            </div>
+                            <div>
+                                <h3>Central de atención</h3>
+                                <p>Estamos para ayudarte.</p>
+                            </div>
+                        </header>
+                        <p class="contacto"><strong>(056) 215 664</strong><small>Lunes a sábado · 8:00 a. m. a 6:00 p. m.</small></p>
+                    </aside>
+
+                </div>
+
+            </section>
+
+        </main>
+
+        <footer class="p-footer">Aqualca · Tu servicio de agua, más cerca.</footer>
+
+    </div>
+
+</div>
+
+
+<!-- MODAL COMPROBANTE -->
+<div class="modal" id="modalComprobante" hidden>
+    <div class="modal-caja comp-caja">
+        <div id="compCuerpo"></div>
+        <div class="modal-acc no-print">
+            <button type="button" class="btn-sec" id="compCerrar">Cerrar</button>
+            <button type="button" class="comp-print" id="compImprimir">Imprimir / Guardar PDF</button>
+        </div>
+    </div>
+</div>
+
+<!-- MODAL CANCELAR -->
+<div class="modal" id="modalCancelar" hidden>
+    <div class="modal-caja">
+        <div class="modal-ico">
+            <svg class="ico" viewBox="0 0 24 24"><path d="M10.3 3.9 1.8 18a2 2 0 0 0 1.7 3h17a2 2 0 0 0 1.7-3L13.7 3.9a2 2 0 0 0-3.4 0z"/><path d="M12 9v4M12 17h.01"/></svg>
+        </div>
+        <h3>¿Cancelar esta solicitud?</h3>
+        <p id="modalTexto">Esta acción no se puede deshacer.</p>
+        <div class="modal-acc">
+            <button type="button" class="btn-sec" id="modalNo">No, volver</button>
+            <button type="button" class="btn-peligro" id="modalSi">Sí, cancelar</button>
+        </div>
+    </div>
+</div>
+
+<div class="toast" id="toast" role="status"></div>
+
+<script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+<script src="js/api.js"></script>
+<script src="js/ciudadano.js"></script>
+
+</body>
+</html>

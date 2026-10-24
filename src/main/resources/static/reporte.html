@@ -1,0 +1,244 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Aqualca - Reporta un problema con tu servicio de agua.">
+
+    <title>Aqualca | Reportar problema</title>
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="css/reporte.css">
+</head>
+
+<body class="reporte-body">
+
+    <!-- burbujas decorativas fijas de fondo -->
+    <div class="reporte-bg-decor" aria-hidden="true">
+        <span class="deco-bubble rb1"></span>
+        <span class="deco-bubble rb2"></span>
+        <span class="deco-bubble rb3"></span>
+        <span class="deco-bubble rb4"></span>
+        <span class="deco-bubble rb5"></span>
+        <span class="deco-bubble rb6"></span>
+    </div>
+
+    <header class="public-header">
+
+        <div class="public-brand">
+
+            <div class="public-logo">A</div>
+
+            <div>
+                <h2>Aqualca</h2>
+                <span>Servicio de agua</span>
+            </div>
+
+        </div>
+
+        <nav class="public-nav">
+
+            <a href="index.html">Inicio</a>
+
+            <a href="login.html" class="login-link">
+                <svg class="icon-svg" viewBox="0 0 24 24" style="width:14px;height:14px"><circle cx="12" cy="8" r="4"/><path d="M4 20c0-4 4-6 8-6s8 2 8 6"/></svg>
+                Personal
+            </a>
+
+        </nav>
+
+    </header>
+
+    <main class="reporte-container">
+
+        <section class="reporte-card">
+
+            <div class="reporte-header">
+
+                <div class="reporte-badge-icon">
+                    <svg class="icon-svg" viewBox="0 0 24 24"><path d="M12 2C8 8 5 11.5 5 15a7 7 0 0014 0c0-3.5-3-7-7-13z"/></svg>
+                </div>
+
+                <span class="reporte-tag">Atención ciudadana</span>
+
+                <h1>Reportar un problema</h1>
+
+                <p>Cuéntanos qué está ocurriendo con tu servicio de agua.</p>
+
+            </div>
+
+
+            <form id="reporteForm">
+
+                <div class="form-group">
+
+                    <label for="codigoSuministro">
+                        <svg class="icon-svg field-icon" viewBox="0 0 24 24"><rect x="3" y="5" width="18" height="14" rx="2"/><path d="M3 9h18M7 15h4"/></svg>
+                        Código de suministro
+                    </label>
+
+                    <div class="suministro-busqueda">
+
+                        <input
+                            type="text"
+                            id="codigoSuministro"
+                            name="codigoSuministro"
+                            placeholder="Ej. 000123456"
+                            required
+                        >
+
+                        <button
+                            type="button"
+                            id="buscarSuministro"
+                            class="buscar-button">
+                            <svg class="icon-svg" viewBox="0 0 24 24" style="width:14px;height:14px"><circle cx="11" cy="11" r="6"/><path d="M20 20l-4.3-4.3"/></svg>
+                            Buscar
+                        </button>
+
+                    </div>
+
+                    <small>Puedes encontrarlo en tu recibo de agua.</small>
+
+                </div>
+
+
+                <div
+                    id="datosSuministro"
+                    class="datos-suministro"
+                    style="display: none;">
+
+                    <div class="suministro-titulo">
+                        <svg class="icon-svg" viewBox="0 0 24 24" style="width:15px;height:15px"><circle cx="12" cy="12" r="9"/><path d="M8 12l3 3 5-5"/></svg>
+                        Suministro encontrado
+                    </div>
+
+                    <div class="suministro-datos">
+
+                        <div>
+                            <span>Titular</span>
+                            <strong id="titularSuministro">-</strong>
+                        </div>
+
+                        <div>
+                            <span>DNI</span>
+                            <strong id="dniSuministro">-</strong>
+                        </div>
+
+                        <div>
+                            <span>Dirección</span>
+                            <strong id="direccionSuministro">-</strong>
+                        </div>
+
+                    </div>
+
+                </div>
+
+                <div class="form-group">
+
+                    <label for="tipoProblema">
+                        <svg class="icon-svg field-icon" viewBox="0 0 24 24"><path d="M12 9v4M12 17h.01"/><circle cx="12" cy="12" r="9"/></svg>
+                        Tipo de problema
+                    </label>
+
+                    <select id="tipoProblema" name="tipoProblema" required>
+                        <option value="">Selecciona una opción</option>
+                        <option value="FUGA_AGUA">Fuga de agua</option>
+                        <option value="CORTE_AGUA">Corte de agua</option>
+                        <option value="BAJA_PRESION">Baja presión</option>
+                        <option value="FACTURACION">Problema de facturación</option>
+                        <option value="OTRO">Otro problema</option>
+                    </select>
+
+                </div>
+
+                <div class="form-group">
+
+                    <label for="descripcion">
+                        <svg class="icon-svg field-icon" viewBox="0 0 24 24"><path d="M4 20h4l10-10-4-4L4 16v4z"/></svg>
+                        Describe el problema
+                    </label>
+
+                    <textarea
+                        id="descripcion"
+                        name="descripcion"
+                        rows="5"
+                        placeholder="Cuéntanos qué está ocurriendo..."
+                        required
+                    ></textarea>
+
+                </div>
+
+                <div class="form-group">
+
+                    <label for="evidencia">
+                        <svg class="icon-svg field-icon" viewBox="0 0 24 24"><rect x="3" y="7" width="18" height="13" rx="2"/><path d="M8 7l2-3h4l2 3"/><circle cx="12" cy="13.5" r="3.2"/></svg>
+                        Evidencia del problema
+                    </label>
+
+                    <div class="file-upload">
+                        <input
+                            type="file"
+                            id="evidencia"
+                            name="evidencia"
+                            accept="image/jpeg,image/png,image/webp"
+                        >
+                        <label for="evidencia" class="file-upload-label">
+                            <svg class="icon-svg" viewBox="0 0 24 24" style="width:15px;height:15px"><path d="M12 16V4M7 9l5-5 5 5"/><path d="M4 16v3a2 2 0 002 2h12a2 2 0 002-2v-3"/></svg>
+                            <span id="fileNameDisplay">Seleccionar imagen</span>
+                        </label>
+                    </div>
+
+                    <small>Puedes adjuntar una fotografía que ayude a identificar el problema. Esta evidencia es opcional.</small>
+
+                </div>
+
+                <div class="priority-info">
+
+                    <svg class="icon-svg priority-icon" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M12 8v5M12 16h.01"/></svg>
+
+                    <div>
+                        <strong>Aqualca determinará automáticamente la prioridad</strong>
+                        <p>No necesitas seleccionar la gravedad del problema. Nuestro sistema analizará la información del reporte.</p>
+                    </div>
+
+                </div>
+
+                <div class="form-actions">
+
+                    <a href="index.html" class="cancel-button">Cancelar</a>
+
+                    <button type="submit" class="submit-button">
+                        Enviar reporte
+                        <svg class="icon-svg" viewBox="0 0 24 24" style="width:14px;height:14px"><path d="M4 12h14M13 6l6 6-6 6"/></svg>
+                    </button>
+
+                </div>
+
+                <div id="reporteMensaje" class="reporte-mensaje"></div>
+
+            </form>
+
+        </section>
+
+    </main>
+
+
+    <script src="js/api.js"></script>
+    <script src="js/reporte.js"></script>
+    <script>
+        // Muestra el nombre del archivo seleccionado en el input de evidencia
+        document.getElementById('evidencia').addEventListener('change', function (e) {
+            const display = document.getElementById('fileNameDisplay');
+            display.textContent = e.target.files.length
+                ? e.target.files[0].name
+                : 'Seleccionar imagen';
+        });
+    </script>
+</body>
+
+</html>

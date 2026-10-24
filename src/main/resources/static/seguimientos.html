@@ -1,0 +1,221 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AquaIca | Seguimientos</title>
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+
+    <!-- CSS general del sistema -->
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="css/dashboard.css">
+    <link rel="stylesheet" href="css/sidebar-pro.css">
+    <link rel="stylesheet" href="css/dashboard-pro.css">
+
+    <!-- Estilos de la línea de tiempo (tarjetas de actividad) -->
+    <link rel="stylesheet" href="css/seguimientos.css">
+
+    <!-- Diseño nuevo de la pantalla -->
+    <link rel="stylesheet" href="css/seguimientos-pro.css">
+</head>
+
+<body class="dashboard-body">
+
+    <div class="dashboard-bg-decor" aria-hidden="true">
+        <span class="deco-bubble db1"></span>
+        <span class="deco-bubble db2"></span>
+        <span class="deco-bubble db3"></span>
+        <span class="deco-bubble db4"></span>
+        <span class="deco-bubble db5"></span>
+    </div>
+
+
+    <!-- SIDEBAR (el contenido del menú lo arma menu.js) -->
+
+    <aside class="sidebar sidebar-pro">
+
+        <div class="sidebar-brand">
+            <div class="brand-logo"><img src="images/logo-aquaica.png" alt="Logo Aqualca"></div>
+            <div>
+                <h2>AquaIca</h2>
+                <span>Sistema de Gestión</span>
+            </div>
+        </div>
+
+        <nav class="sidebar-menu" id="sidebarMenu"></nav>
+
+        <div class="sidebar-bottom">
+            <button id="logoutButton" class="logout-button">Cerrar sesión</button>
+        </div>
+
+    </aside>
+
+    <script src="js/menu.js"></script>
+
+
+    <!-- CONTENIDO PRINCIPAL -->
+
+    <main class="dashboard-main dp-main">
+
+        <!-- CABECERA -->
+        <header class="dp-top">
+
+            <div class="dp-titulo">
+                <span>Gestión de actividad</span>
+                <h1>Seguimientos</h1>
+            </div>
+
+            <div class="dp-acciones">
+                <div class="dp-usuario">
+                    <button type="button" class="dp-usuario-btn" id="usuarioBtn" aria-haspopup="true" aria-expanded="false">
+                        <span class="user-avatar" id="userAvatar">U</span>
+                        <span class="dp-usuario-txt">
+                            <strong id="usernameDisplay">Usuario</strong>
+                            <small id="roleDisplay">Usuario</small>
+                        </span>
+                        <svg class="dp-ico chev" viewBox="0 0 24 24"><path d="m6 9 6 6 6-6"/></svg>
+                    </button>
+
+                    <div class="dp-menu" id="usuarioMenu">
+                        <button type="button" id="logoutMenu">
+                            <svg class="dp-ico" viewBox="0 0 24 24"><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"/><path d="m16 17 5-5-5-5M21 12H9"/></svg>
+                            Cerrar sesión
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+        </header>
+
+
+        <!-- BANNER CON IMAGEN -->
+        <section class="sg-banner">
+
+            <div class="sg-banner-texto">
+                <span class="sg-tag">Historial de actividad</span>
+                <h2>Actividad de los reportes</h2>
+                <p>Consulta los cambios de estado y las acciones realizadas sobre los reportes registrados en AquaIca.</p>
+            </div>
+
+            <div class="sg-total">
+                <svg class="dp-ico" viewBox="0 0 24 24"><path d="M3 12a9 9 0 1 1 3 6.7"/><path d="M3 21v-6h6"/></svg>
+                <span>Total</span>
+                <strong id="bannerTotal">0 actividades</strong>
+            </div>
+
+        </section>
+
+
+        <!-- KPIs (al hacer clic filtran el historial) -->
+        <section class="dp-kpis sg-kpis">
+
+            <article class="dp-kpi sg-kpi k-azul" data-estado="" tabindex="0" role="button" aria-label="Ver toda la actividad">
+                <div class="dp-kpi-ico">
+                    <svg class="dp-ico" viewBox="0 0 24 24"><path d="M3 12a9 9 0 1 1 3 6.7"/><path d="M3 21v-6h6"/></svg>
+                </div>
+                <div class="dp-kpi-cuerpo">
+                    <span>Total de actividades</span>
+                    <strong id="totalSeguimientos">0</strong>
+                    <small>Movimientos registrados</small>
+                    <i class="sg-barra"><b style="width:100%"></b></i>
+                </div>
+            </article>
+
+            <article class="dp-kpi sg-kpi k-morado" data-estado="TECNICO_ASIGNADO" tabindex="0" role="button" aria-label="Filtrar por técnico asignado">
+                <div class="dp-kpi-ico">
+                    <svg class="dp-ico" viewBox="0 0 24 24"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
+                </div>
+                <div class="dp-kpi-cuerpo">
+                    <span>Técnico asignado</span>
+                    <strong id="seguimientosAsignados">0</strong>
+                    <small id="pctAsignados">0% del total</small>
+                    <i class="sg-barra"><b id="barraAsignados" style="width:0"></b></i>
+                </div>
+            </article>
+
+            <article class="dp-kpi sg-kpi k-naranja" data-estado="EN_ATENCION" tabindex="0" role="button" aria-label="Filtrar por en atención">
+                <div class="dp-kpi-ico">
+                    <svg class="dp-ico" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 3"/></svg>
+                </div>
+                <div class="dp-kpi-cuerpo">
+                    <span>En atención</span>
+                    <strong id="seguimientosAtencion">0</strong>
+                    <small id="pctAtencion">0% del total</small>
+                    <i class="sg-barra"><b id="barraAtencion" style="width:0"></b></i>
+                </div>
+            </article>
+
+            <article class="dp-kpi sg-kpi k-teal" data-estado="TRABAJO_REALIZADO" tabindex="0" role="button" aria-label="Filtrar por trabajo realizado">
+                <div class="dp-kpi-ico">
+                    <svg class="dp-ico" viewBox="0 0 24 24"><path d="M14.7 6.3a1 1 0 0 0 0 1.4l1.6 1.6a1 1 0 0 0 1.4 0l3.77-3.77a6 6 0 0 1-7.94 7.94l-6.91 6.91a2.12 2.12 0 0 1-3-3l6.91-6.91a6 6 0 0 1 7.94-7.94z"/></svg>
+                </div>
+                <div class="dp-kpi-cuerpo">
+                    <span>Trabajo realizado</span>
+                    <strong id="seguimientosTrabajo">0</strong>
+                    <small id="pctTrabajo">0% del total</small>
+                    <i class="sg-barra"><b id="barraTrabajo" style="width:0"></b></i>
+                </div>
+            </article>
+
+            <article class="dp-kpi sg-kpi k-verde" data-estado="RESUELTO" tabindex="0" role="button" aria-label="Filtrar por resueltos">
+                <div class="dp-kpi-ico">
+                    <svg class="dp-ico" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M8 12.5l2.5 2.5L16 9.5"/></svg>
+                </div>
+                <div class="dp-kpi-cuerpo">
+                    <span>Resueltos</span>
+                    <strong id="seguimientosResueltos">0</strong>
+                    <small id="pctResueltos">0% del total</small>
+                    <i class="sg-barra"><b id="barraResueltos" style="width:0"></b></i>
+                </div>
+            </article>
+
+        </section>
+
+
+        <!-- HISTORIAL -->
+        <section class="dp-card sg-historial">
+
+            <header class="dp-card-cab">
+                <div class="dp-cab-ico c-azul">
+                    <svg class="dp-ico" viewBox="0 0 24 24"><path d="M3 12a9 9 0 1 1 3 6.7"/><path d="M3 21v-6h6"/></svg>
+                </div>
+                <div class="dp-cab-txt">
+                    <h3>Historial de seguimientos</h3>
+                    <p>Actividad registrada recientemente en los reportes.</p>
+                </div>
+
+                <div class="dp-filtros">
+                    <select id="estadoFiltro" aria-label="Filtrar por estado">
+                        <option value="">Todos los estados</option>
+                        <option value="TECNICO_ASIGNADO">Técnico asignado</option>
+                        <option value="EN_ATENCION">En atención</option>
+                        <option value="TRABAJO_REALIZADO">Trabajo realizado</option>
+                        <option value="RESUELTO">Resuelto</option>
+                    </select>
+                </div>
+            </header>
+
+            <!-- El contenido lo carga seguimientos.js -->
+            <div id="seguimientosContainer" class="seguimientos-container">
+                <div class="seguimientos-loading">
+                    <div class="loading-icon">
+                        <svg class="icon-svg" viewBox="0 0 24 24"><path d="M3 12a9 9 0 1 1 3 6.7"/><path d="M3 21v-6h6"/></svg>
+                    </div>
+                    <p>Cargando actividad...</p>
+                </div>
+            </div>
+
+        </section>
+
+    </main>
+
+    <script src="js/api.js"></script>
+    <script src="js/panel-comun.js"></script>
+    <script src="js/seguimientos.js"></script>
+</body>
+
+</html>

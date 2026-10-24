@@ -1,0 +1,314 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0">
+
+    <title>AquaIca | Evidencias</title>
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+
+    <link
+        rel="stylesheet"
+        href="css/evidencias.css">
+
+</head>
+
+
+<body class="evidencias-body">
+
+    <div class="evidencias-bg-decor" aria-hidden="true">
+        <span class="deco-bubble db1"></span>
+        <span class="deco-bubble db2"></span>
+        <span class="deco-bubble db3"></span>
+        <span class="deco-bubble db4"></span>
+        <span class="deco-bubble db5"></span>
+    </div>
+
+
+    <!-- SIDEBAR -->
+
+    <aside class="sidebar">
+
+        <div class="sidebar-brand">
+
+            <div class="brand-logo">
+                A
+            </div>
+
+            <div>
+
+                <h2>AquaIca</h2>
+
+                <span>
+                    Sistema de Gestión
+                </span>
+
+            </div>
+
+        </div>
+
+
+        <nav class="sidebar-menu" id="sidebarMenu"></nav>
+
+
+        <div class="sidebar-bottom">
+
+            <button
+                id="logoutButton"
+                class="logout-button">
+
+                Cerrar sesión
+
+            </button>
+
+        </div>
+
+    </aside>
+
+    <script src="js/menu.js"></script>
+
+
+
+    <!-- CONTENIDO -->
+
+    <main class="evidencias-main">
+
+
+        <!-- HEADER -->
+
+        <header class="evidencias-header">
+
+            <div>
+
+                <span class="header-subtitle">
+                    Gestión documental
+                </span>
+
+                <h1>
+                    Evidencias
+                </h1>
+
+            </div>
+
+
+            <div class="user-info">
+
+                <div class="user-avatar" id="userAvatar">
+
+                    <span id="userInitial">
+                        C
+                    </span>
+
+                </div>
+
+
+                <div>
+
+                    <strong id="usernameDisplay">
+                        Usuario
+                    </strong>
+
+                    <span id="roleDisplay">
+                        Usuario
+                    </span>
+
+                </div>
+
+            </div>
+
+        </header>
+
+
+
+        <!-- PRESENTACIÓN -->
+
+        <section class="evidencias-intro">
+
+            <div>
+
+                <span class="section-label">
+                    REGISTRO DOCUMENTAL
+                </span>
+
+                <h2>
+                    Evidencias de los reportes
+                </h2>
+
+                <p>
+                    Consulta las fotografías y archivos
+                    asociados a las incidencias registradas
+                    en AquaIca.
+                </p>
+
+            </div>
+
+        </section>
+
+
+
+        <!-- KPI -->
+
+        <section class="evidencias-stats">
+
+
+            <div class="evidencia-stat-card stat-total">
+
+                <div class="evidencia-stat-icon icon-total">
+                    <svg class="icon-svg" viewBox="0 0 24 24"><rect x="3" y="3" width="18" height="18" rx="3"/><circle cx="9" cy="9" r="2"/><path d="M21 15l-5-5L5 21"/></svg>
+                </div>
+
+                <div>
+
+                    <span>
+                        Total de evidencias
+                    </span>
+
+                    <strong id="totalEvidencias">
+                        0
+                    </strong>
+
+                </div>
+
+            </div>
+
+
+
+            <div class="evidencia-stat-card stat-ciudadano">
+
+                <div class="evidencia-stat-icon icon-ciudadano">
+                    <svg class="icon-svg" viewBox="0 0 24 24"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
+                </div>
+
+                <div>
+
+                    <span>
+                        De ciudadanos
+                    </span>
+
+                    <strong id="evidenciasCiudadano">
+                        0
+                    </strong>
+
+                </div>
+
+            </div>
+
+
+
+            <div class="evidencia-stat-card stat-tecnico">
+
+                <div class="evidencia-stat-icon icon-tecnico">
+                    <svg class="icon-svg" viewBox="0 0 24 24"><path d="M14.7 6.3a1 1 0 0 0 0 1.4l1.6 1.6a1 1 0 0 0 1.4 0l3.77-3.77a6 6 0 0 1-7.94 7.94l-6.91 6.91a2.12 2.12 0 0 1-3-3l6.91-6.91a6 6 0 0 1 7.94-7.94z"/></svg>
+                </div>
+
+                <div>
+
+                    <span>
+                        Del personal técnico
+                    </span>
+
+                    <strong id="evidenciasTecnico">
+                        0
+                    </strong>
+
+                </div>
+
+            </div>
+
+
+        </section>
+
+
+
+
+        <section class="evidencias-content-card">
+
+
+            <div class="evidencias-section-header">
+
+                <div>
+
+                    <span class="section-label">
+                        ARCHIVOS REGISTRADOS
+                    </span>
+
+                    <h2>
+                        <svg class="icon-svg" viewBox="0 0 24 24" style="width:18px;height:18px;vertical-align:-3px;margin-right:6px;color:#0077b6"><rect x="3" y="3" width="18" height="18" rx="3"/><circle cx="9" cy="9" r="2"/><path d="M21 15l-5-5L5 21"/></svg>
+                        Evidencias recientes
+                    </h2>
+
+                    <p>
+                        Fotografías y archivos asociados
+                        a los reportes.
+                    </p>
+
+                </div>
+
+
+                <div class="evidencias-filter">
+
+                    <label for="filtroOrigen">
+                        Filtrar por origen
+                    </label>
+
+                    <select id="filtroOrigen">
+
+                        <option value="TODOS">
+                            Todos
+                        </option>
+
+                        <option value="CIUDADANO">
+                            Ciudadanos
+                        </option>
+
+                        <option value="TECNICO">
+                            Técnicos
+                        </option>
+
+                    </select>
+
+                </div>
+
+            </div>
+
+
+
+            <!-- CONTENEDOR -->
+
+            <div
+                id="evidenciasContainer"
+                class="evidencias-grid">
+
+                <div class="evidencias-loading">
+
+                    <div class="loading-spinner"></div>
+
+                    <p>
+                        Cargando evidencias...
+                    </p>
+
+                </div>
+
+            </div>
+
+
+        </section>
+
+
+    </main>
+
+
+
+    <script src="js/evidencias.js"></script>
+
+</body>
+
+</html>

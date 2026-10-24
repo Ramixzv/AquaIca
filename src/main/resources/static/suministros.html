@@ -1,0 +1,331 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AquaIca | Suministros</title>
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="css/dashboard.css">
+    <link rel="stylesheet" href="css/suministros.css">
+
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css">
+</head>
+
+<body class="dashboard-body">
+
+    <div class="dashboard-bg-decor" aria-hidden="true">
+        <span class="deco-bubble db1"></span>
+        <span class="deco-bubble db2"></span>
+        <span class="deco-bubble db3"></span>
+        <span class="deco-bubble db4"></span>
+        <span class="deco-bubble db5"></span>
+    </div>
+
+    <aside class="sidebar">
+
+        <div class="sidebar-brand">
+            <div class="brand-logo">A</div>
+            <div>
+                <h2>AquaIca</h2>
+                <span>Sistema de Gestión</span>
+            </div>
+        </div>
+
+        <nav class="sidebar-menu">
+
+            <a href="dashboard.html" class="menu-item">
+                <span class="menu-icon"><svg class="icon-svg" viewBox="0 0 24 24"><rect x="3" y="3" width="7" height="9" rx="2"/><rect x="14" y="3" width="7" height="5" rx="2"/><rect x="14" y="12" width="7" height="9" rx="2"/><rect x="3" y="16" width="7" height="5" rx="2"/></svg></span>
+                Dashboard
+            </a>
+
+            <a href="reportes.html" class="menu-item">
+                <span class="menu-icon"><svg class="icon-svg" viewBox="0 0 24 24"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><path d="M14 2v6h6M9 13h6M9 17h6"/></svg></span>
+                Reportes
+            </a>
+
+            <a href="asignaciones.html" class="menu-item">
+                <span class="menu-icon"><svg class="icon-svg" viewBox="0 0 24 24"><path d="M9 12l2 2 4-4"/><circle cx="12" cy="12" r="9"/></svg></span>
+                Asignaciones
+            </a>
+
+            <a href="seguimientos.html" class="menu-item">
+                <span class="menu-icon"><svg class="icon-svg" viewBox="0 0 24 24"><path d="M3 12a9 9 0 1 1 3 6.7"/><path d="M3 21v-6h6"/></svg></span>
+                Seguimientos
+            </a>
+
+            <a href="evidencias.html" class="menu-item">
+                <span class="menu-icon"><svg class="icon-svg" viewBox="0 0 24 24"><rect x="3" y="3" width="18" height="18" rx="3"/><circle cx="9" cy="9" r="2"/><path d="M21 15l-5-5L5 21"/></svg></span>
+                Evidencias
+            </a>
+
+            <a href="personal.html" class="menu-item">
+                <span class="menu-icon"><svg class="icon-svg" viewBox="0 0 24 24"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87M16 3.13a4 4 0 0 1 0 7.75"/></svg></span>
+                Personal
+            </a>
+
+            <a href="clientes.html" class="menu-item">
+                <span class="menu-icon"><svg class="icon-svg" viewBox="0 0 24 24"><path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M19 8v6M16 11h6"/></svg></span>
+                Clientes
+            </a>
+
+            <a href="suministros.html" class="menu-item active">
+                <span class="menu-icon"><svg class="icon-svg" viewBox="0 0 24 24"><path d="M20 10c0 6-8 12-8 12s-8-6-8-12a8 8 0 0 1 16 0z"/><circle cx="12" cy="10" r="3"/></svg></span>
+                Suministros
+            </a>
+
+        </nav>
+
+        <div class="sidebar-bottom">
+            <button id="logoutButton" class="logout-button">Cerrar sesión</button>
+        </div>
+
+    </aside>
+
+
+    <main class="dashboard-main">
+
+        <header class="dashboard-header">
+            <div>
+                <span class="header-subtitle">Administración</span>
+                <h1>Suministros</h1>
+            </div>
+
+            <div class="user-info">
+                <div class="user-avatar" id="userAvatar">U</div>
+                <div>
+                    <strong id="usernameDisplay">Usuario</strong>
+                    <span id="roleDisplay">Usuario</span>
+                </div>
+            </div>
+        </header>
+
+
+        <section class="suministros-banner">
+            <div>
+                <h2>Gestión de suministros</h2>
+                <p>Registra suministros, asócialos con clientes y consulta su ubicación geográfica.</p>
+            </div>
+
+            <button type="button" id="btnNuevoSuministro" class="suministros-add-button">
+                <svg class="icon-svg" viewBox="0 0 24 24"><path d="M20 10c0 6-8 12-8 12s-8-6-8-12a8 8 0 0 1 16 0z"/><circle cx="12" cy="10" r="3"/></svg>
+                Nuevo suministro
+            </button>
+        </section>
+
+
+        <section class="suministros-stats">
+
+            <div class="suministros-stat-card stat-total">
+                <div class="suministros-stat-icon">
+                    <svg class="icon-svg" viewBox="0 0 24 24"><path d="M12 2.7s6 6.1 6 10.3a6 6 0 0 1-12 0c0-4.2 6-10.3 6-10.3z"/></svg>
+                </div>
+                <div><span>Total de suministros</span><strong id="totalSuministros">0</strong></div>
+            </div>
+
+            <div class="suministros-stat-card stat-clientes">
+                <div class="suministros-stat-icon">
+                    <svg class="icon-svg" viewBox="0 0 24 24"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87M16 3.13a4 4 0 0 1 0 7.75"/></svg>
+                </div>
+                <div><span>Clientes asociados</span><strong id="clientesAsociados">0</strong></div>
+            </div>
+
+            <div class="suministros-stat-card stat-ubicado">
+                <div class="suministros-stat-icon">
+                    <svg class="icon-svg" viewBox="0 0 24 24"><path d="M20 10c0 6-8 12-8 12s-8-6-8-12a8 8 0 0 1 16 0z"/><path d="M9 10l2 2 4-4"/></svg>
+                </div>
+                <div><span>Con ubicación</span><strong id="suministrosGeolocalizados">0</strong></div>
+            </div>
+
+            <div class="suministros-stat-card stat-sin-ubicar">
+                <div class="suministros-stat-icon">
+                    <svg class="icon-svg" viewBox="0 0 24 24"><path d="M20 10c0 6-8 12-8 12s-8-6-8-12a8 8 0 0 1 16 0z"/><path d="M9.5 7.5l5 5M14.5 7.5l-5 5"/></svg>
+                </div>
+                <div><span>Sin ubicación</span><strong id="suministrosSinUbicacion">0</strong></div>
+            </div>
+
+        </section>
+
+
+        <section class="suministros-filtros">
+
+            <div class="suministros-buscador">
+                <label for="buscarSuministro">Buscar suministro</label>
+                <div class="suministros-buscador-input">
+                    <svg class="icon-svg" viewBox="0 0 24 24"><circle cx="11" cy="11" r="7"/><path d="M21 21l-4.3-4.3"/></svg>
+                    <input type="search" id="buscarSuministro" placeholder="Código o dirección...">
+                </div>
+            </div>
+
+            <div>
+                <label for="filtroUbicacion">Ubicación</label>
+                <select id="filtroUbicacion">
+                    <option value="">Todas</option>
+                    <option value="CON">Con ubicación</option>
+                    <option value="SIN">Sin ubicación</option>
+                </select>
+            </div>
+
+        </section>
+
+
+        <section class="content-card suministros-tabla">
+
+            <div class="section-header">
+                <div>
+                    <h2>
+                        <svg class="icon-svg" viewBox="0 0 24 24"><path d="M20 10c0 6-8 12-8 12s-8-6-8-12a8 8 0 0 1 16 0z"/><circle cx="12" cy="10" r="3"/></svg>
+                        Suministros registrados
+                    </h2>
+                    <p>Listado de suministros de AquaIca</p>
+                </div>
+            </div>
+
+            <div class="table-container">
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Código</th>
+                            <th>Cliente</th>
+                            <th>DNI</th>
+                            <th>Dirección</th>
+                            <th>Ubicación</th>
+                            <th>Acciones</th>
+                        </tr>
+                    </thead>
+
+                    <tbody id="tablaSuministros">
+                        <tr><td colspan="6" class="suministros-vacio">Cargando suministros...</td></tr>
+                    </tbody>
+                </table>
+            </div>
+
+        </section>
+
+    </main>
+
+
+    <!-- MODAL CREAR / EDITAR -->
+
+    <div id="modalSuministro" class="modal-suministro oculto">
+        <div class="modal-contenido">
+
+            <header class="modal-header">
+                <div>
+                    <span>GESTIÓN DE SUMINISTROS</span>
+                    <h2 id="tituloModal">Nuevo suministro</h2>
+                </div>
+
+                <button type="button" id="btnCerrarModal" aria-label="Cerrar">
+                    <svg class="icon-svg" viewBox="0 0 24 24"><path d="M18 6 6 18M6 6l12 12"/></svg>
+                </button>
+            </header>
+
+            <form id="formSuministro" autocomplete="off">
+                <input type="hidden" id="suministroId">
+
+                <h4 class="suministro-form-title">Datos del suministro</h4>
+
+                <div class="suministro-form-grid">
+
+                    <div class="suministro-field">
+                        <label for="codigoSuministro">Código del suministro *</label>
+                        <input id="codigoSuministro" maxlength="20" placeholder="Ej. 000123456" required>
+                    </div>
+
+                    <div class="suministro-field">
+                        <label for="clienteId">Cliente titular *</label>
+                        <select id="clienteId" required>
+                            <option value="">Selecciona un cliente</option>
+                        </select>
+                    </div>
+
+                    <div class="suministro-field suministro-field-full">
+                        <label for="direccionSuministro">Dirección *</label>
+                        <input id="direccionSuministro" maxlength="200" placeholder="Ej. Av. Los Maestros 485, Ica" required>
+                    </div>
+
+                </div>
+
+                <h4 class="suministro-form-title">Ubicación en el mapa</h4>
+
+                <div class="buscador-direccion">
+                    <div class="suministro-field">
+                        <label for="buscarDireccion">Buscar dirección en el mapa</label>
+                        <input id="buscarDireccion" placeholder="Escribe una dirección...">
+                    </div>
+
+                    <button type="button" id="btnBuscarDireccion" class="suministros-btn-secundario">
+                        <svg class="icon-svg" viewBox="0 0 24 24"><circle cx="11" cy="11" r="7"/><path d="M21 21l-4.3-4.3"/></svg>
+                        Buscar
+                    </button>
+                </div>
+
+                <p class="ayuda-mapa">
+                    Haz clic en el mapa o arrastra el marcador para ajustar la ubicación.
+                </p>
+
+                <div id="mapaSuministro"></div>
+
+                <div class="coordenadas">
+                    <div class="suministro-field">
+                        <label for="latitud">Latitud</label>
+                        <input id="latitud" type="number" step="any" readonly>
+                    </div>
+
+                    <div class="suministro-field">
+                        <label for="longitud">Longitud</label>
+                        <input id="longitud" type="number" step="any" readonly>
+                    </div>
+                </div>
+
+                <div class="modal-acciones">
+                    <button type="button" id="btnCancelarSuministro" class="suministros-btn-secundario">Cancelar</button>
+                    <button type="submit" class="suministros-btn-primario">Guardar suministro</button>
+                </div>
+
+            </form>
+        </div>
+    </div>
+     
+<!-- Visor independiente de ubicación -->
+<div id="visorMapaOverlay" class="visor-mapa-overlay oculto">
+    <section class="visor-mapa-ventana" role="dialog"
+             aria-modal="true" aria-labelledby="visorMapaTitulo">
+
+        <header class="visor-mapa-header">
+            <div>
+                <span>UBICACIÓN DEL SUMINISTRO</span>
+                <h2 id="visorMapaTitulo">Ubicación en el mapa</h2>
+                <p id="visorMapaDireccion"></p>
+            </div>
+
+            <button type="button" id="cerrarVisorMapa"
+                    class="visor-mapa-cerrar" aria-label="Cerrar mapa">
+                ×
+            </button>
+        </header>
+
+        <div id="mapaConsultaSuministro" class="mapa-consulta"></div>
+
+        <footer class="visor-mapa-footer">
+            <span id="visorMapaCoordenadas"></span>
+            <button type="button" id="cerrarVisorMapaFooter"
+                    class="btn-secondary">
+                Cerrar
+            </button>
+        </footer>
+    </section>
+</div>
+
+    <div id="suministrosToast" class="suministros-toast" role="status"></div>
+
+    <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+    <script src="js/api.js"></script>
+    <script src="js/suministros.js"></script>
+</body>
+</html>

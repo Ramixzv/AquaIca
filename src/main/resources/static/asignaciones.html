@@ -1,0 +1,189 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AquaIca | Mis asignaciones</title>
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="css/dashboard.css">
+    <link rel="stylesheet" href="css/sidebar-pro.css">
+    <link rel="stylesheet" href="css/dashboard-pro.css">
+    <link rel="stylesheet" href="css/asignaciones-pro.css">
+</head>
+
+<body class="dashboard-body">
+
+    <div class="dashboard-bg-decor" aria-hidden="true">
+        <span class="deco-bubble db1"></span>
+        <span class="deco-bubble db2"></span>
+        <span class="deco-bubble db3"></span>
+        <span class="deco-bubble db4"></span>
+        <span class="deco-bubble db5"></span>
+    </div>
+
+
+    <!-- SIDEBAR (el contenido del menú lo arma menu.js) -->
+
+    <aside class="sidebar sidebar-pro">
+
+        <div class="sidebar-brand">
+            <div class="brand-logo"><img src="images/logo-aquaica.png" alt="Logo Aqualca"></div>
+            <div>
+                <h2>AquaIca</h2>
+                <span>Sistema de Gestión</span>
+            </div>
+        </div>
+
+        <nav class="sidebar-menu" id="sidebarMenu"></nav>
+
+        <div class="sidebar-bottom">
+            <button id="logoutButton" class="logout-button">Cerrar sesión</button>
+        </div>
+
+    </aside>
+
+    <script src="js/menu.js"></script>
+
+
+    <!-- CONTENIDO PRINCIPAL -->
+
+    <main class="dashboard-main dp-main">
+
+        <!-- CABECERA -->
+        <header class="dp-top">
+
+            <div class="dp-titulo">
+                <span>Gestión de trabajo</span>
+                <h1>Mis asignaciones</h1>
+            </div>
+
+            <div class="dp-acciones">
+                <div class="dp-usuario">
+                    <button type="button" class="dp-usuario-btn" id="usuarioBtn" aria-haspopup="true" aria-expanded="false">
+                        <span class="user-avatar" id="userAvatar">U</span>
+                        <span class="dp-usuario-txt">
+                            <strong id="usernameDisplay">Usuario</strong>
+                            <small id="roleDisplay">Usuario</small>
+                        </span>
+                        <svg class="dp-ico chev" viewBox="0 0 24 24"><path d="m6 9 6 6 6-6"/></svg>
+                    </button>
+
+                    <div class="dp-menu" id="usuarioMenu">
+                        <button type="button" id="logoutMenu">
+                            <svg class="dp-ico" viewBox="0 0 24 24"><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"/><path d="m16 17 5-5-5-5M21 12H9"/></svg>
+                            Cerrar sesión
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+        </header>
+
+
+        <!-- BANNER CON IMAGEN -->
+        <section class="as-banner">
+
+            <div class="as-banner-texto">
+                <h2>Trabajos asignados</h2>
+                <p>Consulta los reportes que tienes asignados y actualiza su estado de atención.</p>
+            </div>
+
+            <div class="as-total">
+                <svg class="dp-ico" viewBox="0 0 24 24"><path d="M9 12l2 2 4-4"/><circle cx="12" cy="12" r="9"/></svg>
+                <span>Total</span>
+                <strong id="bannerTotal">0 trabajos</strong>
+            </div>
+
+        </section>
+
+
+        <!-- KPIs -->
+        <section class="dp-kpis as-kpis">
+
+            <article class="dp-kpi k-azul">
+                <div class="dp-kpi-ico">
+                    <svg class="dp-ico" viewBox="0 0 24 24"><path d="M9 12l2 2 4-4"/><circle cx="12" cy="12" r="9"/></svg>
+                </div>
+                <div class="dp-kpi-cuerpo">
+                    <span>Total asignado</span>
+                    <strong id="totalAsignaciones">0</strong>
+                    <small>Trabajos a tu cargo</small>
+                    <i class="as-barra"><b style="width:100%"></b></i>
+                </div>
+            </article>
+
+            <article class="dp-kpi k-naranja">
+                <div class="dp-kpi-ico">
+                    <svg class="dp-ico" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/></svg>
+                </div>
+                <div class="dp-kpi-cuerpo">
+                    <span>Por iniciar</span>
+                    <strong id="asignacionesPendientes">0</strong>
+                    <small id="pctPendientes">0% del total</small>
+                    <i class="as-barra"><b id="barraPendientes" style="width:0"></b></i>
+                </div>
+            </article>
+
+            <article class="dp-kpi k-celeste">
+                <div class="dp-kpi-ico">
+                    <svg class="dp-ico" viewBox="0 0 24 24"><path d="M14.7 6.3a1 1 0 0 0 0 1.4l1.6 1.6a1 1 0 0 0 1.4 0l3.77-3.77a6 6 0 0 1-7.94 7.94l-6.91 6.91a2.12 2.12 0 0 1-3-3l6.91-6.91a6 6 0 0 1 7.94-7.94z"/></svg>
+                </div>
+                <div class="dp-kpi-cuerpo">
+                    <span>En atención</span>
+                    <strong id="asignacionesAtencion">0</strong>
+                    <small id="pctAtencion">0% del total</small>
+                    <i class="as-barra"><b id="barraAtencion" style="width:0"></b></i>
+                </div>
+            </article>
+
+            <article class="dp-kpi k-verde">
+                <div class="dp-kpi-ico">
+                    <svg class="dp-ico" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M8 12.5l2.5 2.5L16 9.5"/></svg>
+                </div>
+                <div class="dp-kpi-cuerpo">
+                    <span>Finalizadas</span>
+                    <strong id="asignacionesFinalizadas">0</strong>
+                    <small id="pctFinalizadas">0% del total</small>
+                    <i class="as-barra"><b id="barraFinalizadas" style="width:0"></b></i>
+                </div>
+            </article>
+
+        </section>
+
+
+        <!-- ASIGNACIONES -->
+        <section class="dp-card as-lista">
+
+            <header class="dp-card-cab">
+                <div class="dp-cab-ico c-azul">
+                    <svg class="dp-ico" viewBox="0 0 24 24"><path d="M9 12l2 2 4-4"/><circle cx="12" cy="12" r="9"/></svg>
+                </div>
+                <div class="dp-cab-txt">
+                    <h3>Mis trabajos</h3>
+                    <p>Reportes asignados a tu cuenta</p>
+                </div>
+            </header>
+
+            <div id="asignacionesContainer" class="asignaciones-container">
+                <div class="asignaciones-loading">
+                    <svg class="dp-ico" viewBox="0 0 24 24"><path d="M3 12a9 9 0 1 1 3 6.7"/><path d="M3 21v-6h6"/></svg>
+                    <p>Cargando asignaciones...</p>
+                </div>
+            </div>
+
+        </section>
+
+    </main>
+
+    <script src="js/api.js"></script>
+    <script src="js/panel-comun.js"></script>
+    <script src="js/asignaciones.js"></script>
+</body>
+
+</html>

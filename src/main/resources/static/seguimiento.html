@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Aqualca - Seguimiento de tu reporte del servicio de agua.">
+
+    <title>Aqualca | Seguimiento de reporte</title>
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+
+    <link rel="stylesheet" href="css/mis-reportes.css">
+    <link rel="stylesheet" href="css/seguimiento.css">
+</head>
+
+<body class="mis-reportes-body">
+
+    <div class="mr-bg-decor" aria-hidden="true">
+        <span class="deco-bubble mb1"></span>
+        <span class="deco-bubble mb2"></span>
+        <span class="deco-bubble mb3"></span>
+        <span class="deco-bubble mb4"></span>
+        <span class="deco-bubble mb5"></span>
+        <span class="deco-bubble mb6"></span>
+    </div>
+
+    <header class="mr-header">
+
+        <div class="mr-brand">
+            <div class="mr-logo">A</div>
+            <div>
+                <h2>Aqualca</h2>
+                <span>Atención ciudadana</span>
+            </div>
+        </div>
+
+        <nav class="mr-nav">
+            <a href="index.html">Inicio</a>
+            <a href="reporte.html">Nuevo reporte</a>
+            <a href="mis-reportes.html">Mis reportes</a>
+        </nav>
+
+    </header>
+
+    <main class="mr-main seguimiento-main">
+
+        <a href="#" id="volverLink" class="seg-back-link">
+            <svg class="icon-svg" viewBox="0 0 24 24" style="width:15px;height:15px"><path d="M15 6l-6 6 6 6"/></svg>
+            Volver a mis reportes
+        </a>
+
+        <!-- ESTADO: CARGANDO -->
+        <section id="segCargando" class="seg-card seg-loading">
+            <div class="seg-spinner"></div>
+            <p>Cargando información de tu reporte...</p>
+        </section>
+
+        <!-- ESTADO: ERROR / NO ENCONTRADO -->
+        <section id="segError" class="seg-card seg-empty" style="display:none;">
+            <div class="mr-empty-icon">
+                <svg class="icon-svg" viewBox="0 0 24 24" style="width:26px;height:26px"><circle cx="12" cy="12" r="9"/><path d="M12 8v5M12 16h.01"/></svg>
+            </div>
+            <h3>No pudimos encontrar este reporte</h3>
+            <p>Revisa que el enlace sea correcto, o consulta de nuevo desde "Mis reportes".</p>
+            <a href="mis-reportes.html" class="new-report-button">Ir a Mis reportes</a>
+        </section>
+
+        <!-- ESTADO: CONTENIDO -->
+        <section id="segContenido" class="seg-card" style="display:none;">
+
+            <div class="seg-header">
+                <div>
+                    <span class="reporte-numero" id="segNumero">REPORTE #--</span>
+                    <h1 id="segTipoProblema">-</h1>
+                </div>
+                <span id="segEstadoBadge" class="estado-badge estado-default">-</span>
+            </div>
+
+            <div class="reporte-card-info seg-info-grid">
+                <div>
+                    <span>Prioridad</span>
+                    <strong id="segPrioridad">-</strong>
+                </div>
+                <div>
+                    <span>Fecha</span>
+                    <strong id="segFecha">-</strong>
+                </div>
+                <div>
+                    <span>Dirección</span>
+                    <strong id="segDireccion">-</strong>
+                </div>
+            </div>
+
+            <div class="reporte-card-description">
+                <span>Descripción</span>
+                <p id="segDescripcion">-</p>
+            </div>
+
+        </section>
+
+        <section id="segTimelineSection" class="seg-card seg-timeline-card" style="display:none;">
+
+    <div class="seg-timeline-header">
+        <span class="reporte-numero">Seguimiento</span>
+        <h2>Estado de tu reporte</h2>
+        <p>Consulta cómo avanza la atención de tu incidencia.</p>
+    </div>
+
+    <div id="segTimeline" class="seg-timeline"></div>
+
+</section>
+
+    </main>
+
+    <script src="js/api.js"></script>
+    <script src="js/seguimiento.js"></script>
+
+</body>
+
+</html>

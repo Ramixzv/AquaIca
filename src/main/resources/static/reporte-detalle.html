@@ -1,0 +1,723 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0">
+
+    <title>AquaIca | Detalle del reporte</title>
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+
+    <link
+        rel="stylesheet"
+        href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css">
+
+    <link
+        rel="stylesheet"
+        href="css/style.css">
+
+    <link
+        rel="stylesheet"
+        href="css/dashboard.css">
+
+    <link
+        rel="stylesheet"
+        href="css/detalle-reporte.css">
+
+    <link rel="stylesheet" href="css/asignar-tecnico.css">
+
+</head>
+
+
+<body class="dashboard-body">
+
+    <div class="dashboard-bg-decor" aria-hidden="true">
+        <span class="deco-bubble db1"></span>
+        <span class="deco-bubble db2"></span>
+        <span class="deco-bubble db3"></span>
+        <span class="deco-bubble db4"></span>
+        <span class="deco-bubble db5"></span>
+    </div>
+
+    <aside class="sidebar">
+
+
+        <div class="sidebar-brand">
+
+            <div class="brand-logo">
+                A
+            </div>
+
+            <div>
+
+                <h2>
+                    AquaIca
+                </h2>
+
+                <span>
+                    Sistema de Gestión
+                </span>
+
+            </div>
+
+        </div>
+
+
+
+        <nav class="sidebar-menu">
+
+
+            <a
+                href="dashboard.html"
+                class="menu-item">
+
+                <span class="menu-icon">
+                    <svg class="icon-svg" viewBox="0 0 24 24"><rect x="3" y="3" width="7" height="9" rx="2"/><rect x="14" y="3" width="7" height="5" rx="2"/><rect x="14" y="12" width="7" height="9" rx="2"/><rect x="3" y="16" width="7" height="5" rx="2"/></svg>
+                </span>
+
+                Dashboard
+
+            </a>
+
+
+            <a
+                href="reportes.html"
+                class="menu-item active">
+
+                <span class="menu-icon">
+                    <svg class="icon-svg" viewBox="0 0 24 24"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><path d="M14 2v6h6"/><path d="M9 13h6M9 17h6"/></svg>
+                </span>
+
+                Reportes
+
+            </a>
+
+
+            <a
+                href="asignaciones.html"
+                class="menu-item">
+
+                <span class="menu-icon">
+                    <svg class="icon-svg" viewBox="0 0 24 24"><path d="M9 12l2 2 4-4"/><circle cx="12" cy="12" r="9"/></svg>
+                </span>
+
+                Asignaciones
+
+            </a>
+
+
+            <a
+                href="seguimientos.html"
+                class="menu-item">
+
+                <span class="menu-icon">
+                    <svg class="icon-svg" viewBox="0 0 24 24"><path d="M3 12a9 9 0 1 1 3 6.7"/><path d="M3 21v-6h6"/></svg>
+                </span>
+
+                Seguimientos
+
+            </a>
+
+
+            <a
+                href="evidencias.html"
+                class="menu-item">
+
+                <span class="menu-icon">
+                    <svg class="icon-svg" viewBox="0 0 24 24"><rect x="3" y="3" width="18" height="18" rx="3"/><circle cx="9" cy="9" r="2"/><path d="M21 15l-5-5L5 21"/></svg>
+                </span>
+
+                Evidencias
+
+            </a>
+
+
+        </nav>
+
+
+
+        <div class="sidebar-bottom">
+
+            <button
+                id="logoutButton"
+                class="logout-button">
+
+                Cerrar sesión
+
+            </button>
+
+        </div>
+
+
+    </aside>
+
+    <main class="dashboard-main">
+
+
+        <!-- HEADER -->
+
+        <header class="dashboard-header">
+
+
+            <div>
+
+                <span class="header-subtitle">
+                    Gestión de incidencias
+                </span>
+
+                <h1>
+                    Detalle del reporte
+                </h1>
+
+            </div>
+
+
+
+            <div class="user-info">
+
+
+                <div class="user-avatar" id="userAvatar">
+                    U
+                </div>
+
+
+                <div>
+
+                    <strong id="usernameDisplay">
+                        Usuario
+                    </strong>
+
+                    <span id="roleDisplay">
+                        Usuario
+                    </span>
+
+                </div>
+
+
+            </div>
+
+
+        </header>
+
+        <div class="detail-back">
+
+            <a
+                href="reportes.html"
+                class="back-button">
+
+                ← Volver a reportes
+
+            </a>
+
+        </div>
+
+        <section class="detail-header-card">
+
+
+            <div>
+
+                <span class="header-subtitle">
+                    Incidencia
+                </span>
+
+                <h2>
+                    Reporte
+                    <span id="reporteId">
+                        #--
+                    </span>
+                </h2>
+
+                <p id="tipoProblema">
+                    Cargando...
+                </p>
+
+            </div>
+
+
+            <div class="detail-status-container">
+
+                <span
+                    id="prioridadBadge"
+                    class="prioridad-badge">
+
+                    --
+
+                </span>
+
+
+                <span
+                    id="estadoBadge"
+                    class="estado-badge">
+
+                    --
+
+                </span>
+
+            </div>
+
+
+        </section>
+
+        <section class="detail-card titular-card">
+
+
+            <div class="detail-section-title">
+
+                <h2>
+                    <svg class="icon-svg" viewBox="0 0 24 24"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
+                    Información del titular
+                </h2>
+
+                <p>
+                    Datos asociados al suministro registrado.
+                </p>
+
+            </div>
+
+
+
+            <div class="detail-grid">
+
+
+                <div class="detail-field">
+
+                    <span>
+                        Nombre del titular
+                    </span>
+
+                    <strong id="nombreTitular">
+                        --
+                    </strong>
+
+                </div>
+
+
+                <div class="detail-field">
+
+                    <span>
+                        DNI
+                    </span>
+
+                    <strong id="dni">
+                        --
+                    </strong>
+
+                </div>
+
+
+                <div class="detail-field">
+
+                    <span>
+                        Código de suministro
+                    </span>
+
+                    <strong id="codigoSuministro">
+                        --
+                    </strong>
+
+                </div>
+
+
+                <div class="detail-field">
+
+                    <span>
+                        Dirección
+                    </span>
+
+                    <strong id="direccion">
+                        --
+                    </strong>
+
+                </div>
+
+
+            </div>
+
+
+        </section>
+
+        <section class="detail-card problema-card">
+
+
+            <div class="detail-section-title">
+
+                <h2>
+                    <svg class="icon-svg" viewBox="0 0 24 24"><path d="M12 9v4"/><path d="M12 17h.01"/><path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"/></svg>
+                    Información del problema
+                </h2>
+
+                <p>
+                    Detalles proporcionados por el ciudadano.
+                </p>
+
+            </div>
+
+
+
+            <div class="problem-description">
+
+                <span>
+                    Descripción
+                </span>
+
+                <p id="descripcion">
+                    Cargando descripción...
+                </p>
+
+            </div>
+
+
+
+            <div class="detail-grid">
+
+
+                <div class="detail-field">
+
+                    <span>
+                        Tipo de problema
+                    </span>
+
+                    <strong id="tipoProblemaDetalle">
+                        --
+                    </strong>
+
+                </div>
+
+
+                <div class="detail-field">
+
+                    <span>
+                        Fecha de creación
+                    </span>
+
+                    <strong id="fechaCreacion">
+                        --
+                    </strong>
+
+                </div>
+
+
+            </div>
+
+
+        </section>
+
+        <section class="detail-card evidencias-card">
+
+
+            <div class="detail-section-title">
+
+                <h2>
+                    <svg class="icon-svg" viewBox="0 0 24 24"><rect x="3" y="3" width="18" height="18" rx="3"/><circle cx="9" cy="9" r="2"/><path d="M21 15l-5-5L5 21"/></svg>
+                    Evidencias del reporte
+                </h2>
+
+                <p>
+                    Archivos adjuntados como evidencia del problema.
+                </p>
+
+            </div>
+
+            <div
+                id="evidenciasContainer"
+                class="evidencias-container">
+
+                <p class="evidencias-cargando">
+                    Cargando evidencias...
+                </p>
+
+            </div>
+
+        </section>
+
+        <section class="detail-card ubicacion-card">
+
+
+            <div class="detail-section-title">
+
+                <h2>
+                    <svg class="icon-svg" viewBox="0 0 24 24"><path d="M20 10c0 6-8 12-8 12s-8-6-8-12a8 8 0 0 1 16 0z"/><circle cx="12" cy="10" r="3"/></svg>
+                    Ubicación del suministro
+                </h2>
+
+                <p>
+                    Coordenadas registradas para la incidencia.
+                </p>
+
+            </div>
+
+
+
+            <div class="location-info">
+
+
+                <div class="location-coordinate">
+
+                    <span>
+                        Latitud
+                    </span>
+
+                    <strong id="latitud">
+                        --
+                    </strong>
+
+                </div>
+
+
+                <div class="location-coordinate">
+
+                    <span>
+                        Longitud
+                    </span>
+
+                    <strong id="longitud">
+                        --
+                    </strong>
+
+                </div>
+
+
+            </div>
+
+
+
+        <div class="map-container">
+
+    <div id="mapaReporte"></div>
+
+</div>
+
+
+        </section>
+        
+        <!-- INFORME TÉCNICO -->
+<section class="informe-tecnico-section">
+
+    <div class="section-header">
+
+        <div>
+
+            <span class="section-kicker">
+                Atención técnica
+            </span>
+
+            <h2>
+                <svg class="icon-svg" viewBox="0 0 24 24" style="width:18px;height:18px;vertical-align:-3px;margin-right:6px;"><path d="M9 12l2 2 4-4"/><path d="M21 12c0 4.97-4.03 9-9 9s-9-4.03-9-9 4.03-9 9-9c1.5 0 2.91.37 4.15 1.02"/><path d="M22 4l-9 9"/></svg>
+                Informe técnico
+            </h2>
+
+            <p>
+                Resultado de la atención realizada por el personal técnico.
+            </p>
+
+        </div>
+
+    </div>
+
+
+    <div id="informeTecnicoContainer">
+
+        <div class="informe-tecnico-loading">
+
+            <svg class="icon-svg" viewBox="0 0 24 24" style="width:26px;height:26px;color:#0077b6;"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><path d="M14 2v6h6"/><path d="M9 13h6M9 17h6"/></svg>
+
+            <p>
+                Cargando informe técnico...
+            </p>
+
+        </div>
+
+    </div>
+
+</section>
+         <!-- SEGUIMIENTO DEL REPORTE -->
+<section class="seguimiento-section">
+
+    <div class="section-header">
+        <span class="section-tag">Seguimiento</span>
+
+        <h2>
+            <svg class="icon-svg" viewBox="0 0 24 24" style="width:18px;height:18px;vertical-align:-3px;margin-right:6px;"><path d="M3 12a9 9 0 1 1 3 6.7"/><path d="M3 21v-6h6"/></svg>
+            Estado de tu reporte
+        </h2>
+
+        <p>
+            Consulta cómo avanza la atención de tu incidencia.
+        </p>
+    </div>
+
+    <div id="seguimientoTimeline" class="seguimiento-timeline">
+
+        <!-- Los seguimientos se cargarán aquí automáticamente -->
+
+        <div class="seguimiento-vacio">
+            <svg class="icon-svg" viewBox="0 0 24 24" style="width:24px;height:24px;color:#0077b6;"><path d="M3 12a9 9 0 1 1 3 6.7"/><path d="M3 21v-6h6"/></svg>
+            <p>Cargando seguimiento...</p>
+        </div>
+
+    </div>
+
+</section>
+
+        <section class="detail-actions">
+             
+            <button id="reabrirButton" class="secondary-button" style="display: none;">
+            <svg class="icon-svg" viewBox="0 0 24 24" style="width:14px;height:14px;vertical-align:-2px;margin-right:5px;"><path d="M3 12a9 9 0 1 1 3 6.7"/><path d="M3 21v-6h6"/></svg>Reabrir caso
+            </button>
+
+            <button
+                id="asignarButton"
+                class="primary-button">
+
+                Asignar técnico
+            </button>
+
+
+        
+
+        </section>
+
+
+    </main>
+
+
+
+
+
+<div id="asignacionModal" class="modal-overlay">
+
+    <div class="modal-card">
+
+        <div class="modal-header">
+
+            <div>
+                <span class="modal-subtitle">
+                    Gestión de incidencia
+                </span>
+
+                <h2>
+                    Asignar técnico
+                </h2>
+            </div>
+
+            <button
+                type="button"
+                id="cerrarModal"
+                class="modal-close">
+
+                ×
+
+            </button>
+
+        </div>
+
+
+        <div class="modal-reporte-info">
+
+            <strong id="modalReporteId">
+                Reporte #--
+            </strong>
+
+            <span id="modalProblema">
+                --
+            </span>
+
+        </div>
+
+
+        <div class="modal-form-group">
+
+            <label for="tecnicoSelect">
+                Técnico
+            </label>
+
+            <select id="tecnicoSelect" style="display:none;"></select>
+
+<div class="tecnico-dropdown" id="tecnicoDropdown">
+
+    <button type="button" class="tecnico-trigger" id="tecnicoTrigger">
+
+        <span class="tecnico-trigger-texto" id="tecnicoTriggerTexto">
+            Cargando técnicos...
+        </span>
+
+        <svg class="tecnico-chevron icon-svg" viewBox="0 0 24 24"><path d="M6 9l6 6 6-6"/></svg>
+
+    </button>
+
+    <div class="tecnico-lista" id="tecnicoLista"></div>
+
+</div>
+
+<small id="tecnicoAyuda">
+    Solo se muestran técnicos de la especialidad del reporte.
+</small>
+
+        </div>
+
+
+        <div class="modal-form-group">
+
+            <label for="observacionesAsignacion">
+                Observaciones
+            </label>
+
+            <textarea
+                id="observacionesAsignacion"
+                rows="4"
+                placeholder="Agrega alguna indicación para el técnico..."></textarea>
+
+        </div>
+
+
+        <div
+            id="asignacionMensaje"
+            class="asignacion-mensaje">
+        </div>
+
+
+        <div class="modal-actions">
+
+            <button
+                type="button"
+                id="cancelarModal"
+                class="secondary-button">
+
+                Cancelar
+
+            </button>
+
+
+            <button
+                type="button"
+                id="confirmarAsignacion"
+                class="primary-button">
+
+                Asignar técnico
+
+            </button>
+
+        </div>
+
+    </div>
+
+</div>
+
+    <script src="js/api.js"></script>
+
+    <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+
+    <script src="js/reporte-detalle.js"></script>
+
+    <script src="js/menu-personal.js"></script>
+
+</body>
+
+</html>

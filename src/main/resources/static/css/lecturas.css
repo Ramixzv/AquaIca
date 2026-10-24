@@ -1,0 +1,37 @@
+/* Pantalla de lecturas. Reutiliza clientes-*, sol-* (solicitudes.css) */
+.lec-modal{max-width:760px}
+.lec-form{display:grid;grid-template-columns:1fr 1fr;gap:0 16px}
+.lec-form .ancho{grid-column:1/-1}
+.lec-prev{margin:10px 0 0;padding:10px 12px;border-radius:10px;background:#fff;border:1px dashed #bfdde8;font-size:12.5px;color:#526b82;min-height:18px}
+.lec-prev.ok{border-style:solid;border-color:#9fdcc9;background:#f0faf5;color:#12794e;font-weight:600}
+.lec-prev.mal{border-style:solid;border-color:#f2c2c2;background:#fdeaea;color:#c4312c;font-weight:600}
+.lec-aviso{margin:14px 0 0;padding:10px 14px;border-radius:12px;background:#efe8fd;color:#5a34b8;font-size:12.5px}
+.lec-hist-titulo{margin:22px 0 8px;font-size:14px;color:#102a43}
+.lec-hist{width:100%;border-collapse:collapse;font-size:12.5px}
+.lec-hist th{padding:8px 10px;text-align:left;font-size:10.5px;text-transform:uppercase;letter-spacing:.4px;color:#8297a1;border-bottom:1px solid #e2edf3}
+.lec-hist td{padding:10px;border-bottom:1px solid #eef3f6;color:#102a43;vertical-align:middle}
+.lec-hist tr:first-child td{background:#f5fbfd}
+.lec-hist .num{text-align:right;font-variant-numeric:tabular-nums}
+.lec-nota{color:#718096;font-size:13px}
+.sol-btn.mini{padding:6px 11px;font-size:11.5px}
+.sol-badge.e-SIN_INICIAL{background:#fff7cc;color:#8a6d00}
+.sol-badge.e-LEIDO{background:#e2f7ec;color:#12794e}
+.sol-badge.e-PENDIENTE{background:#fff1de;color:#c46f00}
+@media (max-width:600px){.lec-form{grid-template-columns:1fr}.lec-hist{display:block;overflow-x:auto}}
+
+/* ---- Datos de prueba (simuladas) ---- */
+.sol-badge.e-SIMULADO{background:#efe8fd;color:#6b3fd0}
+.lec-sim{margin-top:18px;padding:16px 18px;border:1px dashed #c9b8f2;border-radius:14px;background:#faf7ff}
+.lec-sim strong{color:#5a34b8;font-size:13px}
+.lec-sim p{margin:6px 0 12px;font-size:12px;color:#6b5a99}
+.lec-sim-fila{display:flex;flex-wrap:wrap;gap:10px;align-items:center}
+.lec-sim-fila select{width:auto;padding:8px 12px}
+#lecBorrarTodas{margin-top:12px}
+
+/* ---- Anulación auditable ---- */
+.lec-anular{margin-top:18px;padding:16px 18px;border:1px solid #f2c2c2;border-left:4px solid #c4312c;border-radius:14px;background:#fff6f6}
+.lec-anular label{margin-top:0;color:#9b2420}
+.lec-anular .lec-nota{margin:6px 0 0;font-size:12px}
+.lec-hist tr.anulada td{color:#9aa8b2;background:#fafbfc}
+.lec-hist tr.anulada .num strong,.lec-hist tr.anulada .num{text-decoration:line-through}
+.lec-hist tr.anulada small{color:#c4312c;text-decoration:none}

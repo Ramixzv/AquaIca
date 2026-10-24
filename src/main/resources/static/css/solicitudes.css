@@ -1,0 +1,45 @@
+/* Solicitudes (admin) e Instalaciones (técnico). Reutiliza las clases clientes-* */
+.sol-badge{display:inline-block;padding:4px 11px;border-radius:20px;font-size:11px;font-weight:600;background:#eef3f5;color:#526b82}
+.sol-badge.e-PENDIENTE{background:#fff1de;color:#c46f00}.sol-badge.e-EN_EVALUACION{background:#e3f0fc;color:#0a74c9}
+.sol-badge.e-OBSERVADA{background:#fff7cc;color:#8a6d00}.sol-badge.e-APROBADA{background:#e0f5fd;color:#0b86b8}
+.sol-badge.e-EN_INSTALACION{background:#efe8fd;color:#6b3fd0}.sol-badge.e-ACTIVADA{background:#e2f7ec;color:#12794e}
+.sol-badge.e-RECHAZADA{background:#fdeaea;color:#c4312c}.sol-badge.e-CANCELADA{background:#eef1f4;color:#7b8a97}
+.sol-btn{border:0;border-radius:9px;padding:10px 16px;font:600 12.5px 'Poppins',sans-serif;cursor:pointer;transition:transform .2s,box-shadow .2s}
+.sol-btn:hover:not(:disabled){transform:translateY(-1px)}.sol-btn:disabled{opacity:.6;cursor:not-allowed}
+.sol-btn.primario{background:linear-gradient(135deg,#0077b6,#0096c7);color:#fff;box-shadow:0 5px 14px rgba(0,119,182,.2)}
+.sol-btn.ok{background:linear-gradient(135deg,#0d9488,#14b8a6);color:#fff}.sol-btn.aviso{background:#fff3c4;color:#7a5d00}
+.sol-btn.peligro{background:#fdeaea;color:#c4312c}.sol-btn.secundario{background:#e8f5fb;color:#0077b6}
+.sol-modal{max-width:640px;max-height:90vh;overflow-y:auto}
+.sol-modal label,.inst-form label{display:block;margin:14px 0 6px;font-size:12.5px;font-weight:600;color:#102a43}
+.sol-modal label small,.inst-form label small{font-weight:400;color:#718096}
+.sol-modal textarea,.sol-modal select,.sol-modal input,.inst-form input,.inst-form textarea{width:100%;box-sizing:border-box;padding:11px 13px;border:1px solid #d5e1e8;border-radius:10px;font:13px 'Poppins',sans-serif;background:#fbfdfe}
+.sol-modal textarea:focus,.sol-modal select:focus,.sol-modal input:focus,.inst-form input:focus,.inst-form textarea:focus{outline:0;border-color:#0096c7;box-shadow:0 0 0 3px rgba(0,150,199,.12)}
+.sol-datos{display:grid;grid-template-columns:1fr 1fr;gap:14px 18px;margin:16px 0 0}
+.sol-datos div{min-width:0}.sol-datos .ancho{grid-column:1/-1}
+.sol-datos dt{font-size:10.5px;text-transform:uppercase;letter-spacing:.5px;color:#8297a1;font-weight:600;margin-bottom:3px}
+.sol-datos dd{margin:0;font-size:13px;color:#102a43;overflow-wrap:anywhere}.sol-datos a{color:#0077b6;font-weight:600}
+.sol-acciones{display:flex;flex-wrap:wrap;gap:10px;margin-top:16px}
+.sol-orden{margin-top:22px;padding:18px;border:1px solid #d6eefc;border-left:4px solid #14b8a6;border-radius:14px;background:#f5fbfd}
+.sol-orden h4{margin:0;font-size:14px;color:#102a43}.sol-orden h4 span{margin-left:8px;color:#0077b6;font-weight:700}
+.sol-nota{color:#718096;font-size:13px}
+.inst-lista{display:grid;grid-template-columns:repeat(auto-fill,minmax(340px,1fr));gap:18px}
+.inst-card{background:#fff;border:1px solid #e2edf3;border-radius:16px;padding:22px;box-shadow:0 8px 25px rgba(16,42,67,.05)}
+.inst-card header{display:flex;justify-content:space-between;gap:12px;align-items:flex-start}
+.inst-card header small{color:#0077b6;font-weight:700;font-size:11.5px}.inst-card h3{margin:3px 0 0;font-size:15px;color:#102a43}
+.inst-form{margin-top:6px;padding-top:6px;border-top:1px solid #e2edf3}
+.sol-error{margin:10px 0 0;font-size:12.5px;color:#c4312c;min-height:16px}
+@media (max-width:600px){.sol-datos{grid-template-columns:1fr}.inst-lista{grid-template-columns:1fr}}
+
+/* ---- Ajuste del modal de gestión ---- */
+.sol-modal{background:#fff linear-gradient(90deg,#0077b6,#14b8a6) top/100% 5px no-repeat}
+#solCuerpo{padding:20px 23px 26px}
+#solCuerpo > .sol-badge{margin-bottom:2px}
+#solCuerpo > .sol-datos{margin-top:14px;padding:16px 18px;border:1px solid #d6eefc;border-radius:14px;background:linear-gradient(135deg,#f5fbfd,#f0faf7)}
+.sol-orden .sol-datos{padding:0;border:0;background:none}
+.sol-decision{margin-top:18px;padding:18px;border:1px solid #cfe9f2;border-left:4px solid #14b8a6;border-radius:14px;background:linear-gradient(135deg,#eef9fc,#eefaf7)}
+.sol-decision label{margin-top:0;color:#0a4f8f}
+.sol-decision textarea{background:#fff;min-height:84px;resize:vertical}
+.sol-ayuda{margin:6px 0 0;font-size:11.5px;color:#526b82}
+.sol-decision .sol-acciones{margin-top:14px;padding-top:14px;border-top:1px dashed #bfdde8}
+.sol-btn.ok{box-shadow:0 5px 14px rgba(20,184,166,.28)}
+.sol-error:not(:empty){padding:10px 12px;border-radius:10px;background:#fdeaea}

@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>AquaIca | Clientes</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/style.css"><link rel="stylesheet" href="css/dashboard.css"><link rel="stylesheet" href="css/clientes.css">
+</head>
+<body class="dashboard-body">
+  <div class="dashboard-bg-decor" aria-hidden="true"><span class="deco-bubble db1"></span><span class="deco-bubble db2"></span><span class="deco-bubble db3"></span><span class="deco-bubble db4"></span></div>
+  <aside class="sidebar">
+    <div class="sidebar-brand"><div class="brand-logo">A</div><div><h2>AquaIca</h2><span>Sistema de Gestión</span></div></div>
+    <nav class="sidebar-menu">
+      <a href="dashboard.html" class="menu-item"><span class="menu-icon"><svg class="icon-svg" viewBox="0 0 24 24"><rect x="3" y="3" width="7" height="9" rx="2"/><rect x="14" y="3" width="7" height="5" rx="2"/><rect x="14" y="12" width="7" height="9" rx="2"/><rect x="3" y="16" width="7" height="5" rx="2"/></svg></span>Dashboard</a>
+      <a href="reportes.html" class="menu-item"><span class="menu-icon"><svg class="icon-svg" viewBox="0 0 24 24"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><path d="M14 2v6h6M9 13h6M9 17h6"/></svg></span>Reportes</a>
+      <a href="asignaciones.html" class="menu-item"><span class="menu-icon"><svg class="icon-svg" viewBox="0 0 24 24"><path d="M9 12l2 2 4-4"/><circle cx="12" cy="12" r="9"/></svg></span>Asignaciones</a>
+      <a href="seguimientos.html" class="menu-item"><span class="menu-icon"><svg class="icon-svg" viewBox="0 0 24 24"><path d="M3 12a9 9 0 1 1 3 6.7"/><path d="M3 21v-6h6"/></svg></span>Seguimientos</a>
+      <a href="evidencias.html" class="menu-item"><span class="menu-icon"><svg class="icon-svg" viewBox="0 0 24 24"><rect x="3" y="3" width="18" height="18" rx="3"/><circle cx="9" cy="9" r="2"/><path d="M21 15l-5-5L5 21"/></svg></span>Evidencias</a>
+      <a href="personal.html" class="menu-item"><span class="menu-icon"><svg class="icon-svg" viewBox="0 0 24 24"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87M16 3.13a4 4 0 0 1 0 7.75"/></svg></span>Personal</a>
+      <a href="clientes.html" class="menu-item active"><span class="menu-icon"><svg class="icon-svg" viewBox="0 0 24 24"><path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M19 8v6M16 11h6"/></svg></span>Clientes</a>
+      <a href="suministros.html" class="menu-item"><span class="menu-icon"><svg class="icon-svg" viewBox="0 0 24 24"><path d="M20 10c0 6-8 12-8 12s-8-6-8-12a8 8 0 0 1 16 0z"/><circle cx="12" cy="10" r="3"/></svg></span>Suministros</a>
+    </nav>
+    <div class="sidebar-bottom"><button id="logoutButton" class="logout-button">Cerrar sesión</button></div>
+  </aside>
+  <main class="dashboard-main">
+    <header class="dashboard-header"><div><span class="header-subtitle">Administración</span><h1>Clientes</h1></div><div class="user-info"><div class="user-avatar" id="userAvatar">U</div><div><strong id="usernameDisplay">Usuario</strong><span id="roleDisplay">Usuario</span></div></div></header>
+    <section class="clientes-intro"><div><h2>Gestión de clientes</h2><p>Administra los datos de los titulares del servicio y prepara la asociación de sus suministros.</p></div><button type="button" class="clientes-add-button" id="nuevoClienteButton"><svg class="icon-svg" viewBox="0 0 24 24"><path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M19 8v6M16 11h6"/></svg>Nuevo cliente</button></section>
+    <section class="clientes-stats">
+      <div class="clientes-stat-card stat-total"><div class="clientes-stat-icon"><svg class="icon-svg" viewBox="0 0 24 24"><path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M19 8v6M16 11h6"/></svg></div><div><span>Total de clientes</span><strong id="statTotal">0</strong></div></div>
+      <div class="clientes-stat-card stat-activo"><div class="clientes-stat-icon"><svg class="icon-svg" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M8 12.5l2.5 2.5L16 9.5"/></svg></div><div><span>Activos</span><strong id="statActivos">0</strong></div></div>
+      <div class="clientes-stat-card stat-inactivo"><div class="clientes-stat-icon"><svg class="icon-svg" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M5.6 5.6l12.8 12.8"/></svg></div><div><span>Inactivos</span><strong id="statInactivos">0</strong></div></div>
+      <div class="clientes-stat-card stat-correo"><div class="clientes-stat-icon"><svg class="icon-svg" viewBox="0 0 24 24"><rect x="3" y="5" width="18" height="14" rx="2"/><path d="m3 7 9 6 9-6"/></svg></div><div><span>Con correo</span><strong id="statCorreo">0</strong></div></div>
+    </section>
+    <section class="clientes-filtros">
+      <div class="clientes-buscador"><label for="buscarCliente">Buscar cliente</label><div class="clientes-buscador-input"><svg class="icon-svg" viewBox="0 0 24 24"><circle cx="11" cy="11" r="7"/><path d="M21 21l-4.3-4.3"/></svg><input type="search" id="buscarCliente" placeholder="Nombre o DNI..."></div></div>
+      <div><label for="filtroEstado">Estado</label><select id="filtroEstado"><option value="">Todos</option><option value="ACTIVO">Activo</option><option value="INACTIVO">Inactivo</option></select></div>
+    </section>
+    <section class="content-card clientes-tabla-card"><div class="section-header"><div><h2><svg class="icon-svg" viewBox="0 0 24 24"><path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M19 8v6M16 11h6"/></svg>Clientes registrados</h2><p>Listado de titulares registrados en AquaIca</p></div></div><div class="table-container"><table><thead><tr><th>Cliente</th><th>DNI</th><th>Teléfono</th><th>Correo</th><th>Fecha de registro</th><th>Estado</th><th>Acciones</th></tr></thead><tbody id="clientesTable"><tr><td colspan="7" class="clientes-vacio">Cargando clientes...</td></tr></tbody></table></div></section>
+  </main>
+  <div class="clientes-modal-overlay" id="clienteModal"><div class="clientes-modal"><div class="clientes-modal-header"><div><span id="modalKicker">Nuevo registro</span><h3 id="modalTitulo">Nuevo cliente</h3></div><button type="button" class="modal-close" id="cerrarModal" aria-label="Cerrar"><svg class="icon-svg" viewBox="0 0 24 24"><path d="M18 6 6 18M6 6l12 12"/></svg></button></div>
+    <form id="clienteForm" autocomplete="off"><input type="hidden" id="clienteId"><h4 class="cliente-form-title">Datos del cliente</h4><div class="cliente-form-grid">
+      <div class="cliente-field cliente-field-full"><label for="nombreCompleto">Nombre completo *</label><input id="nombreCompleto" maxlength="150" placeholder="Ej. María Pérez García" required></div>
+      <div class="cliente-field"><label for="dni">DNI *</label><input id="dni" maxlength="8" inputmode="numeric" placeholder="8 dígitos" required></div>
+      <div class="cliente-field"><label for="telefono">Teléfono</label><input id="telefono" maxlength="15" inputmode="numeric" placeholder="Número de contacto"></div>
+      <div class="cliente-field cliente-field-full"><label for="email">Correo electrónico</label><input id="email" type="email" maxlength="100" placeholder="cliente@correo.com"></div>
+      <div class="cliente-field cliente-field-full" id="estadoField" hidden><label for="estado">Estado</label><select id="estado"><option value="ACTIVO">Activo</option><option value="INACTIVO">Inactivo</option></select></div>
+    </div><p class="cliente-form-error" id="formError" role="alert"></p><div class="cliente-form-actions"><button type="button" class="btn-cancelar" id="cancelarModal">Cancelar</button><button type="submit" class="btn-guardar" id="guardarCliente">Guardar cliente</button></div></form>
+  </div></div><div class="clientes-toast" id="clientesToast" role="status"></div>
+  <script src="js/api.js"></script><script src="js/clientes.js"></script>
+</body></html>

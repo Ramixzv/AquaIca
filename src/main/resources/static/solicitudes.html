@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>AquaIca | Solicitudes</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/style.css"><link rel="stylesheet" href="css/dashboard.css"><link rel="stylesheet" href="css/clientes.css"><link rel="stylesheet" href="css/solicitudes.css">
+</head>
+<body class="dashboard-body">
+  <div class="dashboard-bg-decor" aria-hidden="true"><span class="deco-bubble db1"></span><span class="deco-bubble db2"></span><span class="deco-bubble db3"></span><span class="deco-bubble db4"></span></div>
+  <aside class="sidebar">
+    <div class="sidebar-brand"><div class="brand-logo">A</div><div><h2>AquaIca</h2><span>Sistema de Gestión</span></div></div>
+    <nav class="sidebar-menu" id="sidebarMenu"></nav>
+    <div class="sidebar-bottom"><button id="logoutButton" class="logout-button">Cerrar sesión</button></div>
+  </aside>
+  <main class="dashboard-main">
+    <header class="dashboard-header"><div><span class="header-subtitle">Administración</span><h1>Solicitudes</h1></div><div class="user-info"><div class="user-avatar" id="userAvatar">U</div><div><strong id="usernameDisplay">Usuario</strong><span id="roleDisplay">Usuario</span></div></div></header>
+    <section class="clientes-intro"><div><h2>Solicitudes de servicio</h2><p>Revisa las solicitudes de nueva conexión, apruébalas y asigna al técnico que hará la instalación.</p></div></section>
+    <section class="clientes-stats"><div class="clientes-stat-card stat-total"><div class="clientes-stat-icon"><svg class="icon-svg" viewBox="0 0 24 24"><path d="M14 3H7a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V8z"/><path d="M14 3v5h5M9 13h6M9 17h4"/></svg></div><div><span>Por revisar</span><strong id="stRevisar">0</strong></div></div><div class="clientes-stat-card stat-inactivo"><div class="clientes-stat-icon"><svg class="icon-svg" viewBox="0 0 24 24"><path d="M14 3H7a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V8z"/><path d="M14 3v5h5M9 13h6M9 17h4"/></svg></div><div><span>Observadas</span><strong id="stObservadas">0</strong></div></div><div class="clientes-stat-card stat-correo"><div class="clientes-stat-icon"><svg class="icon-svg" viewBox="0 0 24 24"><path d="M14 3H7a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V8z"/><path d="M14 3v5h5M9 13h6M9 17h4"/></svg></div><div><span>Aprobadas / en instalación</span><strong id="stInstalacion">0</strong></div></div><div class="clientes-stat-card stat-activo"><div class="clientes-stat-icon"><svg class="icon-svg" viewBox="0 0 24 24"><path d="M14 3H7a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V8z"/><path d="M14 3v5h5M9 13h6M9 17h4"/></svg></div><div><span>Activadas</span><strong id="stActivadas">0</strong></div></div></section>
+    <section class="clientes-filtros">
+      <div class="clientes-buscador"><label for="buscarSolicitud">Buscar solicitud</label><div class="clientes-buscador-input"><svg class="icon-svg" viewBox="0 0 24 24"><circle cx="11" cy="11" r="7"/><path d="M21 21l-4.3-4.3"/></svg><input type="search" id="buscarSolicitud" placeholder="Código, cliente, DNI o dirección..."></div></div>
+      <div><label for="filtroEstado">Estado</label><select id="filtroEstado"><option value="">Todos</option><option value="PENDIENTE">Pendiente</option><option value="EN_EVALUACION">En evaluación</option><option value="OBSERVADA">Observada</option><option value="APROBADA">Aprobada</option><option value="EN_INSTALACION">En instalación</option><option value="ACTIVADA">Activada</option><option value="RECHAZADA">Rechazada</option><option value="CANCELADA">Cancelada</option></select></div>
+    </section>
+    <section class="content-card clientes-tabla-card"><div class="section-header"><div><h2><svg class="icon-svg" viewBox="0 0 24 24"><path d="M14 3H7a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V8z"/><path d="M14 3v5h5M9 13h6M9 17h4"/></svg>Solicitudes registradas</h2><p>Solicitudes de nueva conexión enviadas por los ciudadanos</p></div></div><div class="table-container"><table><thead><tr><th>Solicitud</th><th>Cliente</th><th>Dirección</th><th>Fecha</th><th>Estado</th><th>Acciones</th></tr></thead><tbody id="solTabla"><tr><td colspan="6" class="clientes-vacio">Cargando solicitudes...</td></tr></tbody></table></div></section>
+  </main>
+  <div class="clientes-modal-overlay" id="solModal"><div class="clientes-modal sol-modal"><div class="clientes-modal-header"><div><span id="solKicker">Solicitud</span><h3 id="solTitulo">Gestionar solicitud</h3></div><button type="button" class="modal-close" id="solCerrar" aria-label="Cerrar"><svg class="icon-svg" viewBox="0 0 24 24"><path d="M18 6 6 18M6 6l12 12"/></svg></button></div><div id="solCuerpo"></div></div></div>
+  <div class="clientes-toast" id="clientesToast" role="status"></div>
+  <script src="js/api.js"></script><script src="js/menu.js"></script><script src="js/solicitudes.js"></script>
+</body></html>

@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>AquaIca | Iniciar sesión</title>
+
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="css/login.css">
+</head>
+
+<body class="login-body">
+
+    <main class="login-page">
+
+        <section class="login-card">
+
+        <div class="login-brand">
+
+    <img
+        src="images/logo-aquaica.png"
+        alt="AquaIca"
+        class="login-logo">
+
+            <div class="login-brand-text">
+        <h1>AquaIca</h1>
+        <span>Sistema de Gestión Municipal</span>
+    </div>
+
+</div>
+
+
+            <!-- Título -->
+            <div class="login-header">
+
+                <h2>Iniciar sesión</h2>
+
+                <p>
+                    Ingresa tus credenciales para continuar
+                </p>
+
+            </div>
+
+
+            <!-- Formulario -->
+            <form id="loginForm">
+
+                <div class="form-group">
+
+                    <label for="username">
+                        Usuario
+                    </label>
+
+                    <input
+                        type="text"
+                        id="username"
+                        name="username"
+                        placeholder="Ingresa tu usuario"
+                        autocomplete="username"
+                        required
+                    >
+
+                </div>
+
+
+                <div class="form-group">
+
+                    <label for="password">
+                        Contraseña
+                    </label>
+
+                    <input
+                        type="password"
+                        id="password"
+                        name="password"
+                        placeholder="Ingresa tu contraseña"
+                        autocomplete="current-password"
+                        required
+                    >
+
+                </div>
+
+
+                <!-- Mensaje de error -->
+                <div
+                    id="loginMessage"
+                    class="login-message"
+                    hidden>
+                </div>
+
+
+                <button
+                    type="submit"
+                    class="login-button">
+
+                    Iniciar sesión
+
+                </button>
+            <div class="register-link">
+    <span>¿No tienes una cuenta?</span>
+    <a href="registro.html">Regístrate</a>
+</div>
+
+            </form>
+
+
+            <!-- Footer -->
+            <div class="login-footer">
+
+                <span>AquaIca © 2026</span>
+
+                <span>
+                    Sistema de gestión municipal
+                </span>
+
+            </div>
+
+        </section>
+    </main>
+<script src="js/auth.js"></script>
+
+</body>
+
+</html>

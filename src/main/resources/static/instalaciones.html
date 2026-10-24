@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>AquaIca | Instalaciones</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/style.css"><link rel="stylesheet" href="css/dashboard.css"><link rel="stylesheet" href="css/clientes.css"><link rel="stylesheet" href="css/solicitudes.css">
+</head>
+<body class="dashboard-body">
+  <div class="dashboard-bg-decor" aria-hidden="true"><span class="deco-bubble db1"></span><span class="deco-bubble db2"></span><span class="deco-bubble db3"></span><span class="deco-bubble db4"></span></div>
+  <aside class="sidebar">
+    <div class="sidebar-brand"><div class="brand-logo">A</div><div><h2>AquaIca</h2><span>Sistema de Gestión</span></div></div>
+    <nav class="sidebar-menu" id="sidebarMenu"></nav>
+    <div class="sidebar-bottom"><button id="logoutButton" class="logout-button">Cerrar sesión</button></div>
+  </aside>
+  <main class="dashboard-main">
+    <header class="dashboard-header"><div><span class="header-subtitle">Técnico</span><h1>Instalaciones</h1></div><div class="user-info"><div class="user-avatar" id="userAvatar">U</div><div><strong id="usernameDisplay">Usuario</strong><span id="roleDisplay">Usuario</span></div></div></header>
+    <section class="clientes-intro"><div><h2>Mis instalaciones</h2><p>Órdenes de instalación asignadas a ti. Al terminar, registra el medidor para activar el servicio del cliente.</p></div></section>
+    <section id="instLista" class="inst-lista"><p class="sol-nota">Cargando tus órdenes...</p></section>
+  </main>
+  <div class="clientes-toast" id="clientesToast" role="status"></div>
+  <script src="js/api.js"></script><script src="js/menu.js"></script><script src="js/instalaciones.js"></script>
+</body></html>
