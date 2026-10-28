@@ -37,6 +37,9 @@ public class Usuario {
     @Column(nullable = false, length = 255)
     private String password;
 
+    @Column(name = "google_subject", unique = true, length = 255)
+    private String googleSubject;
+
     @Column(nullable = false, length = 20)
     private String rol;
 
@@ -107,5 +110,13 @@ public class Usuario {
 
     public void setFechaCreacion(LocalDateTime fechaCreacion) {
         this.fechaCreacion = fechaCreacion;
+    }
+
+    public String getGoogleSubject() {
+    return googleSubject;
+    }
+
+    public void setGoogleSubject(String googleSubject) {
+    this.googleSubject = googleSubject;
     }
 }

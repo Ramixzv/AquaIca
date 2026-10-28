@@ -7,7 +7,9 @@ import org.springframework.data.jpa.repository.JpaRepository;
 
 import com.aquaica.entity.Usuario;
 
+
 public interface UsuarioRepository extends JpaRepository<Usuario, Long> {
+    
 
     Optional<Usuario> findByUsername(String username);
 
@@ -17,4 +19,6 @@ public interface UsuarioRepository extends JpaRepository<Usuario, Long> {
 
     // Buscar si un cliente ya tiene una cuenta
     Optional<Usuario> findByClienteId(Long clienteId);
+
+    Optional<Usuario> findByGoogleSubject(String googleSubject);
 }

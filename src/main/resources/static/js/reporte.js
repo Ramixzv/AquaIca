@@ -95,10 +95,10 @@ document.addEventListener("DOMContentLoaded", () => {
 
 
             titularSuministro.textContent =
-                suministro.nombreTitular ?? "-";
+                suministro.nombreCliente ?? "-";
 
             dniSuministro.textContent =
-                suministro.dni ?? "-";
+                suministro.dniCliente ?? "-";
 
             direccionSuministro.textContent =
                 suministro.direccion ?? "-";

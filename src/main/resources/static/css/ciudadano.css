@@ -1124,3 +1124,19 @@ button { font-family: inherit; }
 @media (max-width:640px){.cons-kpis{grid-template-columns:1fr}}
 
 .btn-sec.chico{padding:10px 16px;font-size:12.5px}
+
+
+/* ===== Recibos y pagos ===== */
+.rb-seccion{margin:20px 0 10px;font-size:13px;font-weight:700;color:#0a4f8f}
+.rb-seccion:first-child{margin-top:4px}
+.rb-desglose{width:100%;border-collapse:collapse;margin:0 0 14px;font-size:13px}
+.rb-desglose td{padding:9px 2px;border-bottom:1px solid #eef3f6;color:#102a43}
+.rb-desglose td:last-child{text-align:right;font-variant-numeric:tabular-nums}
+.rb-desglose small{color:#718096}
+.rb-medios{margin:16px 0 0;padding:0;border:0}
+.rb-medios legend{padding:0;margin-bottom:8px;font-size:12.5px;font-weight:700;color:#0a3d7a}
+.rb-medio{display:flex;align-items:center;gap:10px;padding:11px 14px;margin-bottom:8px;border:1px solid #d5e1e8;border-radius:12px;cursor:pointer;font-size:13px;color:#102a43}
+.rb-medio:has(input:checked){border-color:#0a74c9;background:#eef6fd}
+.rb-nota{margin:12px 0 0;padding:10px 14px;border-radius:12px;background:#f5fbfd;font-size:12px;line-height:1.5;color:#526b82}
+.rb-error{margin:10px 0 0;min-height:16px;font-size:12.5px;color:#c4312c}
+.rb-error:not(:empty){padding:10px 12px;border-radius:10px;background:#fdeaea}

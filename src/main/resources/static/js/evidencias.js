@@ -775,3 +775,35 @@ document
 cargarUsuario();
 
 cargarEvidencias();
+
+
+function inicializarMenuUsuarioEvidencias() {
+    document.getElementById("logoutMenu")?.addEventListener("click", () => {
+        ["token", "jwt", "accessToken", "username", "rol", "personalId", "clienteId"].forEach(k => localStorage.removeItem(k));
+        window.location.href = "login.html";
+    });
+
+    function cerrarMenus() {
+        document.querySelectorAll(".dp-menu.abierto").forEach(menu => menu.classList.remove("abierto"));
+        document.querySelectorAll(".dp-acciones [aria-expanded='true']").forEach(boton => boton.setAttribute("aria-expanded", "false"));
+    }
+
+    [["usuarioBtn", "usuarioMenu"], ["campanaBtn", "campanaMenu"]].forEach(([botonId, menuId]) => {
+        const boton = document.getElementById(botonId);
+        const menu = document.getElementById(menuId);
+        if (!boton || !menu) return;
+        boton.addEventListener("click", evento => {
+            evento.stopPropagation();
+            const abrir = !menu.classList.contains("abierto");
+            cerrarMenus();
+            menu.classList.toggle("abierto", abrir);
+            boton.setAttribute("aria-expanded", String(abrir));
+        });
+    });
+
+    document.addEventListener("click", cerrarMenus);
+    document.addEventListener("keydown", evento => {
+        if (evento.key === "Escape") cerrarMenus();
+    });
+}
+inicializarMenuUsuarioEvidencias();

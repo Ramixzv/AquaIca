@@ -34,6 +34,9 @@ public class Cliente {
     @Column(nullable = false, length = 20)
     private String estado = "ACTIVO";
 
+    @Column(name = "titular_verificado", nullable = false)
+    private boolean titularVerificado = false;
+
     @Column(name = "fecha_registro", nullable = false)
     private LocalDateTime fechaRegistro;
 
@@ -101,5 +104,13 @@ public class Cliente {
 
     public void setFechaRegistro(LocalDateTime fechaRegistro) {
         this.fechaRegistro = fechaRegistro;
+    }
+
+    public boolean isTitularVerificado() {
+    return titularVerificado;
+    }
+
+    public void setTitularVerificado(boolean titularVerificado) {
+    this.titularVerificado = titularVerificado;
     }
 }

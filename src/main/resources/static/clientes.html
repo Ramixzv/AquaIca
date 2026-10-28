@@ -5,13 +5,19 @@
   <title>AquaIca | Clientes</title>
   <link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700;800&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="css/style.css"><link rel="stylesheet" href="css/dashboard.css"><link rel="stylesheet" href="css/clientes.css">
+  <link rel="stylesheet" href="css/style.css">
+  <link rel="stylesheet" href="css/dashboard.css">
+  <link rel="stylesheet" href="css/sidebar-pro.css">
+  <link rel="stylesheet" href="css/dashboard-pro.css">
+  <link rel="stylesheet" href="css/notificaciones.css">
+  <link rel="stylesheet" href="css/clientes.css">
+
 </head>
 <body class="dashboard-body">
   <div class="dashboard-bg-decor" aria-hidden="true"><span class="deco-bubble db1"></span><span class="deco-bubble db2"></span><span class="deco-bubble db3"></span><span class="deco-bubble db4"></span></div>
-  <aside class="sidebar">
+  <aside class="sidebar sidebar-pro">
     <div class="sidebar-brand"><div class="brand-logo">A</div><div><h2>AquaIca</h2><span>Sistema de Gestión</span></div></div>
-    <nav class="sidebar-menu">
+    <nav class="sidebar-menu" id="sidebarMenu">
       <a href="dashboard.html" class="menu-item"><span class="menu-icon"><svg class="icon-svg" viewBox="0 0 24 24"><rect x="3" y="3" width="7" height="9" rx="2"/><rect x="14" y="3" width="7" height="5" rx="2"/><rect x="14" y="12" width="7" height="9" rx="2"/><rect x="3" y="16" width="7" height="5" rx="2"/></svg></span>Dashboard</a>
       <a href="reportes.html" class="menu-item"><span class="menu-icon"><svg class="icon-svg" viewBox="0 0 24 24"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><path d="M14 2v6h6M9 13h6M9 17h6"/></svg></span>Reportes</a>
       <a href="asignaciones.html" class="menu-item"><span class="menu-icon"><svg class="icon-svg" viewBox="0 0 24 24"><path d="M9 12l2 2 4-4"/><circle cx="12" cy="12" r="9"/></svg></span>Asignaciones</a>
@@ -24,13 +30,71 @@
     <div class="sidebar-bottom"><button id="logoutButton" class="logout-button">Cerrar sesión</button></div>
   </aside>
   <main class="dashboard-main">
-    <header class="dashboard-header"><div><span class="header-subtitle">Administración</span><h1>Clientes</h1></div><div class="user-info"><div class="user-avatar" id="userAvatar">U</div><div><strong id="usernameDisplay">Usuario</strong><span id="roleDisplay">Usuario</span></div></div></header>
-    <section class="clientes-intro"><div><h2>Gestión de clientes</h2><p>Administra los datos de los titulares del servicio y prepara la asociación de sus suministros.</p></div><button type="button" class="clientes-add-button" id="nuevoClienteButton"><svg class="icon-svg" viewBox="0 0 24 24"><path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M19 8v6M16 11h6"/></svg>Nuevo cliente</button></section>
+    
+<header class="dp-top">
+    <div class="dp-titulo">
+        <span>Administración</span>
+        <h1>Clientes</h1>
+    </div>
+
+    <div class="dp-acciones">
+        <div class="dp-campana" id="campanaWrap">
+            <button
+                type="button"
+                class="dp-campana-btn"
+                id="campanaBtn"
+                aria-label="Notificaciones"
+                aria-haspopup="true"
+                aria-expanded="false">
+                <svg class="dp-ico" viewBox="0 0 24 24">
+                    <path d="M6 8a6 6 0 0 1 12 0c0 7 3 9 3 9H3s3-2 3-9"/>
+                    <path d="M10.3 21a1.94 1.94 0 0 0 3.4 0"/>
+                </svg>
+                <span class="dp-badge" id="campanaBadge" hidden>0</span>
+            </button>
+
+            <div class="dp-menu dp-menu-notif" id="campanaMenu">
+                <h4>Notificaciones</h4>
+                <div id="campanaLista"></div>
+            </div>
+        </div>
+
+        <div class="dp-usuario" id="usuarioWrap">
+            <button
+                type="button"
+                class="dp-usuario-btn"
+                id="usuarioBtn"
+                aria-haspopup="true"
+                aria-expanded="false">
+                <span class="user-avatar" id="userAvatar">U</span>
+                <span class="dp-usuario-txt">
+                    <strong id="usernameDisplay">Usuario</strong>
+                    <small id="roleDisplay">Usuario</small>
+                </span>
+                <svg class="dp-ico chev" viewBox="0 0 24 24">
+                    <path d="m6 9 6 6 6-6"/>
+                </svg>
+            </button>
+
+            <div class="dp-menu" id="usuarioMenu">
+                <button type="button" id="logoutMenu">
+                    <svg class="dp-ico" viewBox="0 0 24 24">
+                        <path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"/>
+                        <path d="m16 17 5-5-5-5M21 12H9"/>
+                    </svg>
+                    Cerrar sesión
+                </button>
+            </div>
+        </div>
+    </div>
+</header>
+
+    <section class="clientes-intro dp-banner"><div><h2>Gestión de clientes</h2><p>Administra los datos de los titulares del servicio y prepara la asociación de sus suministros.</p></div><button type="button" class="clientes-add-button" id="nuevoClienteButton"><svg class="icon-svg" viewBox="0 0 24 24"><path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M19 8v6M16 11h6"/></svg>Nuevo cliente</button></section>
     <section class="clientes-stats">
-      <div class="clientes-stat-card stat-total"><div class="clientes-stat-icon"><svg class="icon-svg" viewBox="0 0 24 24"><path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M19 8v6M16 11h6"/></svg></div><div><span>Total de clientes</span><strong id="statTotal">0</strong></div></div>
-      <div class="clientes-stat-card stat-activo"><div class="clientes-stat-icon"><svg class="icon-svg" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M8 12.5l2.5 2.5L16 9.5"/></svg></div><div><span>Activos</span><strong id="statActivos">0</strong></div></div>
-      <div class="clientes-stat-card stat-inactivo"><div class="clientes-stat-icon"><svg class="icon-svg" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M5.6 5.6l12.8 12.8"/></svg></div><div><span>Inactivos</span><strong id="statInactivos">0</strong></div></div>
-      <div class="clientes-stat-card stat-correo"><div class="clientes-stat-icon"><svg class="icon-svg" viewBox="0 0 24 24"><rect x="3" y="5" width="18" height="14" rx="2"/><path d="m3 7 9 6 9-6"/></svg></div><div><span>Con correo</span><strong id="statCorreo">0</strong></div></div>
+      <div class="clientes-stat-card stat-total"><div class="clientes-stat-icon"><svg class="icon-svg" viewBox="0 0 24 24"><path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M19 8v6M16 11h6"/></svg></div><div><span>Total de perfiles</span><strong id="statTotal">0</strong></div></div>
+      <div class="clientes-stat-card stat-activo"><div class="clientes-stat-icon"><svg class="icon-svg" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M8 12.5l2.5 2.5L16 9.5"/></svg></div><div><span>Titulares Verificados</span><strong id="statActivos">0</strong></div></div>
+      <div class="clientes-stat-card stat-inactivo"><div class="clientes-stat-icon"><svg class="icon-svg" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M5.6 5.6l12.8 12.8"/></svg></div><div><span>Pendientes de verificación</span><strong id="statInactivos">0</strong></div></div>
+      <div class="clientes-stat-card stat-correo"><div class="clientes-stat-icon"><svg class="icon-svg" viewBox="0 0 24 24"><rect x="3" y="5" width="18" height="14" rx="2"/><path d="m3 7 9 6 9-6"/></svg></div><div><span>Usuarios Registrados</span><strong id="statCorreo">0</strong></div></div>
     </section>
     <section class="clientes-filtros">
       <div class="clientes-buscador"><label for="buscarCliente">Buscar cliente</label><div class="clientes-buscador-input"><svg class="icon-svg" viewBox="0 0 24 24"><circle cx="11" cy="11" r="7"/><path d="M21 21l-4.3-4.3"/></svg><input type="search" id="buscarCliente" placeholder="Nombre o DNI..."></div></div>
@@ -47,5 +111,9 @@
       <div class="cliente-field cliente-field-full" id="estadoField" hidden><label for="estado">Estado</label><select id="estado"><option value="ACTIVO">Activo</option><option value="INACTIVO">Inactivo</option></select></div>
     </div><p class="cliente-form-error" id="formError" role="alert"></p><div class="cliente-form-actions"><button type="button" class="btn-cancelar" id="cancelarModal">Cancelar</button><button type="submit" class="btn-guardar" id="guardarCliente">Guardar cliente</button></div></form>
   </div></div><div class="clientes-toast" id="clientesToast" role="status"></div>
-  <script src="js/api.js"></script><script src="js/clientes.js"></script>
+    <script src="js/api.js"></script>
+    <script src="js/clientes.js"></script>
+    <script src="js/menu.js"></script>
+    <script src="js/notificaciones.js"></script>
+    
 </body></html>

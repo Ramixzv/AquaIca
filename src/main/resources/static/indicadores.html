@@ -1,0 +1,209 @@
+﻿<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>AquaIca | Indicadores</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/style.css">
+  <link rel="stylesheet" href="css/dashboard.css">
+  <link rel="stylesheet" href="css/sidebar-pro.css">
+  <link rel="stylesheet" href="css/dashboard-pro.css">
+  <link rel="stylesheet" href="css/clientes.css">
+  <link rel="stylesheet" href="css/indicadores.css">
+  <link rel="stylesheet" href="css/notificaciones.css">
+</head>
+<body class="dashboard-body">
+  <div class="dashboard-bg-decor" aria-hidden="true">
+    <span class="deco-bubble db1"></span>
+    <span class="deco-bubble db2"></span>
+    <span class="deco-bubble db3"></span>
+    <span class="deco-bubble db4"></span>
+    <span class="deco-bubble db5"></span>
+  </div>
+
+  <aside class="sidebar sidebar-pro">
+    <div class="sidebar-brand">
+      <div class="brand-logo"><img src="images/logo-aquaica.png" alt="Logo Aqualca"></div>
+      <div>
+        <h2>AquaIca</h2>
+        <span>Sistema de Gestión</span>
+      </div>
+    </div>
+    <nav class="sidebar-menu" id="sidebarMenu"></nav>
+    <div class="sidebar-bottom">
+      <button id="logoutButton" class="logout-button" type="button">Cerrar sesión</button>
+    </div>
+  </aside>
+
+  <main class="dashboard-main">
+
+    <header class="dp-top">
+      <div class="dp-titulo">
+        <span>Análisis</span>
+        <h1>Indicadores</h1>
+      </div>
+
+      <div class="dp-acciones">
+        <div class="dp-campana" id="campanaWrap">
+          <button type="button" class="dp-campana-btn" id="campanaBtn" aria-label="Notificaciones" aria-haspopup="true" aria-expanded="false">
+            <svg class="dp-ico" viewBox="0 0 24 24">
+              <path d="M6 8a6 6 0 0 1 12 0c0 7 3 9 3 9H3s3-2 3-9"/>
+              <path d="M10.3 21a1.94 1.94 0 0 0 3.4 0"/>
+            </svg>
+            <span class="dp-badge" id="campanaBadge" hidden>0</span>
+          </button>
+          <div class="dp-menu dp-menu-notif" id="campanaMenu">
+            <h4>Notificaciones</h4>
+            <div id="campanaLista"></div>
+          </div>
+        </div>
+
+        <div class="dp-usuario" id="usuarioWrap">
+          <button type="button" class="dp-usuario-btn" id="usuarioBtn" aria-haspopup="true" aria-expanded="false">
+            <span class="user-avatar" id="userAvatar">U</span>
+            <span class="dp-usuario-txt">
+              <strong id="usernameDisplay">Usuario</strong>
+              <small id="roleDisplay">Usuario</small>
+            </span>
+            <svg class="dp-ico chev" viewBox="0 0 24 24">
+              <path d="m6 9 6 6 6-6"/>
+            </svg>
+          </button>
+          <div class="dp-menu" id="usuarioMenu">
+            <button type="button" id="logoutMenu">
+              <svg class="dp-ico" viewBox="0 0 24 24">
+                <path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"/>
+                <path d="m16 17 5-5-5-5M21 12H9"/>
+              </svg>
+              Cerrar sesión
+            </button>
+          </div>
+        </div>
+      </div>
+    </header>
+
+    <section class="clientes-intro dp-banner">
+      <div>
+        <h2>Indicadores del servicio</h2>
+        <p>Un resumen en tiempo real de cómo va el servicio: incidencias, conexiones, consumo y cobranza.</p>
+      </div>
+    </section>
+
+    <section class="content-card ind-filtros">
+      <div>
+        <label for="indMeses">Periodo</label>
+        <select id="indMeses">
+          <option value="3">Últimos 3 meses</option>
+          <option value="6" selected>Últimos 6 meses</option>
+          <option value="12">Últimos 12 meses</option>
+        </select>
+      </div>
+      <label class="ind-check">
+        <input type="checkbox" id="indPrueba"> Incluir datos de prueba <small>(lecturas simuladas y recibos de prueba)</small>
+      </label>
+    </section>
+
+    <p class="ind-aviso" id="indAviso" hidden></p>
+
+    <h3 class="ind-titulo">Operación</h3>
+    <section class="clientes-stats">
+      <div class="clientes-stat-card stat-total">
+        <div class="clientes-stat-icon">
+          <svg class="icon-svg" viewBox="0 0 24 24"><path d="M4 20V10M10 20V4M16 20v-7M22 20H2"/></svg>
+        </div>
+        <div><span>Clientes</span><strong id="kClientes">0</strong><small class="ind-sub" id="kClientesSub">&nbsp;</small></div>
+      </div>
+      <div class="clientes-stat-card stat-correo">
+        <div class="clientes-stat-icon">
+          <svg class="icon-svg" viewBox="0 0 24 24"><path d="M4 20V10M10 20V4M16 20v-7M22 20H2"/></svg>
+        </div>
+        <div><span>Medidores activos</span><strong id="kMedidores">0</strong><small class="ind-sub" id="kMedidoresSub">&nbsp;</small></div>
+      </div>
+      <div class="clientes-stat-card stat-inactivo">
+        <div class="clientes-stat-icon">
+          <svg class="icon-svg" viewBox="0 0 24 24"><path d="M4 20V10M10 20V4M16 20v-7M22 20H2"/></svg>
+        </div>
+        <div><span>Incidencias abiertas</span><strong id="kAbiertas">0</strong><small class="ind-sub" id="kAbiertasSub">&nbsp;</small></div>
+      </div>
+      <div class="clientes-stat-card stat-activo">
+        <div class="clientes-stat-icon">
+          <svg class="icon-svg" viewBox="0 0 24 24"><path d="M4 20V10M10 20V4M16 20v-7M22 20H2"/></svg>
+        </div>
+        <div><span>Solicitudes por revisar</span><strong id="kSolicitudes">0</strong><small class="ind-sub" id="kSolicitudesSub">&nbsp;</small></div>
+      </div>
+    </section>
+
+    <h3 class="ind-titulo">Cobranza</h3>
+    <section class="clientes-stats">
+      <div class="clientes-stat-card stat-total">
+        <div class="clientes-stat-icon">
+          <svg class="icon-svg" viewBox="0 0 24 24"><path d="M4 20V10M10 20V4M16 20v-7M22 20H2"/></svg>
+        </div>
+        <div><span>Facturado</span><strong id="kFacturado">0</strong><small class="ind-sub" id="kFacturadoSub">&nbsp;</small></div>
+      </div>
+      <div class="clientes-stat-card stat-activo">
+        <div class="clientes-stat-icon">
+          <svg class="icon-svg" viewBox="0 0 24 24"><path d="M4 20V10M10 20V4M16 20v-7M22 20H2"/></svg>
+        </div>
+        <div><span>Cobrado</span><strong id="kCobrado">0</strong><small class="ind-sub" id="kCobradoSub">&nbsp;</small></div>
+      </div>
+      <div class="clientes-stat-card stat-correo">
+        <div class="clientes-stat-icon">
+          <svg class="icon-svg" viewBox="0 0 24 24"><path d="M4 20V10M10 20V4M16 20v-7M22 20H2"/></svg>
+        </div>
+        <div><span>Por cobrar</span><strong id="kPorCobrar">0</strong><small class="ind-sub" id="kPorCobrarSub">&nbsp;</small></div>
+      </div>
+      <div class="clientes-stat-card stat-inactivo">
+        <div class="clientes-stat-icon">
+          <svg class="icon-svg" viewBox="0 0 24 24"><path d="M4 20V10M10 20V4M16 20v-7M22 20H2"/></svg>
+        </div>
+        <div><span>Vencido</span><strong id="kVencido">0</strong><small class="ind-sub" id="kVencidoSub">&nbsp;</small></div>
+      </div>
+    </section>
+
+    <section class="ind-grid">
+      <article class="content-card ind-card">
+        <h4>Facturado y cobrado por mes</h4>
+        <div class="ind-leyenda"><i style="background:#0a74c9"></i> Facturado <i style="background:#14b8a6"></i> Cobrado</div>
+        <div id="gFacturacion"></div>
+      </article>
+      <article class="content-card ind-card">
+        <h4>Consumo mensual (m³)</h4>
+        <p class="ind-nota" id="gConsumoNota"></p>
+        <div id="gConsumo"></div>
+      </article>
+      <article class="content-card ind-card">
+        <h4>Incidencias por mes</h4>
+        <div id="gIncMes"></div>
+      </article>
+      <article class="content-card ind-card">
+        <h4>Incidencias por tipo</h4>
+        <div id="gIncTipo"></div>
+      </article>
+      <article class="content-card ind-card">
+        <h4>Incidencias por estado</h4>
+        <p class="ind-nota" id="gResolucion"></p>
+        <div id="gIncEstado"></div>
+      </article>
+      <article class="content-card ind-card">
+        <h4>Solicitudes de servicio por estado</h4>
+        <div id="gSolicitudes"></div>
+      </article>
+    </section>
+
+    <section class="content-card ind-card ind-ancho">
+      <h4>Mayores consumos <span id="topPeriodo"></span></h4>
+      <div id="gTop"></div>
+    </section>
+
+  </main>
+
+  <script src="js/api.js"></script>
+  <script src="js/menu.js"></script>
+  <script src="js/indicadores.js"></script>
+  <script src="js/notificaciones.js"></script>
+</body>
+</html>

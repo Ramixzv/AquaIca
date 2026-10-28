@@ -147,6 +147,7 @@ public void registrarCiudadano(RegistroCiudadanoDTO request) {
                     ? null : request.getTelefono().trim());
     cliente.setEmail(request.getEmail().trim());
     cliente.setEstado("ACTIVO");
+    cliente.setTitularVerificado(false);
     cliente.setFechaRegistro(LocalDateTime.now());
 
     Cliente clienteGuardado = clienteRepository.save(cliente);

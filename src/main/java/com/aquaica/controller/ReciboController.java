@@ -19,7 +19,7 @@ import com.aquaica.dto.ResumenGeneracionDTO;
 import com.aquaica.security.CustomUserDetails;
 import com.aquaica.service.ReciboService;
 
-/** Generar y consultar: ADMIN y SOPORTE. Anular: solo ADMIN. (Reglas en SecurityConfig.) */
+/** Para generar y consultar, solo lo hace ADMIN y SOPORTE. */
 @RestController
 @RequestMapping("/api/recibos")
 public class ReciboController {

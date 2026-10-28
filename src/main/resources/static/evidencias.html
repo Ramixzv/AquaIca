@@ -15,9 +15,12 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700;800&display=swap" rel="stylesheet">
 
-    <link
-        rel="stylesheet"
-        href="css/evidencias.css">
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="css/dashboard.css">
+    <link rel="stylesheet" href="css/sidebar-pro.css">
+    <link rel="stylesheet" href="css/dashboard-pro.css">
+    <link rel="stylesheet" href="css/notificaciones.css">
+    <link rel="stylesheet" href="css/evidencias.css">
 
 </head>
 
@@ -82,75 +85,97 @@
     <main class="evidencias-main">
 
 
-        <!-- HEADER -->
+        
+<!-- HEADER COMPARTIDO AQUAICA -->
+<header class="dp-top evidencias-header">
+    <div class="dp-titulo">
+        <span>Gestión documental</span>
+        <h1>Evidencias</h1>
+    </div>
 
-        <header class="evidencias-header">
+    <div class="dp-acciones">
+        <div class="dp-campana">
+            <button
+                type="button"
+                class="dp-campana-btn"
+                id="campanaBtn"
+                aria-label="Notificaciones"
+                aria-haspopup="true"
+                aria-expanded="false">
+                <svg class="dp-ico" viewBox="0 0 24 24">
+                    <path d="M18 8a6 6 0 0 0-12 0c0 7-3 7-3 9h18c0-2-3-2-3-9"/>
+                    <path d="M10 21h4"/>
+                </svg>
+            </button>
 
-            <div>
+            <div class="dp-menu dp-menu-notif" id="campanaMenu">
+                <h4>Notificaciones</h4>
+                <div id="campanaLista">
+                    <div class="dp-notif-ok">
+                        Consulta tus notificaciones aquí.
+                    </div>
+                </div>
+            </div>
+        </div>
 
-                <span class="header-subtitle">
-                    Gestión documental
+        <div class="dp-usuario" id="usuarioWrap">
+            <button
+                type="button"
+                class="dp-usuario-btn"
+                id="usuarioBtn"
+                aria-haspopup="true"
+                aria-expanded="false">
+                <span class="user-avatar" id="userAvatar">
+                    <span id="userInitial">U</span>
                 </span>
 
-                <h1>
-                    Evidencias
-                </h1>
+                <span class="dp-usuario-txt">
+                    <strong id="usernameDisplay">Usuario</strong>
+                    <small id="roleDisplay">Usuario</small>
+                </span>
 
+                <svg class="dp-ico chev" viewBox="0 0 24 24">
+                    <path d="m6 9 6 6 6-6"/>
+                </svg>
+            </button>
+
+            <div class="dp-menu" id="usuarioMenu">
+                <button type="button" id="logoutMenu">
+                    <svg class="dp-ico" viewBox="0 0 24 24">
+                        <path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"/>
+                        <path d="m16 17 5-5-5-5M21 12H9"/>
+                    </svg>
+                    Cerrar sesión
+                </button>
             </div>
+        </div>
+    </div>
+</header>
 
 
-            <div class="user-info">
-
-                <div class="user-avatar" id="userAvatar">
-
-                    <span id="userInitial">
-                        C
-                    </span>
-
-                </div>
-
-
-                <div>
-
-                    <strong id="usernameDisplay">
-                        Usuario
-                    </strong>
-
-                    <span id="roleDisplay">
-                        Usuario
-                    </span>
-
-                </div>
-
-            </div>
-
-        </header>
+        
 
 
 
         <!-- PRESENTACIÓN -->
 
-        <section class="evidencias-intro">
+        
+<!-- BANNER DE EVIDENCIAS -->
+<section class="dp-banner evidencias-banner">
+    <div class="dp-banner-texto">
+        <span class="evidencias-banner-label">
+            REGISTRO DOCUMENTAL
+        </span>
 
-            <div>
+        <h2>Evidencias de los reportes</h2>
 
-                <span class="section-label">
-                    REGISTRO DOCUMENTAL
-                </span>
+        <p>
+            Consulta y revisa las fotografías y archivos
+            asociados a las incidencias registradas en AquaIca.
+        </p>
+    </div>
+</section>
 
-                <h2>
-                    Evidencias de los reportes
-                </h2>
-
-                <p>
-                    Consulta las fotografías y archivos
-                    asociados a las incidencias registradas
-                    en AquaIca.
-                </p>
-
-            </div>
-
-        </section>
 
 
 

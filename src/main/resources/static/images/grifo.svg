@@ -1,0 +1,25 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 190 200" fill="none">
+  <defs>
+    <linearGradient id="metal" x1="0" x2="1" y1="0" y2="1">
+      <stop offset="0" stop-color="#8fd2f7"/>
+      <stop offset=".5" stop-color="#3b9be0"/>
+      <stop offset="1" stop-color="#1c6fc2"/>
+    </linearGradient>
+    <linearGradient id="gota" x1="0" x2="1" y1="0" y2="1">
+      <stop offset="0" stop-color="#4cc3f7"/>
+      <stop offset="1" stop-color="#0a74c9"/>
+    </linearGradient>
+  </defs>
+  <!-- tubo horizontal -->
+  <rect x="70" y="26" width="120" height="34" rx="12" fill="url(#metal)"/>
+  <rect x="62" y="20" width="22" height="46" rx="8" fill="#2b86d6"/>
+  <!-- cuello y pico -->
+  <path d="M96 56 H132 V86 C132 100 118 108 106 108 H72 V84 H96Z" fill="url(#metal)"/>
+  <path d="M68 100 H112 a8 8 0 0 1 8 8 V118 a8 8 0 0 1 -8 8 H76 a8 8 0 0 1 -8 -8Z" fill="#2b86d6"/>
+  <!-- manija -->
+  <rect x="112" y="4" width="24" height="26" rx="6" fill="#2b86d6"/>
+  <rect x="104" y="0" width="40" height="10" rx="5" fill="#8fd2f7"/>
+  <!-- gota -->
+  <path d="M94 142 C103 156 108 163 108 171 a14 14 0 0 1 -28 0 C80 163 85 156 94 142Z" fill="url(#gota)"/>
+  <path d="M88 168 a7 7 0 0 0 6 6" stroke="#fff" stroke-width="2.2" stroke-linecap="round" opacity=".7"/>
+</svg>

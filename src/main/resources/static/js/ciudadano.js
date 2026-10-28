@@ -1,6 +1,21 @@
+/* =========================================================
+   PORTAL CIUDADANO · AQUALCA
+
+   Endpoints que consume (no se modificó el backend):
+     GET   /api/clientes/me
+     GET   /api/reportes/mis-reportes-ciudadano
+     GET   /api/solicitudes-servicio/mis-solicitudes
+     POST  /api/solicitudes-servicio
+     PATCH /api/solicitudes-servicio/{id}/cancelar
+   ========================================================= */
+
 (function () {
 
     "use strict";
+
+    /* =====================================================
+       SESIÓN
+       ===================================================== */
 
     const SESION_CLAVES = ["token", "username", "rol", "personalId", "clienteId"];
 
@@ -14,6 +29,10 @@
         return;
     }
 
+
+    /* =====================================================
+       UTILIDADES
+       ===================================================== */
 
     const $ = (selector, raiz = document) => raiz.querySelector(selector);
     const $$ = (selector, raiz = document) => [...raiz.querySelectorAll(selector)];
@@ -63,6 +82,10 @@
         return apiFetch(url, { ...opciones, headers });
     }
 
+
+    /* =====================================================
+       ICONOS Y CATÁLOGOS
+       ===================================================== */
 
     const svg = trazo => `<svg class="ico" viewBox="0 0 24 24">${trazo}</svg>`;
 
@@ -146,7 +169,9 @@
         solicitudNueva: null,
         solicitudACancelar: null,
         suministros: [],
-        suministroConsumo: null
+        suministroConsumo: null,
+        recibos: [],
+        reciboSeleccionado: null
     };
 
 
@@ -165,17 +190,19 @@
                 return valorPorDefecto;
             });
 
-        const [perfil, reportes, solicitudes, suministros] = await Promise.all([
+        const [perfil, reportes, solicitudes, suministros, recibos] = await Promise.all([
             intentar(api("/api/clientes/me"), "tu perfil", null),
             intentar(api("/api/reportes/mis-reportes-ciudadano"), "tus reportes", []),
             intentar(api("/api/solicitudes-servicio/mis-solicitudes"), "tus solicitudes", []),
-            intentar(api("/api/ciudadano/suministros"), "tus suministros", [])
+            intentar(api("/api/ciudadano/suministros"), "tus suministros", []),
+            intentar(api("/api/ciudadano/recibos"), "tus recibos", [])
         ]);
 
         datos.perfil = perfil;
         datos.reportes = Array.isArray(reportes) ? reportes : [];
         datos.solicitudes = Array.isArray(solicitudes) ? solicitudes : [];
         datos.suministros = Array.isArray(suministros) ? suministros : [];
+        datos.recibos = Array.isArray(recibos) ? recibos : [];
 
         const aviso = $("#avisoCarga");
 
@@ -186,6 +213,16 @@
         } else {
             aviso.hidden = true;
         }
+    }
+
+    async function recargarReportes() {
+        try {
+            const lista = await api("/api/reportes/mis-reportes-ciudadano");
+            datos.reportes = Array.isArray(lista) ? lista : [];
+        } catch (error) {
+            console.error(error);
+        }
+        renderizarTodo();
     }
 
     async function recargarSolicitudes() {
@@ -251,6 +288,12 @@
         $("#kpiSolicitudes").textContent = activas;
         $("#kpiReportes").textContent = datos.reportes.length;
         $("#kpiPendientes").textContent = pendientes;
+
+        const porPagar = datos.recibos.filter(r => r.estadoVisible === "PENDIENTE" || r.estadoVisible === "VENCIDO");
+        $("#kpiRecibos").textContent = porPagar.length;
+        $("#kpiRecibosSub").textContent = porPagar.length
+            ? "Por pagar: " + soles(porPagar.reduce((a, r) => a + Number(r.total), 0))
+            : "Sin recibos por pagar";
     }
 
     function renderizarActividad() {
@@ -447,7 +490,7 @@
                     <div class="ico-g">${ICO.alerta}</div>
                     <h4>Aún no tienes reportes</h4>
                     <p>Cuando reportes un problema con tu servicio, podrás seguirlo desde aquí.</p>
-                    <a href="reporte.html" class="btn-prim chico">${ICO.mas} Reportar incidencia</a>
+                    <a href="reporte.html" data-abrir-reporte class="btn-prim chico">${ICO.mas} Reportar incidencia</a>
                 </div>`;
             return;
         }
@@ -507,6 +550,7 @@
         renderizarSolicitudes();
         renderizarReportes();
         renderizarSuministros();
+        renderizarRecibos();
         if (vistaActual === "consumo") prepararConsumo();
         actualizarAvisoTramite();
         actualizarTitulo(vistaActual);
@@ -517,7 +561,7 @@
        NAVEGACIÓN ENTRE VISTAS
        ===================================================== */
 
-    const VISTAS = ["inicio", "solicitar", "solicitudes", "suministros", "consumo", "reportes", "perfil", "ayuda"];
+    const VISTAS = ["inicio", "solicitar", "solicitudes", "suministros", "consumo", "recibos", "reportes", "perfil", "ayuda"];
     let vistaActual = "inicio";
 
     function textosCabecera(vista) {
@@ -527,6 +571,7 @@
             solicitudes: ["Servicios", "Mis solicitudes", "Consulta el avance de tus trámites."],
             suministros: ["Servicios", "Mis suministros", "Tus conexiones de agua y su código."],
             consumo:     ["Servicios", "Mi consumo", "Tu consumo mensual de agua en m³."],
+            recibos:     ["Servicios", "Recibos y pagos", "Lo que debes y tus pagos realizados."],
             reportes:    ["Incidencias", "Mis reportes", "Sigue el estado de los problemas que reportaste."],
             perfil:      ["Cuenta", "Mi perfil", "Información de tu cuenta ciudadana."],
             ayuda:       ["Soporte", "Ayuda", "Resuelve tus dudas sobre el servicio."]
@@ -1039,7 +1084,7 @@
 
                 <div class="item-pie sum-acciones">
                     <button type="button" class="btn-sec chico" data-ver-consumo="${esc(s.id)}">Ver consumo</button>
-                    <a class="btn-prim chico" href="reporte.html?codigo=${encodeURIComponent(s.codigoSuministro)}">Reportar un problema</a>
+                    <a class="btn-prim chico" href="reporte.html?codigo=${encodeURIComponent(s.codigoSuministro)}" data-abrir-reporte data-codigo="${esc(s.codigoSuministro)}">Reportar un problema</a>
                 </div>
             </article>`).join("");
     }
@@ -1180,6 +1225,243 @@
     });
 
 
+    /* =====================================================
+       RECIBOS Y PAGOS (el pago es SIMULADO)
+       ===================================================== */
+
+    const soles = v => v == null ? "—"
+        : "S/ " + Number(v).toLocaleString("es-PE", { minimumFractionDigits: 2, maximumFractionDigits: 2 });
+
+    const mesLargo = periodo => new Date(periodo + "-01T00:00:00")
+        .toLocaleDateString("es-PE", { month: "long", year: "numeric" });
+
+    const fechaHora = valor => new Date(valor)
+        .toLocaleString("es-PE", { dateStyle: "medium", timeStyle: "short" });
+
+    const ESTADOS_RECIBO = {
+        PENDIENTE: { texto: "Por pagar", color: "naranja" },
+        VENCIDO:   { texto: "Vencido",   color: "rojo" },
+        PAGADO:    { texto: "Pagado",    color: "verde" }
+    };
+
+    const MEDIOS_PAGO = {
+        TARJETA:       "Tarjeta de crédito o débito",
+        YAPE:          "Yape",
+        TRANSFERENCIA: "Transferencia bancaria"
+    };
+
+    const porPagar = r => r.estadoVisible === "PENDIENTE" || r.estadoVisible === "VENCIDO";
+
+    function pillRecibo(r) {
+        const info = ESTADOS_RECIBO[r.estadoVisible] || { texto: r.estadoVisible, color: "gris" };
+        return `<span class="pill pill-${info.color}">${esc(info.texto)}</span>`
+            + (r.dePrueba ? ' <span class="sim-tag">DE PRUEBA</span>' : "");
+    }
+
+    function tarjetaRecibo(r) {
+        return `
+            <article class="item" style="--borde:${porPagar(r) ? "#e08a00" : "#0f8f57"}">
+                <div class="item-cab">
+                    <div class="item-titulo">
+                        <span class="act-ico azul">${ICO.doc}</span>
+                        <div>
+                            <strong>Recibo ${esc(r.codigo)}</strong>
+                            <small>${esc(mesLargo(r.periodo))} · Suministro ${esc(r.codigoSuministro)}</small>
+                        </div>
+                    </div>
+                    ${pillRecibo(r)}
+                </div>
+
+                <dl class="item-datos">
+                    <div><dt>Consumo</dt><dd>${esc(Number(r.consumoM3).toLocaleString("es-PE", { maximumFractionDigits: 3 }))} m³</dd></div>
+                    <div><dt>Total</dt><dd><strong>${esc(soles(r.total))}</strong></dd></div>
+                    <div><dt>${r.estado === "PAGADO" ? "Pagado el" : "Vence"}</dt><dd>${r.estado === "PAGADO" ? esc(fechaHora(r.fechaPago)) : esc(diaLocal(r.fechaVencimiento))}</dd></div>
+                    <div><dt>Categoría</dt><dd>${r.categoria === "COMERCIAL" ? "Comercial" : "Doméstico"}</dd></div>
+                </dl>
+
+                <div class="item-pie sum-acciones">
+                    <button type="button" class="btn-sec chico" data-ver-recibo="${esc(r.id)}">Ver detalle</button>
+                    ${r.estado === "PAGADO"
+                        ? `<button type="button" class="btn-prim chico" data-comp-pago="${esc(r.id)}">Comprobante de pago</button>`
+                        : `<button type="button" class="btn-prim chico" data-pagar-recibo="${esc(r.id)}">Pagar ${esc(soles(r.total))}</button>`}
+                </div>
+            </article>`;
+    }
+
+    function renderizarRecibos() {
+
+        const lista = $("#listaRecibos");
+
+        if (!datos.recibos.length) {
+            lista.innerHTML = `
+                <div class="vacio">
+                    <div class="ico-g">${ICO.doc}</div>
+                    <h4>Aún no tienes recibos</h4>
+                    <p>Tus recibos aparecerán aquí cuando se facture el consumo de tu medidor.</p>
+                </div>`;
+            return;
+        }
+
+        const pendientes = datos.recibos.filter(porPagar);
+        const pagados = datos.recibos.filter(r => r.estado === "PAGADO");
+
+        lista.innerHTML =
+            (pendientes.length ? `<h4 class="rb-seccion">Por pagar (${pendientes.length})</h4>` + pendientes.map(tarjetaRecibo).join("") : "")
+            + (pagados.length ? `<h4 class="rb-seccion">Pagados (${pagados.length})</h4>` + pagados.map(tarjetaRecibo).join("") : "");
+    }
+
+    function abrirRecibo(id) {
+
+        const r = datos.recibos.find(x => x.id === id);
+        if (!r) return;
+
+        datos.reciboSeleccionado = id;
+        const pagar = porPagar(r);
+
+        $("#reciboCuerpo").innerHTML = `
+            <div class="comp-cab">
+                <div class="comp-marca">
+                    <img src="images/logo-aquaica.png" alt="" width="40" height="40">
+                    <div><strong>Aqualca</strong><span>Recibo de agua</span></div>
+                </div>
+                ${pillRecibo(r)}
+            </div>
+            <p class="comp-tipo">${esc(r.codigo)}</p>
+            <h3>${esc(mesLargo(r.periodo))}</h3>
+            ${r.dePrueba ? '<p class="rb-nota"><strong>Recibo de prueba:</strong> nace de una lectura simulada. No es un cobro real.</p>' : ""}
+
+            <div class="comp-codigo"><span>${pagar ? "Total a pagar" : "Total del recibo"}</span><strong>${esc(soles(r.total))}</strong></div>
+
+            <table class="rb-desglose">
+                <tr><td>Cargo fijo mensual</td><td>${esc(soles(r.cargoFijo))}</td></tr>
+                <tr><td>Consumo<br><small>${esc(Number(r.consumoM3).toLocaleString("es-PE", { maximumFractionDigits: 3 }))} m³ × ${esc(soles(r.precioM3))} por m³</small></td><td>${esc(soles(r.importeConsumo))}</td></tr>
+            </table>
+
+            <dl class="comp-datos">
+                <div><dt>Suministro</dt><dd>${esc(r.codigoSuministro)}</dd></div>
+                <div><dt>Dirección</dt><dd>${esc(r.direccion || "—")}</dd></div>
+                <div><dt>Emisión</dt><dd>${esc(diaLocal(r.fechaEmision))}</dd></div>
+                <div><dt>Vencimiento</dt><dd>${esc(diaLocal(r.fechaVencimiento))}</dd></div>
+                ${r.estado === "PAGADO" ? `<div><dt>Pago</dt><dd>${esc(fechaHora(r.fechaPago))} · ${esc(r.codigoOperacion || "")}</dd></div>` : ""}
+            </dl>
+
+            ${pagar ? `
+                <fieldset class="rb-medios">
+                    <legend>Medio de pago</legend>
+                    ${Object.entries(MEDIOS_PAGO).map(([valor, texto], i) => `
+                        <label class="rb-medio"><input type="radio" name="medioPago" value="${valor}" ${i === 0 ? "checked" : ""}> <span>${esc(texto)}</span></label>`).join("")}
+                </fieldset>
+                <p class="rb-nota">Pago simulado: es una demostración y no se cobra dinero real.</p>` : ""}
+            <p class="rb-error" id="reciboError" role="alert"></p>`;
+
+        const boton = $("#reciboPagar");
+        boton.hidden = false;
+        boton.disabled = false;
+        boton.textContent = pagar ? `Pagar ${soles(r.total)}` : "Ver comprobante de pago";
+        $("#modalRecibo").hidden = false;
+    }
+
+    function cerrarRecibo() {
+        $("#modalRecibo").hidden = true;
+        datos.reciboSeleccionado = null;
+    }
+
+    async function recargarRecibos() {
+        const lista = await api("/api/ciudadano/recibos");
+        datos.recibos = Array.isArray(lista) ? lista : [];
+        renderizarRecibos();
+        renderizarKpis();
+    }
+
+    async function abrirComprobantePago(id) {
+        try {
+            const c = await api(`/api/ciudadano/recibos/${id}/comprobante`);
+            $("#compCuerpo").innerHTML = `
+                <div class="comp-cab">
+                    <div class="comp-marca">
+                        <img src="images/logo-aquaica.png" alt="" width="40" height="40">
+                        <div><strong>Aqualca</strong><span>Sistema de Gestión del Servicio de Agua</span></div>
+                    </div>
+                    <span class="comp-estado">Pagado</span>
+                </div>
+                <p class="comp-tipo">Comprobante de pago</p>
+                <h3>¡Pago registrado!</h3>
+                <p class="comp-txt">Recibimos el pago de tu recibo de ${esc(mesLargo(c.periodo))}.</p>
+                ${c.dePrueba ? '<p class="rb-nota"><strong>Pago de prueba:</strong> corresponde a un recibo de prueba.</p>' : ""}
+                <div class="comp-codigo"><span>N.º de operación</span><strong>${esc(c.codigoOperacion)}</strong></div>
+                <dl class="comp-datos">
+                    <div><dt>Monto pagado</dt><dd>${esc(soles(c.monto))}</dd></div>
+                    <div><dt>Recibo</dt><dd>${esc(c.codigoRecibo)}</dd></div>
+                    <div><dt>Suministro</dt><dd>${esc(c.codigoSuministro)}</dd></div>
+                    <div><dt>Titular</dt><dd>${esc(c.titular || "—")}</dd></div>
+                    <div><dt>Dirección</dt><dd>${esc(c.direccion || "—")}</dd></div>
+                    <div><dt>Medio de pago</dt><dd>${esc(MEDIOS_PAGO[c.medio] || c.medio)}</dd></div>
+                    <div><dt>Fecha y hora</dt><dd>${esc(fechaHora(c.fechaPago))}</dd></div>
+                </dl>
+                <p class="rb-nota">Pago simulado: no se cobró dinero real.</p>`;
+            $("#modalComprobante").hidden = false;
+        } catch (error) {
+            toast(mensajeDeError(error, "No se pudo cargar el comprobante."), true);
+        }
+    }
+
+    $("#listaRecibos").addEventListener("click", evento => {
+
+        const ver = evento.target.closest("[data-ver-recibo],[data-pagar-recibo]");
+        if (ver) {
+            abrirRecibo(Number(ver.dataset.verRecibo || ver.dataset.pagarRecibo));
+            return;
+        }
+
+        const comp = evento.target.closest("[data-comp-pago]");
+        if (comp) abrirComprobantePago(Number(comp.dataset.compPago));
+    });
+
+    $("#reciboCerrar").addEventListener("click", cerrarRecibo);
+    $("#modalRecibo").addEventListener("click", evento => {
+        if (evento.target === $("#modalRecibo")) cerrarRecibo();
+    });
+
+    $("#reciboPagar").addEventListener("click", async () => {
+
+        const r = datos.recibos.find(x => x.id === datos.reciboSeleccionado);
+        if (!r) return;
+
+        if (r.estado === "PAGADO") {
+            cerrarRecibo();
+            abrirComprobantePago(r.id);
+            return;
+        }
+
+        const medio = document.querySelector('input[name="medioPago"]:checked');
+        const boton = $("#reciboPagar");
+        $("#reciboError").textContent = "";
+
+        if (!medio) {
+            $("#reciboError").textContent = "Elige un medio de pago.";
+            return;
+        }
+
+        boton.disabled = true;
+        boton.textContent = "Procesando pago...";
+
+        try {
+            await api(`/api/ciudadano/recibos/${r.id}/pagar`, {
+                method: "POST",
+                body: JSON.stringify({ medio: medio.value })
+            });
+            cerrarRecibo();
+            await recargarRecibos();
+            toast("¡Pago realizado!");
+            abrirComprobantePago(r.id);
+        } catch (error) {
+            $("#reciboError").textContent = mensajeDeError(error, "No se pudo procesar el pago.");
+            boton.disabled = false;
+            boton.textContent = `Pagar ${soles(r.total)}`;
+        }
+    });
+
+
     async function iniciar() {
 
         $("#userName").textContent = nombreCompleto();
@@ -1189,6 +1471,7 @@
         $("#listaSolicitudes").innerHTML = '<div class="cargando">Cargando solicitudes...</div>';
         $("#listaReportes").innerHTML = '<div class="cargando">Cargando reportes...</div>';
         $("#listaSuministros").innerHTML = '<div class="cargando">Cargando suministros...</div>';
+        $("#listaRecibos").innerHTML = '<div class="cargando">Cargando recibos...</div>';
 
         mostrarVista();
 
@@ -1196,6 +1479,9 @@
 
         renderizarTodo();
     }
+
+    // La ventana "Reportar un problema" (reporte-modal.js) usa estas piezas del portal.
+    window.AquaIcaPortal = { datos, toast, irA, recargarReportes };
 
     iniciar();
 

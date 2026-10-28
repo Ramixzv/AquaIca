@@ -23,6 +23,7 @@ import com.aquaica.security.CustomUserDetails;
 public class AsignacionService {
 
     private final AsignacionRepository asignacionRepository;
+    private final NotificacionService notificacionService;
     private final ReporteRepository reporteRepository;
     private final PersonalRepository personalRepository;
     private final SeguimientoRepository seguimientoRepository;
@@ -32,7 +33,9 @@ public class AsignacionService {
             AsignacionRepository asignacionRepository,
             ReporteRepository reporteRepository,
             PersonalRepository personalRepository,
-            SeguimientoRepository seguimientoRepository) {
+            SeguimientoRepository seguimientoRepository,
+            NotificacionService notificacionService) {
+        this.notificacionService = notificacionService;
 
         this.asignacionRepository = asignacionRepository;
         this.reporteRepository = reporteRepository;
@@ -98,6 +101,19 @@ public class AsignacionService {
 
     seguimientoRepository.save(seguimiento);
 
+
+    notificacionService.notificarPersonal(
+            personal.getId(), NotificacionService.ASIGNACION,
+            "Nuevo reporte asignado",
+            "Reporte #" + reporte.getId() + " · " + reporte.getTipoProblema(),
+            "asignaciones.html");
+
+    notificacionService.notificarCliente(
+            reporte.getSuministroId().getCliente().getId(),
+            NotificacionService.REPORTE,
+            "Tu reporte fue asignado",
+            "Asignamos un técnico a tu reporte #" + reporte.getId() + ".",
+            "ciudadano.html#reportes");
 
     return guardada;
 }

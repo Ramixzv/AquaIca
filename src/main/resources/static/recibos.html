@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>AquaIca | Recibos</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/style.css"><link rel="stylesheet" href="css/dashboard.css"><link rel="stylesheet" href="css/clientes.css"><link rel="stylesheet" href="css/solicitudes.css"><link rel="stylesheet" href="css/facturacion.css">
+  <link rel="stylesheet" href="css/sidebar-pro.css">
+  <link rel="stylesheet" href="css/dashboard-pro.css">
+  <link rel="stylesheet" href="css/panel-comun.css">
+  <link rel="stylesheet" href="css/recibos.css">
+</head>
+<body class="dashboard-body">
+  <div class="dashboard-bg-decor" aria-hidden="true"><span class="deco-bubble db1"></span><span class="deco-bubble db2"></span><span class="deco-bubble db3"></span><span class="deco-bubble db4"></span></div>
+  <aside class="sidebar">
+    <div class="sidebar-brand"><div class="brand-logo">A</div><div><h2>AquaIca</h2><span>Sistema de Gestión</span></div></div>
+    <nav class="sidebar-menu" id="sidebarMenu"></nav>
+    <div class="sidebar-bottom"><button id="logoutButton" class="logout-button">Cerrar sesión</button></div>
+  </aside>
+  <main class="dashboard-main">
+    <header class="dp-top">
+  <div class="dp-titulo"><span>Facturación</span><h1>Recibos</h1></div>
+  <div class="dp-acciones">
+    <div class="dp-campana" id="campanaWrap">
+      <button type="button" class="dp-campana-btn" id="campanaBtn" aria-label="Notificaciones" aria-haspopup="true" aria-expanded="false">
+        <svg class="dp-ico" viewBox="0 0 24 24" aria-hidden="true"><path d="M6 8a6 6 0 0 1 12 0c0 7 3 9 3 9H3s3-2 3-9"/><path d="M10.3 21a1.94 1.94 0 0 0 3.4 0"/></svg>
+      </button>
+      <div class="dp-menu dp-menu-notif" id="campanaMenu"><h4>Notificaciones</h4><div id="campanaLista"><p class="dp-notif-ok">No hay notificaciones nuevas.</p></div></div>
+    </div>
+    <div class="dp-usuario" id="usuarioWrap">
+      <button type="button" class="dp-usuario-btn" id="usuarioBtn" aria-haspopup="true" aria-expanded="false">
+        <span class="user-avatar" id="userAvatar">U</span>
+        <span class="dp-usuario-txt"><strong id="usernameDisplay">Usuario</strong><small id="roleDisplay">Usuario</small></span>
+        <svg class="dp-ico chev" viewBox="0 0 24 24" aria-hidden="true"><path d="m6 9 6 6 6-6"/></svg>
+      </button>
+      <div class="dp-menu" id="usuarioMenu"><button type="button" id="logoutMenu"><svg class="dp-ico" viewBox="0 0 24 24" aria-hidden="true"><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"/><path d="m16 17 5-5-5-5M21 12H9"/></svg>Cerrar sesión</button></div>
+    </div>
+  </div>
+</header>
+    <section class="dp-banner clientes-intro"><div class="dp-banner-texto"><h2>Recibos</h2><p>Genera los recibos de cada mes a partir de las lecturas. El total es cargo fijo + consumo × precio por m³, según la categoría del suministro.</p></div></section>
+    <section class="content-card rec-generar">
+      <div><h3>Generar recibos del mes</h3><p>Se crea un recibo por cada lectura del mes que aún no tenga uno, con la tarifa vigente de hoy. Las lecturas <strong>SIMULADAS</strong> generan recibos <strong>DE PRUEBA</strong>.</p></div>
+      <div class="rec-generar-form"><div><label for="recPeriodo">Periodo</label><input type="month" id="recPeriodo"></div><button type="button" class="sol-btn primario" id="recGenerar">Generar recibos</button></div>
+      <div class="rec-resumen" id="recResumen" hidden></div>
+    </section>
+    <section class="dp-kpis recibos-kpis clientes-stats"><div class="dp-kpi k-azul clientes-stat-card stat-total"><div class="dp-kpi-ico clientes-stat-icon"><svg class="icon-svg" viewBox="0 0 24 24"><path d="M6 3h12v18l-3-2-3 2-3-2-3 2z"/><path d="M9 8h6M9 12h6"/></svg></div><div><span>Pendientes</span><strong id="stPend">0</strong><small class="rec-sub" id="stPendMonto">&nbsp;</small></div></div><div class="dp-kpi k-rojo clientes-stat-card stat-inactivo"><div class="dp-kpi-ico clientes-stat-icon"><svg class="icon-svg" viewBox="0 0 24 24"><path d="M6 3h12v18l-3-2-3 2-3-2-3 2z"/><path d="M9 8h6M9 12h6"/></svg></div><div><span>Vencidos</span><strong id="stVenc">0</strong><small class="rec-sub" id="stVencMonto">&nbsp;</small></div></div><div class="dp-kpi k-verde clientes-stat-card stat-activo"><div class="dp-kpi-ico clientes-stat-icon"><svg class="icon-svg" viewBox="0 0 24 24"><path d="M6 3h12v18l-3-2-3 2-3-2-3 2z"/><path d="M9 8h6M9 12h6"/></svg></div><div><span>Pagados</span><strong id="stPag">0</strong><small class="rec-sub" id="stPagMonto">&nbsp;</small></div></div><div class="dp-kpi k-morado clientes-stat-card stat-correo"><div class="dp-kpi-ico clientes-stat-icon"><svg class="icon-svg" viewBox="0 0 24 24"><path d="M6 3h12v18l-3-2-3 2-3-2-3 2z"/><path d="M9 8h6M9 12h6"/></svg></div><div><span>De prueba</span><strong id="stPrueba">0</strong><small class="rec-sub" id="stPruebaSub">&nbsp;</small></div></div></section>
+    <section class="clientes-filtros">
+      <div class="clientes-buscador"><label for="buscarRecibo">Buscar recibo</label><div class="clientes-buscador-input"><svg class="icon-svg" viewBox="0 0 24 24"><circle cx="11" cy="11" r="7"/><path d="M21 21l-4.3-4.3"/></svg><input type="search" id="buscarRecibo" placeholder="Código, suministro o cliente..."></div></div>
+      <div><label for="filtroEstadoRecibo">Estado</label><select id="filtroEstadoRecibo"><option value="">Todos</option><option value="PENDIENTE">Pendiente</option><option value="VENCIDO">Vencido</option><option value="PAGADO">Pagado</option><option value="ANULADO">Anulado</option></select></div>
+      <div><label for="filtroTipoRecibo">Tipo</label><select id="filtroTipoRecibo"><option value="">Todos</option><option value="REAL">Reales</option><option value="PRUEBA">De prueba</option></select></div>
+    </section>
+    <section class="content-card clientes-tabla-card"><div class="section-header"><div><h2><svg class="icon-svg" viewBox="0 0 24 24"><path d="M6 3h12v18l-3-2-3 2-3-2-3 2z"/><path d="M9 8h6M9 12h6"/></svg>Recibos emitidos</h2><p>Los recibos de prueba nunca se mezclan con los reales en los totales</p></div></div><div class="table-container"><table><thead><tr><th>Recibo</th><th>Suministro</th><th>Periodo</th><th>Consumo</th><th>Total</th><th>Vence</th><th>Estado</th><th>Acciones</th></tr></thead><tbody id="recTabla"><tr><td colspan="8" class="clientes-vacio">Cargando recibos...</td></tr></tbody></table></div></section>
+  </main>
+  <div class="clientes-modal-overlay" id="recModal"><div class="clientes-modal sol-modal"><div class="clientes-modal-header"><div><span id="recKicker">Recibo</span><h3>Detalle del recibo</h3></div><button type="button" class="modal-close" id="recCerrar" aria-label="Cerrar"><svg class="icon-svg" viewBox="0 0 24 24"><path d="M18 6 6 18M6 6l12 12"/></svg></button></div><div id="recCuerpo"></div></div></div>
+  <div class="clientes-toast" id="clientesToast" role="status"></div>
+  <script src="js/api.js"></script><script src="js/menu.js"></script><script src="js/recibos.js"></script>
+</body></html>

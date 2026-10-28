@@ -587,3 +587,156 @@
     .personal-filtros,
     .form-grid { grid-template-columns: 1fr; }
 }
+
+/* Personal: mismos componentes visuales del panel administrativo */
+.personal-intro.dp-banner {
+  background:
+    linear-gradient(90deg, rgba(6, 92, 178, .96) 0%, rgba(8, 118, 204, .86) 38%, rgba(10, 130, 215, .32) 66%, rgba(10, 130, 215, 0) 84%),
+    url("../images/aquaica-hero2.png") center 40% / cover no-repeat;
+}
+.personal-stats.dp-kpis { grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 16px; margin-bottom: 18px; }
+.personal-stats .personal-stat-card {
+  display: flex; align-items: center; gap: 14px; min-height: 92px; padding: 16px;
+  border: 1px solid #e0eaf2; border-left: 4px solid var(--kpi-color, #0787d1);
+  border-radius: 16px; background: #fff; box-shadow: 0 8px 22px rgba(13, 64, 105, .06);
+  transition: transform .15s ease, box-shadow .15s ease;
+}
+.personal-stats .personal-stat-card:hover { transform: translateY(-2px); box-shadow: 0 12px 26px rgba(13, 64, 105, .1); }
+.personal-stats .personal-stat-icon { display: grid; place-items: center; width: 42px; height: 42px; flex: 0 0 42px; border-radius: 13px; }
+.personal-stats .personal-stat-icon svg { width: 21px; height: 21px; fill: none; stroke: currentColor; stroke-width: 1.9; stroke-linecap: round; stroke-linejoin: round; }
+.personal-stats.dp-kpis {
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+    gap: 16px;
+    margin-bottom: 18px;
+}
+
+.personal-stats .personal-stat-card {
+    border: 1px solid #e0eaf2;
+    border-left: 1px solid #e0eaf2;
+    border-radius: 16px;
+    overflow: hidden;
+    background: #fff;
+    box-shadow: 0 8px 22px rgba(13, 64, 105, .06);
+}
+
+/* Una sola franja de color por tarjeta */
+.personal-stats .personal-stat-card::before {
+    width: 4px;
+    left: 0;
+    top: 0;
+    bottom: 0;
+}
+
+.personal-stats .personal-stat-card.stat-total::before {
+    background: #0787d1;
+}
+
+.personal-stats .personal-stat-card.stat-tecnico::before {
+    background: #8b5cf6;
+}
+
+.personal-stats .personal-stat-card.stat-activo::before {
+    background: #059669;
+}
+
+.personal-stats .personal-stat-card.stat-inactivo::before {
+    background: #ef4444;
+}
+
+/* Fondos e iconos independientes */
+.personal-stat-icon.icon-total {
+    background: #e1f1ff;
+    color: #0787d1;
+}
+
+.personal-stat-icon.icon-tecnico {
+    background: #f0e8ff;
+    color: #7c3aed;
+}
+
+.personal-stat-icon.icon-activo {
+    background: #dcfce9;
+    color: #059669;
+}
+
+.personal-stat-icon.icon-inactivo {
+    background: #ffe4e6;
+    color: #e11d48;
+}
+.personal-stats .personal-stat-card span { color: #45617b; font-size: 12px; }
+.personal-stats .personal-stat-card strong { color: #09264a; font-size: 27px; font-weight: 700; }
+.dp-usuario-btn .user-avatar { background: linear-gradient(135deg, #ec4899, #f472b6); box-shadow: 0 6px 16px rgba(236,72,153,.24); }
+.dp-menu-notif { min-width: 260px; padding: 14px; }
+.dp-menu-notif h4 { margin: 2px 4px 10px; color: #0b2a4a; font-size: 13px; }
+.dp-notif-vacia { margin: 0; padding: 12px 6px; color: #62788d; font-size: 12px; }
+#usuarioMenu button { display: flex; align-items: center; gap: 10px; width: 100%; padding: 12px; border: 0; border-radius: 9px; background: #fff; color: #b91c1c; text-align: left; font: inherit; font-size: 13px; cursor: pointer; }
+#usuarioMenu button:hover { background: #fff1f1; }
+@media (max-width: 1100px) { .personal-stats.dp-kpis { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
+@media (max-width: 700px) {
+  .personal-intro.dp-banner { align-items: flex-start; flex-direction: column; padding: 23px; }
+  .personal-intro.dp-banner h2 { font-size: 24px; }
+  .personal-stats.dp-kpis { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 10px; }
+  .personal-stats .personal-stat-card { padding: 12px; gap: 9px; min-height: 84px; }
+  .personal-stats .personal-stat-icon { width: 38px; height: 38px; flex-basis: 38px; }
+}
+@media (max-width: 430px) { .personal-stats.dp-kpis { grid-template-columns: 1fr; } }
+
+personal-intro.dp-banner {
+  background:
+    linear-gradient(90deg, rgba(6, 92, 178, .96) 0%, rgba(8, 118, 204, .86) 38%, rgba(10, 130, 215, .32) 66%, rgba(10, 130, 215, 0) 84%),
+    url("../images/aquaica-hero2.png") center 40% / cover no-repeat;
+  box-shadow: 0 10px 28px rgba(0, 119, 182, 0.22);
+}
+/* Sidebar fijo y scroll independiente para que la navegación sea 100% fluida */
+body.dashboard-body > .sidebar.sidebar-pro {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 250px;
+    height: 100vh;
+    height: 100dvh;
+    z-index: 100;
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+}
+
+body.dashboard-body > .sidebar.sidebar-pro .sidebar-brand {
+    flex: 0 0 auto;
+}
+body.dashboard-body > .sidebar.sidebar-pro .sidebar-menu {
+    flex: 1 1 auto;
+    min-height: 0;
+    overflow-y: auto;
+    overflow-x: hidden;
+}
+body.dashboard-body > .sidebar.sidebar-pro .sidebar-bottom {
+    flex: 0 0 auto;
+    margin-top: auto;
+}
+body.dashboard-body > .dashboard-main {
+    margin-left: 250px;
+    min-width: 0;
+    box-sizing: border-box;
+}
+
+@media (max-width: 700px) {
+    body.dashboard-body > .sidebar.sidebar-pro {
+        position: relative;
+        width: 100%;
+        height: auto;
+        min-height: 0;
+    }
+    body.dashboard-body > .sidebar.sidebar-pro .sidebar-menu {
+        flex: initial;
+        overflow: visible;
+    }
+    body.dashboard-body > .sidebar.sidebar-pro .sidebar-bottom {
+        margin-top: 0;
+    }
+    body.dashboard-body > .dashboard-main {
+        margin-left: 0;
+        width: 100%;
+    }
+}
+

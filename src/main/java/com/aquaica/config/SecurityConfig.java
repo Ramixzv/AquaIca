@@ -41,7 +41,7 @@ public class SecurityConfig {
                 .requestMatchers(
                     "/", "/index.html",
                     "/instalaciones.html",
-                    "/solicitudes.html", "/lecturas.html", "/login.html", "/registro.html", "/ciudadano.html","/reporte.html", "/reporte-detalle.html",
+                    "/solicitudes.html", "/lecturas.html", "/indicadores.html", "/tarifas.html", "/recibos.html", "/login.html", "/registro.html", "/ciudadano.html","/reporte.html", "/reporte-detalle.html",
                     "/dashboard.html", "/reportes.html", "/asignaciones.html", "/mis-reportes.html",
                     "/seguimientos.html", "/seguimiento.html", "/evidencias.html", "/personal.html",
                     "/clientes.html", "/suministros.html", "/css/**", "/js/**", "/images/**", "/favicon.ico"
@@ -171,6 +171,12 @@ public class SecurityConfig {
                 .requestMatchers(HttpMethod.PATCH, "/api/lecturas/*/anular").hasAnyRole("ADMIN", "SOPORTE")
                 .requestMatchers("/api/lecturas", "/api/lecturas/**").hasAnyRole("ADMIN", "SOPORTE", "TECNICO")
 
+                // INDICADORES: solo ADMIN y SOPORTE
+                .requestMatchers(HttpMethod.GET, "/api/indicadores").hasAnyRole("ADMIN", "SOPORTE")
+
+                // NOTIFICACIONES: cualquier usuario autenticado, solo las suyas
+                .requestMatchers("/api/notificaciones", "/api/notificaciones/**").authenticated()
+
                 // RECIBOS: generar y consultar ADMIN y SOPORTE; anular solo ADMIN
                 .requestMatchers(HttpMethod.PATCH, "/api/recibos/*/anular").hasRole("ADMIN")
                 .requestMatchers("/api/recibos", "/api/recibos/**").hasAnyRole("ADMIN", "SOPORTE")
@@ -181,6 +187,7 @@ public class SecurityConfig {
 
                 // PORTAL CIUDADANO: sus suministros y su consumo
                 .requestMatchers(HttpMethod.GET, "/api/ciudadano/**").hasRole("CIUDADANO")
+                .requestMatchers(HttpMethod.POST, "/api/ciudadano/recibos/*/pagar").hasRole("CIUDADANO")
 
                 // CUALQUIER OTRA PETICIÓN
                 .anyRequest().authenticated()

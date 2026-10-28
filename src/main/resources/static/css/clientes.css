@@ -9,3 +9,88 @@
 .clientes-modal-overlay{position:fixed;inset:0;z-index:1000;display:none;align-items:center;justify-content:center;padding:18px;background:rgba(5,30,50,.52);backdrop-filter:blur(4px)}.clientes-modal-overlay.show{display:flex}.clientes-modal{width:min(620px,100%);max-height:92vh;overflow:auto;border-radius:19px;background:#fff;box-shadow:0 25px 70px #001b3380;animation:clienteModalIn .18s ease-out}@keyframes clienteModalIn{from{opacity:0;transform:translateY(8px) scale(.99)}to{opacity:1;transform:translateY(0) scale(1)}}.clientes-modal-header{display:flex;justify-content:space-between;align-items:center;padding:22px 25px;border-bottom:1px solid #e7eff4;background:linear-gradient(120deg,#f6fcff,#fff)}.clientes-modal-header span{color:#0087bd;font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:.8px}.clientes-modal-header h3{margin:4px 0 0;color:#09264a;font-size:21px}.clientes-modal-header .modal-close{display:grid;place-items:center;width:35px;height:35px;border:0;border-radius:9px;background:#edf7fb;color:#31536b;cursor:pointer}.clientes-modal-header .modal-close svg{width:18px;height:18px;fill:none;stroke:currentColor;stroke-width:2}.clientes-modal form{padding:22px 25px 25px}.cliente-form-title{margin:0 0 15px;color:#123b5b;font-size:13px}.cliente-form-grid{display:grid;grid-template-columns:1fr 1fr;gap:16px}.cliente-field-full{grid-column:1/-1}.cliente-field input,.cliente-field select{box-sizing:border-box;width:100%;height:43px;padding:0 12px;border:1px solid #d4e4ed;border-radius:10px;background:#fff;color:#173957;font-family:Poppins,Arial,sans-serif;font-size:12px;outline:none}.cliente-field input:focus,.cliente-field select:focus{border-color:#00a6d6;box-shadow:0 0 0 3px #00a6d61c}.cliente-form-error{min-height:18px;margin:12px 0;color:#dc2626;font-size:12px}.cliente-form-actions{display:flex;justify-content:flex-end;gap:10px;padding-top:8px}.cliente-form-actions button{padding:11px 18px;border-radius:10px;font-family:Poppins,Arial,sans-serif;font-size:12px;font-weight:600;cursor:pointer}.cliente-form-actions .btn-cancelar{border:1px solid #d8e5ec;background:#fff;color:#496176}.cliente-form-actions .btn-guardar{border:0;background:linear-gradient(120deg,#0077b6,#00a6d6);color:#fff;box-shadow:0 5px 12px #0077b62b}.cliente-form-actions button:disabled{opacity:.65;cursor:wait}.clientes-toast{position:fixed;right:24px;bottom:24px;z-index:1200;max-width:min(400px,calc(100vw - 48px));padding:13px 18px;border-radius:12px;background:#073b5b;color:#fff;font-size:12px;box-shadow:0 10px 30px #00334a35;opacity:0;transform:translateY(10px);pointer-events:none;transition:.2s}.clientes-toast.show{opacity:1;transform:translateY(0)}.clientes-toast.error{background:#b91c1c}
 @media(max-width:1100px){.clientes-stats{grid-template-columns:repeat(2,minmax(0,1fr))}.clientes-tabla-card .table-container{overflow-x:auto}.clientes-tabla-card table{min-width:850px}}
 @media(max-width:700px){.clientes-intro{align-items:flex-start;flex-direction:column;padding:23px}.clientes-stats{gap:10px}.clientes-stat-card{padding:12px;gap:9px}.clientes-stat-icon{width:35px;height:35px}.clientes-filtros{grid-template-columns:1fr;padding:15px}.cliente-form-grid{grid-template-columns:1fr}.cliente-field-full{grid-column:auto}.clientes-modal form{padding:18px}.clientes-modal-header{padding:18px}.clientes-form-actions{flex-wrap:wrap}}
+
+
+/* Correcciones solicitadas: banner con imagen, cabecera desplegable y avatar consistente */
+.clientes-intro.dp-banner {
+  background:
+    linear-gradient(90deg, rgba(6, 92, 178, .96) 0%, rgba(8, 118, 204, .86) 38%, rgba(10, 130, 215, .32) 66%, rgba(10, 130, 215, 0) 84%),
+    url("../images/aquaica-hero2.png") center 40% / cover no-repeat;
+}
+.dp-usuario-btn .user-avatar {
+  background: linear-gradient(135deg, #ec4899, #f472b6);
+  box-shadow: 0 6px 16px rgba(236, 72, 153, .24);
+}
+.dp-menu-notif { width: 310px; right: -6px; }
+.dp-menu-notif h4 { margin: 4px 8px 8px; font-size: 14px; color: #0b2a4a; }
+.dp-notif-vacia { margin: 0; padding: 18px 10px; text-align: center; color: #5d7389; font-size: 13px; }
+#usuarioMenu button { display: flex; align-items: center; gap: 11px; width: 100%; padding: 11px 13px; border: 0; border-radius: 10px; background: transparent; color: #c0392b; font-family: inherit; font-size: 13.5px; cursor: pointer; text-align: left; }
+#usuarioMenu button:hover { background: #fff0ee; }
+@media (max-width: 700px) {
+  .clientes-intro.dp-banner { align-items: flex-start; flex-direction: column; padding: 23px; }
+  .clientes-intro.dp-banner h2 { font-size: 24px; }
+}
+
+
+/* ==========================================
+   CLIENTES: SIDEBAR FIJO Y SCROLL INDEPENDIENTE
+   ========================================== */
+
+body.dashboard-body > .sidebar.sidebar-pro {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 250px;
+    height: 100vh;
+    height: 100dvh;
+    z-index: 100;
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+}
+
+body.dashboard-body > .sidebar.sidebar-pro .sidebar-brand {
+    flex: 0 0 auto;
+}
+
+body.dashboard-body > .sidebar.sidebar-pro .sidebar-menu {
+    flex: 1 1 auto;
+    min-height: 0;
+    overflow-y: auto;
+    overflow-x: hidden;
+}
+
+body.dashboard-body > .sidebar.sidebar-pro .sidebar-bottom {
+    flex: 0 0 auto;
+    margin-top: auto;
+}
+
+body.dashboard-body > .dashboard-main {
+    margin-left: 250px;
+    min-width: 0;
+    box-sizing: border-box;
+}
+
+/* Adaptación para pantallas pequeñas */
+@media (max-width: 700px) {
+    body.dashboard-body > .sidebar.sidebar-pro {
+        position: relative;
+        width: 100%;
+        height: auto;
+        min-height: 0;
+    }
+
+    body.dashboard-body > .sidebar.sidebar-pro .sidebar-menu {
+        flex: initial;
+        overflow: visible;
+    }
+
+    body.dashboard-body > .sidebar.sidebar-pro .sidebar-bottom {
+        margin-top: 0;
+    }
+
+    body.dashboard-body > .dashboard-main {
+        margin-left: 0;
+        width: 100%;
+    }
+}

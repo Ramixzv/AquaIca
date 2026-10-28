@@ -1,0 +1,25 @@
+/* Campana de notificaciones (staff y portal ciudadano) */
+.notif-grupo{display:flex;align-items:center;gap:14px}
+.notif-wrap{position:relative}
+.notif-btn{position:relative;width:42px;height:42px;display:flex;align-items:center;justify-content:center;border:1px solid #dcebf0;border-radius:12px;background:#fff;color:#0a4f8f;cursor:pointer;transition:background .2s,transform .2s}
+.notif-btn:hover{background:#eef6fd;transform:translateY(-1px)}
+.notif-btn svg{width:20px;height:20px;stroke:currentColor;fill:none;stroke-width:2;stroke-linecap:round;stroke-linejoin:round}
+.notif-badge{position:absolute;top:-6px;right:-6px;min-width:18px;height:18px;padding:0 5px;box-sizing:border-box;border-radius:9px;background:#e5484d;color:#fff;font:700 10.5px/18px 'Poppins',sans-serif;text-align:center}
+.notif-panel{position:absolute;right:0;top:calc(100% + 10px);z-index:3000;width:370px;max-height:70vh;overflow:hidden;display:flex;flex-direction:column;border:1px solid #dcebf0;border-radius:16px;background:#fff;box-shadow:0 18px 45px rgba(16,42,67,.16)}
+.notif-panel[hidden]{display:none}
+.notif-cab{display:flex;align-items:center;justify-content:space-between;gap:10px;padding:14px 16px;border-bottom:1px solid #e2edf3}
+.notif-cab strong{font:700 14px 'Poppins',sans-serif;color:#102a43}
+.notif-todas{border:0;background:none;color:#0a74c9;font:600 12px 'Poppins',sans-serif;cursor:pointer}
+.notif-todas:hover{text-decoration:underline}
+.notif-lista{overflow-y:auto}
+.notif-item{display:flex;gap:12px;width:100%;padding:13px 16px;border:0;border-bottom:1px solid #eef3f6;background:#fff;text-align:left;cursor:pointer;font-family:'Poppins',sans-serif}
+.notif-item:hover{background:#f5fbfd}
+.notif-item.nueva{background:#eef6fd}
+.notif-punto{flex-shrink:0;width:10px;height:10px;margin-top:6px;border-radius:50%;background:#cfd9e0}
+.notif-item.nueva .notif-punto{background:#0a74c9}
+.notif-txt{min-width:0}
+.notif-txt strong{display:block;font-size:13px;color:#102a43}
+.notif-txt span{display:block;margin-top:2px;font-size:12px;line-height:1.45;color:#526b82;overflow-wrap:anywhere}
+.notif-txt small{display:block;margin-top:4px;font-size:11px;color:#8297a1}
+.notif-vacio{padding:30px 16px;text-align:center;font:13px 'Poppins',sans-serif;color:#718096}
+@media (max-width:640px){.notif-panel{position:fixed;left:12px;right:12px;top:74px;width:auto}}

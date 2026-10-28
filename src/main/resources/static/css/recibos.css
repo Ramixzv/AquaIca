@@ -1,0 +1,49 @@
+/* Estilos del módulo Recibos: componentes compartidos de AquaIca */
+.clientes-intro.dp-banner {
+  background:
+    linear-gradient(90deg, rgba(6, 92, 178, .96) 0%, rgba(8, 118, 204, .86) 38%, rgba(10, 130, 215, .32) 66%, rgba(10, 130, 215, 0) 84%),
+    url("../images/aquaica-hero2.png") center 40% / cover no-repeat;
+}
+.recibos-kpis { grid-template-columns: repeat(4, minmax(0, 1fr)); }
+.recibos-kpis .clientes-stat-card { min-height: 92px; align-items: center; }
+.recibos-kpis .clientes-stat-card > div:last-child { min-width: 0; }
+.recibos-kpis .clientes-stat-card span { color: #35506a; font-size: 12px; }
+.recibos-kpis .clientes-stat-card strong { display: block; color: #0b2a4a; font-size: 27px; line-height: 1.2; }
+.recibos-kpis .rec-sub { display: block; margin-top: 4px; color: #5d7389; font-size: 11px; }
+.recibos-kpis .stat-total { --c: #0a74c9; --f: #e3f1fd; }
+.recibos-kpis .stat-inactivo { --c: #ef4444; --f: #ffe4e6; }
+.recibos-kpis .stat-activo { --c: #14a463; --f: #dcf7ea; }
+.recibos-kpis .stat-correo { --c: #7c4ddb; --f: #eee5ff; }
+
+/* El color del avatar varía por rol, no por módulo. */
+.user-avatar.avatar-admin { background: linear-gradient(135deg, #ec4899, #f472b6); box-shadow: 0 6px 16px rgba(236,72,153,.24); }
+.user-avatar.avatar-soporte { background: linear-gradient(135deg, #7c4ddb, #a78bfa); box-shadow: 0 6px 16px rgba(124,77,219,.22); }
+.user-avatar.avatar-tecnico { background: linear-gradient(135deg, #0284c7, #38bdf8); box-shadow: 0 6px 16px rgba(2,132,199,.22); }
+.user-avatar.avatar-ciudadano { background: linear-gradient(135deg, #059669, #34d399); box-shadow: 0 6px 16px rgba(5,150,105,.22); }
+.dp-menu-notif { width: 310px; right: -6px; }
+.dp-menu-notif h4 { margin: 4px 8px 8px; font-size: 14px; color: #0b2a4a; }
+@media (max-width: 900px) { .recibos-kpis { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
+@media (max-width: 600px) {
+  .clientes-intro.dp-banner { padding: 23px; }
+  .clientes-intro.dp-banner h2 { font-size: 24px; }
+  .recibos-kpis { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 10px; }
+}
+
+/* =========================================
+   RECIBOS: centrar y ampliar las cuatro KPI
+   ========================================= */
+
+.dashboard-body .dp-kpis.recibos-kpis {
+    display: flex;
+    justify-content: center;
+    align-items: stretch;
+    flex-wrap: wrap;
+    gap: 16px;
+    width: 100%;
+}
+
+.dashboard-body .dp-kpis.recibos-kpis > .dp-kpi {
+    flex: 0 1 220px;
+    min-width: 0;
+    box-sizing: border-box;
+}

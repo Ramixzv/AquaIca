@@ -11,9 +11,13 @@
 
     <link rel="stylesheet" href="css/style.css">
     <link rel="stylesheet" href="css/dashboard.css">
+    <link rel="stylesheet" href="css/sidebar-pro.css">
+    <link rel="stylesheet" href="css/dashboard-pro.css">
+    <link rel="stylesheet" href="css/panel-comun.css">
     <link rel="stylesheet" href="css/suministros.css">
 
     <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css">
+    <link rel="stylesheet" href="css/facturacion.css">
 </head>
 
 <body class="dashboard-body">
@@ -26,87 +30,31 @@
         <span class="deco-bubble db5"></span>
     </div>
 
-    <aside class="sidebar">
-
-        <div class="sidebar-brand">
-            <div class="brand-logo">A</div>
-            <div>
-                <h2>AquaIca</h2>
-                <span>Sistema de Gestión</span>
-            </div>
-        </div>
-
-        <nav class="sidebar-menu">
-
-            <a href="dashboard.html" class="menu-item">
-                <span class="menu-icon"><svg class="icon-svg" viewBox="0 0 24 24"><rect x="3" y="3" width="7" height="9" rx="2"/><rect x="14" y="3" width="7" height="5" rx="2"/><rect x="14" y="12" width="7" height="9" rx="2"/><rect x="3" y="16" width="7" height="5" rx="2"/></svg></span>
-                Dashboard
-            </a>
-
-            <a href="reportes.html" class="menu-item">
-                <span class="menu-icon"><svg class="icon-svg" viewBox="0 0 24 24"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><path d="M14 2v6h6M9 13h6M9 17h6"/></svg></span>
-                Reportes
-            </a>
-
-            <a href="asignaciones.html" class="menu-item">
-                <span class="menu-icon"><svg class="icon-svg" viewBox="0 0 24 24"><path d="M9 12l2 2 4-4"/><circle cx="12" cy="12" r="9"/></svg></span>
-                Asignaciones
-            </a>
-
-            <a href="seguimientos.html" class="menu-item">
-                <span class="menu-icon"><svg class="icon-svg" viewBox="0 0 24 24"><path d="M3 12a9 9 0 1 1 3 6.7"/><path d="M3 21v-6h6"/></svg></span>
-                Seguimientos
-            </a>
-
-            <a href="evidencias.html" class="menu-item">
-                <span class="menu-icon"><svg class="icon-svg" viewBox="0 0 24 24"><rect x="3" y="3" width="18" height="18" rx="3"/><circle cx="9" cy="9" r="2"/><path d="M21 15l-5-5L5 21"/></svg></span>
-                Evidencias
-            </a>
-
-            <a href="personal.html" class="menu-item">
-                <span class="menu-icon"><svg class="icon-svg" viewBox="0 0 24 24"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87M16 3.13a4 4 0 0 1 0 7.75"/></svg></span>
-                Personal
-            </a>
-
-            <a href="clientes.html" class="menu-item">
-                <span class="menu-icon"><svg class="icon-svg" viewBox="0 0 24 24"><path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M19 8v6M16 11h6"/></svg></span>
-                Clientes
-            </a>
-
-            <a href="suministros.html" class="menu-item active">
-                <span class="menu-icon"><svg class="icon-svg" viewBox="0 0 24 24"><path d="M20 10c0 6-8 12-8 12s-8-6-8-12a8 8 0 0 1 16 0z"/><circle cx="12" cy="10" r="3"/></svg></span>
-                Suministros
-            </a>
-
-        </nav>
-
-        <div class="sidebar-bottom">
-            <button id="logoutButton" class="logout-button">Cerrar sesión</button>
-        </div>
-
+    <aside class="sidebar sidebar-pro">
+        <div class="sidebar-brand"><div class="brand-logo"><img src="images/logo-aquaica.png" alt="Logo AquaIca"></div><div><h2>AquaIca</h2><span>Sistema de Gestión</span></div></div>
+        <nav class="sidebar-menu" id="sidebarMenu"></nav>
+        <div class="sidebar-bottom"><button id="logoutButton" class="logout-button" type="button">Cerrar sesión</button></div>
     </aside>
-
+    <script src="js/menu.js"></script>
 
     <main class="dashboard-main">
 
-        <header class="dashboard-header">
-            <div>
-                <span class="header-subtitle">Administración</span>
-                <h1>Suministros</h1>
-            </div>
-
-            <div class="user-info">
-                <div class="user-avatar" id="userAvatar">U</div>
-                <div>
-                    <strong id="usernameDisplay">Usuario</strong>
-                    <span id="roleDisplay">Usuario</span>
+        <header class="dp-top">
+            <div class="dp-titulo"><span>Administración</span><h1>Suministros</h1></div>
+            <div class="dp-acciones">
+                <div class="dp-campana" id="campanaWrap">
+                    <button type="button" class="dp-campana-btn" id="campanaBtn" aria-label="Notificaciones" aria-haspopup="true" aria-expanded="false"><svg class="dp-ico" viewBox="0 0 24 24" aria-hidden="true"><path d="M6 8a6 6 0 0 1 12 0c0 7 3 9 3 9H3s3-2 3-9"/><path d="M10.3 21a1.94 1.94 0 0 0 3.4 0"/></svg><span class="dp-badge" id="campanaBadge" hidden>0</span></button>
+                    <div class="dp-menu dp-menu-notif" id="campanaMenu"><h4>Notificaciones</h4><div id="campanaLista"><p class="dp-notif-vacia">No hay notificaciones nuevas.</p></div></div>
+                </div>
+                <div class="dp-usuario" id="usuarioWrap">
+                    <button type="button" class="dp-usuario-btn" id="usuarioBtn" aria-haspopup="true" aria-expanded="false"><span class="user-avatar" id="userAvatar">U</span><span class="dp-usuario-txt"><strong id="usernameDisplay">Usuario</strong><small id="roleDisplay">Usuario</small></span><svg class="dp-ico chev" viewBox="0 0 24 24" aria-hidden="true"><path d="m6 9 6 6 6-6"/></svg></button>
+                    <div class="dp-menu" id="usuarioMenu"><button type="button" id="logoutMenu"><svg class="dp-ico" viewBox="0 0 24 24" aria-hidden="true"><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"/><path d="m16 17 5-5-5-5M21 12H9"/></svg>Cerrar sesión</button></div>
                 </div>
             </div>
         </header>
 
-
-        <section class="suministros-banner">
-            <div>
+        <section class="dp-banner suministros-banner">
+            <div class="dp-banner-texto">
                 <h2>Gestión de suministros</h2>
                 <p>Registra suministros, asócialos con clientes y consulta su ubicación geográfica.</p>
             </div>
@@ -118,31 +66,31 @@
         </section>
 
 
-        <section class="suministros-stats">
+        <section class="dp-kpis suministros-stats">
 
-            <div class="suministros-stat-card stat-total">
-                <div class="suministros-stat-icon">
+            <div class="dp-kpi k-azul suministros-stat-card stat-total">
+                <div class="dp-kpi-ico suministros-stat-icon">
                     <svg class="icon-svg" viewBox="0 0 24 24"><path d="M12 2.7s6 6.1 6 10.3a6 6 0 0 1-12 0c0-4.2 6-10.3 6-10.3z"/></svg>
                 </div>
                 <div><span>Total de suministros</span><strong id="totalSuministros">0</strong></div>
             </div>
 
-            <div class="suministros-stat-card stat-clientes">
-                <div class="suministros-stat-icon">
+            <div class="dp-kpi k-morado suministros-stat-card stat-clientes">
+                <div class="dp-kpi-ico suministros-stat-icon">
                     <svg class="icon-svg" viewBox="0 0 24 24"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87M16 3.13a4 4 0 0 1 0 7.75"/></svg>
                 </div>
                 <div><span>Clientes asociados</span><strong id="clientesAsociados">0</strong></div>
             </div>
 
-            <div class="suministros-stat-card stat-ubicado">
-                <div class="suministros-stat-icon">
+            <div class="dp-kpi k-verde suministros-stat-card stat-ubicado">
+                <div class="dp-kpi-ico suministros-stat-icon">
                     <svg class="icon-svg" viewBox="0 0 24 24"><path d="M20 10c0 6-8 12-8 12s-8-6-8-12a8 8 0 0 1 16 0z"/><path d="M9 10l2 2 4-4"/></svg>
                 </div>
                 <div><span>Con ubicación</span><strong id="suministrosGeolocalizados">0</strong></div>
             </div>
 
-            <div class="suministros-stat-card stat-sin-ubicar">
-                <div class="suministros-stat-icon">
+            <div class="dp-kpi k-naranja suministros-stat-card stat-sin-ubicar">
+                <div class="dp-kpi-ico suministros-stat-icon">
                     <svg class="icon-svg" viewBox="0 0 24 24"><path d="M20 10c0 6-8 12-8 12s-8-6-8-12a8 8 0 0 1 16 0z"/><path d="M9.5 7.5l5 5M14.5 7.5l-5 5"/></svg>
                 </div>
                 <div><span>Sin ubicación</span><strong id="suministrosSinUbicacion">0</strong></div>
@@ -193,13 +141,14 @@
                             <th>Cliente</th>
                             <th>DNI</th>
                             <th>Dirección</th>
+                            <th>Categoría</th>
                             <th>Ubicación</th>
                             <th>Acciones</th>
                         </tr>
                     </thead>
 
                     <tbody id="tablaSuministros">
-                        <tr><td colspan="6" class="suministros-vacio">Cargando suministros...</td></tr>
+                        <tr><td colspan="7" class="suministros-vacio">Cargando suministros...</td></tr>
                     </tbody>
                 </table>
             </div>
@@ -326,6 +275,16 @@
 
     <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
     <script src="js/api.js"></script>
+    <script>
+    window.gm_authFailure = function () {
+        alert("Google Maps no pudo autenticar la Demo Key.");
+    };
+</script>
+
+<script
+    src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCbCeha8q5M8PbDuoE8WRusz_HE6a0EAG0&v=weekly"
+    async>
+</script>
     <script src="js/suministros.js"></script>
 </body>
 </html>

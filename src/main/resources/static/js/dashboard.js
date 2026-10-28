@@ -284,22 +284,21 @@ document.addEventListener("DOMContentLoaded", () => {
     const COLOR_PRIORIDAD = { ALTA: "#ef4444", MEDIA: "#f5b301", BAJA: "#22c55e" };
 
     function iniciarMapa() {
-
-        if (!window.L) {
-            $("mapaIncidencias").innerHTML =
-                '<div class="dp-vacio-mini">No se pudo cargar el mapa. Revisa tu conexión a Internet.</div>';
-            return;
-        }
-
-        mapa = L.map("mapaIncidencias").setView([-14.0672, -75.7281], 13);
-
-        L.tileLayer("https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png", {
-            attribution: "&copy; OpenStreetMap contributors",
-            maxZoom: 19
-        }).addTo(mapa);
-
-        setTimeout(() => mapa.invalidateSize(), 200);
+    if (!window.google?.maps) {
+        $("mapaIncidencias").innerHTML =
+            '<div class="dp-vacio-mini">Google Maps todavía no está disponible. Recarga la página.</div>';
+        return;
     }
+
+    mapa = new google.maps.Map($("mapaIncidencias"), {
+        center: { lat: -14.0672, lng: -75.7281 },
+        zoom: 13,
+        mapTypeId: "satellite",
+        mapTypeControl: true,
+        streetViewControl: true,
+        fullscreenControl: true
+    });
+}
 
     function coordenadas(reporte) {
         const lat = Number(reporte.latitud ?? reporte.latitude);
@@ -319,92 +318,135 @@ document.addEventListener("DOMContentLoaded", () => {
         );
     }
 
-    function dibujarMapa() {
+    
+function dibujarMapa() {
+    if (!mapa || !window.google?.maps) return;
 
-        if (!mapa) return;
+    // Limpiar las capas anteriores
+    capasMapa.forEach(capa => capa.setMap(null));
+    capasMapa = [];
 
-        capasMapa.forEach(capa => mapa.removeLayer(capa));
-        capasMapa = [];
+    const lista = reportesDelMapa();
+    const puntos = [];
+    const celdas = {};
+    const tamano = 0.003;
 
-        const lista = reportesDelMapa();
-        const puntos = [];
+    // Agrupar reportes por zonas
+    lista.forEach(reporte => {
+        const c = coordenadas(reporte);
+        if (!c) return;
 
-        const celdas = {};
-        const tamano = 0.003;
+        const clave =
+            `${Math.floor(c.lat / tamano)}_${Math.floor(c.lng / tamano)}`;
 
-        lista.forEach(reporte => {
-            const c = coordenadas(reporte);
-            if (!c) return;
+        celdas[clave] = celdas[clave] || {
+            lat: (Math.floor(c.lat / tamano) + 0.5) * tamano,
+            lng: (Math.floor(c.lng / tamano) + 0.5) * tamano,
+            reportes: []
+        };
 
-            const clave = `${Math.floor(c.lat / tamano)}_${Math.floor(c.lng / tamano)}`;
+        celdas[clave].reportes.push(reporte);
+    });
 
-            celdas[clave] = celdas[clave] || {
-                lat: (Math.floor(c.lat / tamano) + .5) * tamano,
-                lng: (Math.floor(c.lng / tamano) + .5) * tamano,
-                reportes: []
-            };
+    const ventanaInfo = new google.maps.InfoWindow();
 
-            celdas[clave].reportes.push(reporte);
-        });
+    // Dibujar zonas verdes, amarillas y rojas
+    Object.values(celdas).forEach(zona => {
+        const cantidad = zona.reportes.length;
 
-        Object.values(celdas).forEach(zona => {
+        const [color, nivel] =
+            cantidad === 1 ? ["#22c55e", "Baja"] :
+            cantidad <= 3 ? ["#f5b301", "Media"] :
+            ["#ef4444", "Alta"];
 
-            const cantidad = zona.reportes.length;
-            const [color, nivel] =
-                cantidad === 1 ? ["#22c55e", "Baja"] :
-                cantidad <= 3 ? ["#f5b301", "Media"] :
-                ["#ef4444", "Alta"];
+        [260, 150].forEach((radio, i) => {
+            const circulo = new google.maps.Circle({
+                map: mapa,
+                center: { lat: zona.lat, lng: zona.lng },
+                radius: radio,
+                strokeWeight: 0,
+                fillColor: color,
+                fillOpacity: i === 0 ? 0.20 : 0.26,
+                clickable: i === 0
+            });
 
-            [260, 150].forEach((radio, i) => {
-                const circulo = L.circle([zona.lat, zona.lng], {
-                    radius: radio,
-                    stroke: false,
-                    fillColor: color,
-                    fillOpacity: i === 0 ? .2 : .26
-                }).addTo(mapa);
-
-                if (i === 0) {
-                    circulo.bindPopup(`
+            if (i === 0) {
+                circulo.addListener("click", evento => {
+                    ventanaInfo.setContent(`
                         <strong>Zona de incidencia</strong><br>
                         Nivel: ${nivel}<br>
                         Incidencias: ${cantidad}<br>
-                        Reportes: ${zona.reportes.map(r => "#" + esc(r.reporteId)).join(", ")}`);
-                }
+                        Reportes: ${zona.reportes
+                            .map(r => "#" + esc(r.reporteId))
+                            .join(", ")}
+                    `);
 
-                capasMapa.push(circulo);
-            });
+                    ventanaInfo.setPosition(evento.latLng);
+                    ventanaInfo.open({ map: mapa });
+                });
+            }
+
+            capasMapa.push(circulo);
+        });
+    });
+
+    // Dibujar los reportes individuales según su prioridad
+    lista.forEach(reporte => {
+        const c = coordenadas(reporte);
+        if (!c) return;
+
+        puntos.push({ lat: c.lat, lng: c.lng });
+
+        const marcador = new google.maps.Marker({
+            map: mapa,
+            position: { lat: c.lat, lng: c.lng },
+            title: `Reporte #${reporte.reporteId}`,
+            icon: {
+                path: google.maps.SymbolPath.CIRCLE,
+                scale: 8,
+                fillColor:
+                    COLOR_PRIORIDAD[normalizar(reporte.prioridad)] || "#0a74c9",
+                fillOpacity: 1,
+                strokeColor: "#ffffff",
+                strokeWeight: 2
+            }
         });
 
-
-        lista.forEach(reporte => {
-
-            const c = coordenadas(reporte);
-            if (!c) return;
-
-            puntos.push([c.lat, c.lng]);
-
-            const punto = L.circleMarker([c.lat, c.lng], {
-                radius: 9,
-                color: "#ffffff",
-                weight: 2.5,
-                fillColor: COLOR_PRIORIDAD[normalizar(reporte.prioridad)] || "#0a74c9",
-                fillOpacity: 1
-            }).addTo(mapa);
-
-            punto.bindPopup(`
+        marcador.addListener("click", () => {
+            ventanaInfo.setContent(`
                 <strong>Reporte #${esc(reporte.reporteId)}</strong><br>
                 Problema: ${esc(tipoLegible(reporte.tipoProblema))}<br>
                 Prioridad: ${esc(titulo(reporte.prioridad || "—"))}<br>
-                Estado: ${esc(titulo(String(reporte.estado || "—").replaceAll("_", " ")))}<br>
-                <a href="reporte-detalle.html?id=${encodeURIComponent(reporte.reporteId)}">Ver detalle</a>`);
+                Estado: ${esc(titulo(
+                    String(reporte.estado || "—").replaceAll("_", " ")
+                ))}<br>
+                <a href="reporte-detalle.html?id=${encodeURIComponent(
+                    reporte.reporteId
+                )}">Ver detalle</a>
+            `);
 
-            capasMapa.push(punto);
+            ventanaInfo.open({
+                map: mapa,
+                anchor: marcador
+            });
         });
 
-        if (puntos.length) {
-            mapa.fitBounds(puntos, { padding: [40, 40], maxZoom: 15 });
+        capasMapa.push(marcador);
+    });
+
+    // Ajustar el mapa a los reportes encontrados
+    if (puntos.length) {
+        const limites = new google.maps.LatLngBounds();
+        puntos.forEach(punto => limites.extend(punto));
+
+        mapa.fitBounds(limites, 40);
+
+        if (puntos.length === 1) {
+            mapa.setZoom(15);
         }
     }
+}
+
 
     function llenarTiposProblema() {
 
@@ -593,6 +635,7 @@ document.addEventListener("DOMContentLoaded", () => {
     async function iniciar() {
 
         iniciarMapa();
+        if (!mapa) return;
 
         const [respuestaReportes, respuestaSolicitudes] = await Promise.all([
             apiFetch("/api/reportes").catch(error => {

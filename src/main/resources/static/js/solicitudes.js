@@ -1,19 +1,10 @@
 // Pantalla admin: validar solicitudes de servicio y asignar técnico de instalación
 document.addEventListener("DOMContentLoaded", () => {
-  const token = localStorage.getItem("token");
-  const username = localStorage.getItem("username") || "Usuario";
-  const rol = localStorage.getItem("rol") || "Usuario";
-  if (!token) { window.location.href = "login.html"; return; }
-  if (!["ADMIN", "SOPORTE"].includes(rol)) { window.location.href = "dashboard.html"; return; }
+  // Sesión y cabecera (avatar, menú de usuario, cerrar sesión): panel-comun.js
+  const sesion = Panel.iniciar(["ADMIN", "SOPORTE"]);
+  if (!sesion) return;
 
   const $ = id => document.getElementById(id);
-  $("usernameDisplay").textContent = username;
-  $("roleDisplay").textContent = rol;
-  $("userAvatar").textContent = username.charAt(0).toUpperCase();
-  $("logoutButton").addEventListener("click", () => {
-    ["token", "username", "rol", "personalId", "clienteId"].forEach(k => localStorage.removeItem(k));
-    window.location.href = "login.html";
-  });
 
   const ESTADO = { PENDIENTE: "Pendiente", EN_EVALUACION: "En evaluación", OBSERVADA: "Observada", APROBADA: "Aprobada", EN_INSTALACION: "En instalación", ACTIVADA: "Activada", RECHAZADA: "Rechazada", CANCELADA: "Cancelada" };
   // Transiciones que el backend permite desde el panel (APROBADA en adelante las maneja la orden de instalación)
@@ -47,28 +38,66 @@ document.addEventListener("DOMContentLoaded", () => {
     }
   }
 
+  const PILL = { PENDIENTE: "p-naranja", EN_EVALUACION: "p-azul", OBSERVADA: "p-amarillo", APROBADA: "p-celeste", EN_INSTALACION: "p-morado", ACTIVADA: "p-verde", RECHAZADA: "p-rojo", CANCELADA: "p-gris" };
+  let grupo = null; // filtro por tarjeta KPI (puede abarcar varios estados)
+
   function stats() {
     const n = lista => solicitudes.filter(s => lista.includes(s.estado)).length;
-    $("stRevisar").textContent = n(["PENDIENTE", "EN_EVALUACION"]);
-    $("stObservadas").textContent = n(["OBSERVADA"]);
-    $("stInstalacion").textContent = n(["APROBADA", "EN_INSTALACION"]);
-    $("stActivadas").textContent = n(["ACTIVADA"]);
+    const total = solicitudes.length;
+    const pct = c => total ? Math.round((c / total) * 100) : 0;
+    const cifras = { Revisar: n(["PENDIENTE", "EN_EVALUACION"]), Observadas: n(["OBSERVADA"]), Aprobadas: n(["APROBADA"]), Instalacion: n(["EN_INSTALACION"]), Activadas: n(["ACTIVADA"]) };
+
+    $("stTotal").textContent = total;
+    Object.entries(cifras).forEach(([clave, cantidad]) => {
+      $("st" + clave).textContent = cantidad;
+      $("barra" + clave).style.width = pct(cantidad) + "%";
+      if (clave !== "Aprobadas") $("pct" + clave).textContent = `${pct(cantidad)}% del total`;
+    });
+    $("bannerTotal").textContent = `${total} ${total === 1 ? "solicitud" : "solicitudes"}`;
+    campana();
+  }
+
+  // Campanita: pendientes de la administración
+  function campana() {
+    const n = estado => solicitudes.filter(s => s.estado === estado).length;
+    const filas = [
+      [n("PENDIENTE"), "PENDIENTE", "c-naranja", "pendiente", "pendientes", "Esperan su revisión", '<circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/>'],
+      [n("EN_EVALUACION"), "EN_EVALUACION", "c-azul", "en evaluación", "en evaluación", "Falta aprobarlas, observarlas o rechazarlas", '<circle cx="11" cy="11" r="7"/><path d="m21 21-4.3-4.3"/>'],
+      [n("APROBADA"), "APROBADA", "c-celeste", "aprobada sin técnico", "aprobadas sin técnico", "Asigna al técnico de la instalación", '<circle cx="12" cy="12" r="9"/><path d="M8 12.5l2.5 2.5L16 9.5"/>']
+    ].filter(f => f[0] > 0);
+    const total = filas.reduce((suma, f) => suma + f[0], 0);
+    const insignia = $("campanaBadge");
+    insignia.hidden = total === 0;
+    insignia.textContent = total > 99 ? "99+" : total;
+    $("campanaLista").innerHTML = filas.length
+      ? filas.map(([cant, estado, color, uno, varios, sub, trazo]) => `
+        <a href="#" class="dp-notif" data-notif="${estado}">
+          <span class="dp-cab-ico ${color}"><svg class="dp-ico" viewBox="0 0 24 24">${trazo}</svg></span>
+          <span><strong>${cant} ${cant === 1 ? "solicitud " + uno : "solicitudes " + varios}</strong><small>${sub}</small></span>
+        </a>`).join("")
+      : '<div class="dp-notif-ok">Estás al día. No hay pendientes.</div>';
   }
 
   function render() {
     const q = $("buscarSolicitud").value.trim().toLowerCase(), e = $("filtroEstado").value;
     const lista = solicitudes
-      .filter(s => (!e || s.estado === e) && (!q || [codigo(s), cliente(s).nombreCompleto, cliente(s).dni, s.direccion].some(v => (v || "").toLowerCase().includes(q))))
+      .filter(s => (!e || s.estado === e) && (!grupo || grupo.includes(s.estado)) && (!q || [codigo(s), cliente(s).nombreCompleto, cliente(s).dni, s.direccion].some(v => (v || "").toLowerCase().includes(q))))
       .sort((a, b) => new Date(b.fechaSolicitud) - new Date(a.fechaSolicitud));
-    $("solTabla").innerHTML = lista.length ? lista.map(s => `
-      <tr>
-        <td><strong>${esc(codigo(s))}</strong></td>
-        <td>${esc(cliente(s).nombreCompleto || "—")}<br><small>DNI: ${esc(cliente(s).dni || "—")}</small></td>
-        <td>${esc(s.direccion)}</td>
+    $("resumenFiltro").textContent = lista.length === solicitudes.length
+      ? "Solicitudes de nueva conexión enviadas por los ciudadanos"
+      : `Mostrando ${lista.length} de ${solicitudes.length} solicitudes`;
+    $("solTabla").innerHTML = lista.length ? lista.map(s => {
+      const c = cliente(s), nombre = c.nombreCompleto || "—";
+      return `
+      <tr class="click" data-id="${s.id}">
+        <td class="pc-codigo">${esc(codigo(s))}</td>
+        <td><div class="pc-persona"><span class="pc-avatar" style="background:${Panel.gradiente(nombre)}">${esc(Panel.iniciales(nombre))}</span><span><strong>${esc(nombre)}</strong><span class="pc-sub">DNI: ${esc(c.dni || "—")}</span></span></div></td>
+        <td class="sp-dir" title="${esc(s.direccion)}">${esc(s.direccion)}</td>
         <td>${fecha(s.fechaSolicitud)}</td>
-        <td><span class="sol-badge e-${esc(s.estado)}">${esc(ESTADO[s.estado] || s.estado)}</span></td>
-        <td><button type="button" class="sol-btn secundario" data-id="${s.id}">Gestionar</button></td>
-      </tr>`).join("") : `<tr><td colspan="6" class="clientes-vacio">No hay solicitudes con esos filtros.</td></tr>`;
+        <td><span class="dp-pill ${PILL[s.estado] || "p-gris"}">${esc(ESTADO[s.estado] || s.estado)}</span></td>
+        <td><button type="button" class="sp-gestionar" data-id="${s.id}">Gestionar</button></td>
+      </tr>`;
+    }).join("") : `<tr><td colspan="6" class="pc-vacio"><h4>Sin resultados</h4>No hay solicitudes con esos filtros.</td></tr>`;
   }
 
   function abrir(id) {
@@ -174,7 +203,41 @@ document.addEventListener("DOMContentLoaded", () => {
   const cerrar = () => $("solModal").classList.remove("show");
   $("solCerrar").addEventListener("click", cerrar);
   $("solModal").addEventListener("click", e => { if (e.target === $("solModal")) cerrar(); });
+  const tarjetas = document.querySelectorAll(".sp-kpi");
+  function marcar() {
+    const clave = grupo ? grupo.join(",") : $("filtroEstado").value;
+    tarjetas.forEach(t => t.classList.toggle("activo", t.dataset.grupo === clave));
+  }
+  tarjetas.forEach(t => {
+    const accion = () => {
+      const g = t.dataset.grupo;
+      grupo = t.classList.contains("activo") && g ? null : (g ? g.split(",") : null);
+      $("filtroEstado").value = "";
+      marcar(); render();
+    };
+    t.addEventListener("click", accion);
+    t.addEventListener("keydown", e => { if (e.key === "Enter" || e.key === " ") { e.preventDefault(); accion(); } });
+  });
   $("buscarSolicitud").addEventListener("input", render);
-  $("filtroEstado").addEventListener("change", render);
+  $("filtroEstado").addEventListener("change", () => { grupo = null; marcar(); render(); });
+  $("btnLimpiar").addEventListener("click", () => { $("buscarSolicitud").value = ""; $("filtroEstado").value = ""; grupo = null; marcar(); render(); });
+
+  $("campanaBtn").addEventListener("click", e => {
+    e.stopPropagation();
+    const menu = $("campanaMenu"), abrir = !menu.classList.contains("abierto");
+    document.querySelectorAll(".dp-menu.abierto").forEach(m => m.classList.remove("abierto"));
+    menu.classList.toggle("abierto", abrir);
+    $("campanaBtn").setAttribute("aria-expanded", String(abrir));
+  });
+  $("campanaMenu").addEventListener("click", e => {
+    e.stopPropagation();
+    const fila = e.target.closest("[data-notif]");
+    if (!fila) return;
+    e.preventDefault();
+    grupo = [fila.dataset.notif]; $("filtroEstado").value = "";
+    marcar(); render();
+    $("campanaMenu").classList.remove("abierto");
+  });
+
   cargar();
 });
