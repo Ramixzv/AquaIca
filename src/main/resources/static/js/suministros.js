@@ -48,11 +48,31 @@ document.addEventListener("DOMContentLoaded", () => {
     avatarUsuario.textContent = sesionUsuario.charAt(0).toUpperCase();
     avatarUsuario.style.background = gradienteAvatar(sesionUsuario);
 
-    $("logoutButton").addEventListener("click", () => {
+    function cerrarSesion() {
         ["token", "username", "rol", "personalId", "clienteId"]
             .forEach(clave => localStorage.removeItem(clave));
         window.location.href = "login.html";
+    }
+    $("logoutButton")?.addEventListener("click", cerrarSesion);
+    $("logoutMenu")?.addEventListener("click", cerrarSesion);
+
+    function cerrarMenusCabecera() {
+        document.querySelectorAll(".dp-menu.abierto").forEach(menu => menu.classList.remove("abierto"));
+        document.querySelectorAll(".dp-acciones [aria-expanded='true']").forEach(boton => boton.setAttribute("aria-expanded", "false"));
+    }
+    [["usuarioBtn", "usuarioMenu"], ["campanaBtn", "campanaMenu"]].forEach(([botonId, menuId]) => {
+        const boton = $(botonId), menu = $(menuId);
+        if (!boton || !menu) return;
+        boton.addEventListener("click", evento => {
+            evento.stopPropagation();
+            const abrir = !menu.classList.contains("abierto");
+            cerrarMenusCabecera();
+            menu.classList.toggle("abierto", abrir);
+            boton.setAttribute("aria-expanded", String(abrir));
+        });
     });
+    document.addEventListener("click", cerrarMenusCabecera);
+    document.addEventListener("keydown", evento => { if (evento.key === "Escape") cerrarMenusCabecera(); });
 
     const ICONO_EDITAR = '<svg class="icon-svg" viewBox="0 0 24 24"><path d="M12 20h9"/><path d="M16.5 3.5a2.12 2.12 0 0 1 3 3L7 19l-4 1 1-4z"/></svg>';
     const ICONO_ELIMINAR = '<svg class="icon-svg" viewBox="0 0 24 24"><path d="M3 6h18"/><path d="M8 6V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"/><path d="M19 6l-1 14a2 2 0 0 1-2 2H8a2 2 0 0 1-2-2L5 6"/><path d="M10 11v6M14 11v6"/></svg>';
@@ -157,7 +177,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
     async function cargarSuministros(termino = "") {
         tabla.innerHTML =
-            '<tr><td colspan="6" class="suministros-vacio">Cargando suministros...</td></tr>';
+            '<tr><td colspan="7" class="suministros-vacio">Cargando suministros...</td></tr>';
 
         try {
             const url = termino.trim()
@@ -173,7 +193,7 @@ document.addEventListener("DOMContentLoaded", () => {
             console.error("Error al cargar suministros:", error);
 
             tabla.innerHTML =
-                '<tr><td colspan="6" class="suministros-vacio">No se pudieron cargar los suministros.</td></tr>';
+                '<tr><td colspan="7" class="suministros-vacio">No se pudieron cargar los suministros.</td></tr>';
 
             notificar("Error al cargar los suministros.", true);
         }
@@ -194,7 +214,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
         if (!lista.length) {
             tabla.innerHTML =
-                '<tr><td colspan="6" class="suministros-vacio">No se encontraron suministros con esos criterios.</td></tr>';
+                '<tr><td colspan="7" class="suministros-vacio">No se encontraron suministros con esos criterios.</td></tr>';
             return;
         }
 
@@ -204,6 +224,7 @@ document.addEventListener("DOMContentLoaded", () => {
                 suministro.longitud != null;
 
             const nombre = suministro.nombreCliente || "Cliente";
+            const cat = suministro.categoria || "DOMESTICO";
 
             return `
                 <tr>
@@ -225,6 +246,13 @@ document.addEventListener("DOMContentLoaded", () => {
 
                     <td>${escapar(suministro.dniCliente)}</td>
                     <td>${escapar(suministro.direccion)}</td>
+
+                    <td>
+                        <select class="suministro-cat" data-cat-id="${suministro.id}" data-valor="${escapar(cat)}" aria-label="Categoría del suministro">
+                            <option value="DOMESTICO" ${cat === "DOMESTICO" ? "selected" : ""}>Doméstico</option>
+                            <option value="COMERCIAL" ${cat === "COMERCIAL" ? "selected" : ""}>Comercial</option>
+                        </select>
+                    </td>
 
                     <td>
                         ${
@@ -362,36 +390,48 @@ function abrirVisorMapa(suministro) {
     $("visorMapaCoordenadas").textContent =
         `Latitud: ${lat.toFixed(7)} · Longitud: ${lng.toFixed(7)}`;
 
-    const overlay = $("visorMapaOverlay");
-    overlay.classList.remove("oculto");
+    $("visorMapaOverlay").classList.remove("oculto");
 
-    // Crear el mapa una sola vez.
     if (!mapaConsulta) {
-        mapaConsulta = L.map("mapaConsultaSuministro")
-            .setView([lat, lng], 17);
+        mapaConsulta = new google.maps.Map(
+            $("mapaConsultaSuministro"),
+            {
+                center: { lat, lng },
+                zoom: 18,
+                mapTypeId: "satellite",
+                mapTypeControl: true,
+                streetViewControl: true,
+                fullscreenControl: true
+            }
+        );
 
-        L.tileLayer("https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png", {
-            maxZoom: 19,
-            attribution: "&copy; OpenStreetMap"
-        }).addTo(mapaConsulta);
-
-        marcadorConsulta = L.marker([lat, lng])
-            .addTo(mapaConsulta);
+        marcadorConsulta = new google.maps.Marker({
+            position: { lat, lng },
+            map: mapaConsulta,
+            title: suministro.codigoSuministro
+        });
     } else {
-        mapaConsulta.setView([lat, lng], 17);
-        marcadorConsulta.setLatLng([lat, lng]);
+        mapaConsulta.setCenter({ lat, lng });
+        marcadorConsulta.setPosition({ lat, lng });
     }
 
-    marcadorConsulta.bindPopup(
-        `<strong>${escapar(suministro.codigoSuministro)}</strong><br>` +
-        `${escapar(suministro.direccion || "Sin dirección")}`
-    );
+    marcadorConsulta.setTitle(suministro.codigoSuministro);
 
-    // Leaflet debe recalcular el tamaño al mostrar la ventana.
+    const ventanaInfo = new google.maps.InfoWindow({
+        content:
+            `<strong>${escapar(suministro.codigoSuministro)}</strong><br>` +
+            `${escapar(suministro.direccion || "Sin dirección")}`
+    });
+
+    ventanaInfo.open({
+        map: mapaConsulta,
+        anchor: marcadorConsulta
+    });
+
     setTimeout(() => {
-        mapaConsulta.invalidateSize();
-        marcadorConsulta.openPopup();
-    }, 150);
+        google.maps.event.trigger(mapaConsulta, "resize");
+        mapaConsulta.setCenter({ lat, lng });
+    }, 200);
 }
 
 function cerrarVisorMapa() {
@@ -657,6 +697,28 @@ function cerrarVisorMapa() {
         }
     });
 
+
+    // Cambiar la categoría (doméstico / comercial) desde la tabla
+    tabla.addEventListener("change", async evento => {
+        const selector = evento.target.closest(".suministro-cat");
+        if (!selector) return;
+
+        const anterior = selector.dataset.valor;
+        selector.disabled = true;
+
+        try {
+            await peticion(`/api/suministros/${selector.dataset.catId}/categoria`, {
+                method: "PATCH",
+                body: JSON.stringify({ categoria: selector.value })
+            });
+            selector.dataset.valor = selector.value;
+        } catch (error) {
+            selector.value = anterior;
+            alert(error.message || "No se pudo cambiar la categoría.");
+        } finally {
+            selector.disabled = false;
+        }
+    });
 
     $("btnNuevoSuministro").addEventListener("click", async () => {
         await cargarClientes();

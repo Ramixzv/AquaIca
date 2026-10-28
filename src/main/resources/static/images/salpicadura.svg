@@ -1,0 +1,17 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 320 130" fill="none">
+  <defs>
+    <linearGradient id="agua" x1="0" x2="1" y1="0" y2="1">
+      <stop offset="0" stop-color="#bfe6fb" stop-opacity=".1"/>
+      <stop offset=".6" stop-color="#6cc2f0" stop-opacity=".55"/>
+      <stop offset="1" stop-color="#2a8fe0" stop-opacity=".75"/>
+    </linearGradient>
+  </defs>
+  <path d="M20 96 C80 80 120 38 190 34 C250 30 290 16 320 6 V60 C280 52 250 66 210 78 C160 94 110 112 20 120Z" fill="url(#agua)"/>
+  <path d="M60 100 C130 84 170 50 240 42 C270 38 300 30 320 22" stroke="#fff" stroke-width="2" opacity=".7"/>
+  <g fill="#fff" stroke="#7cc8f1" stroke-width="1.2" opacity=".9">
+    <circle cx="196" cy="22" r="6"/><circle cx="222" cy="12" r="3.5"/>
+    <circle cx="248" cy="26" r="5"/><circle cx="276" cy="14" r="8"/>
+    <circle cx="300" cy="34" r="4"/><circle cx="170" cy="42" r="3"/>
+    <circle cx="258" cy="56" r="3"/><circle cx="286" cy="62" r="5"/>
+  </g>
+</svg>

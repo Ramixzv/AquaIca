@@ -252,3 +252,20 @@
     .as-banner h2 { font-size: 24px; }
     .dashboard-main .asignacion-card { padding: 20px 18px 18px 24px; }
 }
+
+/* =========================================
+   ASIGNACIONES: KPI centradas y más amplias
+   ========================================= */
+
+.dp-kpis.as-kpis {
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
+    gap: 16px;
+}
+
+.dp-kpis.as-kpis > .dp-kpi {
+    flex: 0 1 220px;
+    min-width: 0;
+}
+

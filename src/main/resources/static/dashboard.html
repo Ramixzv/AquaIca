@@ -294,6 +294,16 @@
 
     <script src="js/api.js"></script>
     <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+    <script>
+    window.gm_authFailure = function () {
+        console.error("Google Maps no pudo autenticar la Demo Key.");
+    };
+</script>
+
+<script
+    src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCbCeha8q5M8PbDuoE8WRusz_HE6a0EAG0&v=weekly"
+    async>
+</script>
     <script src="js/dashboard.js"></script>
 </body>
 

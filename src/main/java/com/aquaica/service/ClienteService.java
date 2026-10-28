@@ -11,12 +11,19 @@ import com.aquaica.dto.ClienteRequestDTO;
 import com.aquaica.dto.ClienteResponseDTO;
 import com.aquaica.entity.Cliente;
 import com.aquaica.repository.ClienteRepository;
+import com.aquaica.repository.UsuarioRepository;
 
 @Service
 public class ClienteService {
     private final ClienteRepository clienteRepository;
+    private final UsuarioRepository usuarioRepository;
 
-    public ClienteService(ClienteRepository clienteRepository) { this.clienteRepository = clienteRepository; }
+    public ClienteService(
+        ClienteRepository clienteRepository,
+        UsuarioRepository usuarioRepository) {
+    this.clienteRepository = clienteRepository;
+    this.usuarioRepository = usuarioRepository;
+    }
 
     @Transactional(readOnly = true)
     public List<ClienteResponseDTO> listar() {
@@ -79,6 +86,20 @@ public class ClienteService {
     }
 
     private ClienteResponseDTO toDTO(Cliente c) {
-        return new ClienteResponseDTO(c.getId(), c.getDni(), c.getNombreCompleto(), c.getTelefono(), c.getEmail(), c.getEstado(), c.getFechaRegistro());
-    }
+    boolean tieneUsuario = usuarioRepository
+            .findByClienteId(c.getId())
+            .isPresent();
+
+    return new ClienteResponseDTO(
+            c.getId(),
+            c.getDni(),
+            c.getNombreCompleto(),
+            c.getTelefono(),
+            c.getEmail(),
+            c.getEstado(),
+            c.getFechaRegistro(),
+            c.isTitularVerificado(),
+            tieneUsuario
+    );
+}
 }

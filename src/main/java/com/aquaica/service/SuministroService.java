@@ -96,7 +96,11 @@ public class SuministroService {
         suministro.setNombreTitular(cliente.getNombreCompleto());
         suministro.setDni(cliente.getDni());
 
-        return suministroRepository.save(suministro);
+        Suministro suministroGuardado =
+        suministroRepository.save(suministro);
+        cliente.setTitularVerificado(true);
+        clienteRepository.save(cliente);
+        return suministroGuardado;
     }
 
     @Transactional

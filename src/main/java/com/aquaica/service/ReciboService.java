@@ -6,8 +6,10 @@ import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.YearMonth;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.LinkedHashSet;
 import java.util.List;
+import java.util.Map;
 import java.util.Optional;
 import java.util.Set;
 
@@ -17,10 +19,12 @@ import org.springframework.transaction.annotation.Transactional;
 import com.aquaica.dto.ReciboDTO;
 import com.aquaica.dto.ResumenGeneracionDTO;
 import com.aquaica.entity.Lectura;
+import com.aquaica.entity.Pago;
 import com.aquaica.entity.Recibo;
 import com.aquaica.entity.Suministro;
 import com.aquaica.entity.Tarifa;
 import com.aquaica.repository.LecturaRepository;
+import com.aquaica.repository.PagoRepository;
 import com.aquaica.repository.ReciboRepository;
 import com.aquaica.repository.UsuarioRepository;
 
@@ -39,30 +43,41 @@ public class ReciboService {
     private static final int DIAS_VENCIMIENTO = 15;
 
     private final ReciboRepository reciboRepository;
+    private final NotificacionService notificacionService;
     private final LecturaRepository lecturaRepository;
     private final TarifaService tarifaService;
     private final UsuarioRepository usuarioRepository;
+    private final PagoRepository pagoRepository;
 
     public ReciboService(
             ReciboRepository reciboRepository,
             LecturaRepository lecturaRepository,
             TarifaService tarifaService,
-            UsuarioRepository usuarioRepository) {
+            UsuarioRepository usuarioRepository,
+            PagoRepository pagoRepository,
+            NotificacionService notificacionService) {
+        this.notificacionService = notificacionService;
 
         this.reciboRepository = reciboRepository;
         this.lecturaRepository = lecturaRepository;
         this.tarifaService = tarifaService;
         this.usuarioRepository = usuarioRepository;
+        this.pagoRepository = pagoRepository;
     }
 
     @Transactional(readOnly = true)
     public List<ReciboDTO> listar() {
-        return reciboRepository.findAllByOrderByIdDesc().stream().map(ReciboDTO::de).toList();
+        Map<Long, Pago> pagos = new HashMap<>();
+        pagoRepository.findAll().forEach(p -> pagos.put(p.getRecibo().getId(), p));
+
+        return reciboRepository.findAllByOrderByIdDesc().stream()
+                .map(r -> ReciboDTO.de(r, pagos.get(r.getId())))
+                .toList();
     }
 
     @Transactional(readOnly = true)
     public ReciboDTO obtener(Long id) {
-        return ReciboDTO.de(buscar(id));
+        return ReciboDTO.de(buscar(id), pagoRepository.findByReciboId(id).orElse(null));
     }
 
     /** Genera los recibos de todas las lecturas del mes que aún no se facturaron. */
@@ -239,7 +254,19 @@ public class ReciboService {
         Recibo guardado = reciboRepository.save(recibo);
         guardado.setCodigo(String.format("REC-%d-%06d", hoy.getYear(), guardado.getId()));
 
-        return reciboRepository.save(guardado);
+        Recibo emitido = reciboRepository.save(guardado);
+
+        notificacionService.notificarCliente(
+                suministro.getCliente() != null ? suministro.getCliente().getId() : null,
+                NotificacionService.RECIBO,
+                "Tienes un recibo nuevo",
+                "Recibo " + emitido.getCodigo() + " (" + YearMonth.from(emitido.getPeriodo())
+                        + "): S/ " + emitido.getTotal().toPlainString() + ". Vence el "
+                        + emitido.getFechaVencimiento()
+                        + (emitido.isDePrueba() ? " (recibo de prueba)." : "."),
+                "ciudadano.html#recibos");
+
+        return emitido;
     }
 
     private Recibo buscar(Long id) {

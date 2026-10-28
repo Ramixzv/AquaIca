@@ -1,0 +1,33 @@
+/* Indicadores. Reutiliza las tarjetas clientes-stat-card */
+.ind-titulo{margin:22px 0 10px;font-size:14px;font-weight:700;color:#0a4f8f}
+.ind-filtros{display:flex;flex-wrap:wrap;gap:18px 28px;align-items:end;padding:16px 22px;margin-bottom:14px}
+.ind-filtros label{display:block;margin-bottom:6px;font-size:12.5px;font-weight:600;color:#102a43}
+.ind-filtros select{padding:10px 12px;border:1px solid #d5e1e8;border-radius:10px;font:13px 'Poppins',sans-serif;background:#fff}
+.ind-check{display:flex!important;align-items:center;gap:8px;margin:0!important;cursor:pointer}
+.ind-check small{font-weight:400;color:#718096}
+.ind-aviso{margin:0 0 14px;padding:12px 16px;border-radius:12px;background:#efe8fd;color:#5a34b8;font-size:13px}
+.ind-sub{display:block;margin-top:2px;font-size:11.5px;color:#718096;font-weight:400}
+.ind-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(380px,1fr));gap:16px;margin:22px 0 16px}
+.ind-card{padding:20px 22px}
+.ind-card h4{margin:0 0 12px;font-size:14px;color:#102a43}
+.ind-ancho{margin-bottom:20px}
+.ind-nota{margin:-6px 0 10px;font-size:12px;color:#718096}
+.ind-leyenda{display:flex;align-items:center;gap:8px;margin:-4px 0 10px;font-size:12px;color:#526b82}
+.ind-leyenda i{display:inline-block;width:11px;height:11px;border-radius:3px;margin-left:8px}
+.ind-leyenda i:first-child{margin-left:0}
+.ind-cols{display:flex;align-items:stretch;gap:10px;height:200px;overflow-x:auto}
+.ind-col{flex:1;min-width:44px;display:flex;flex-direction:column;align-items:center;gap:4px}
+.ind-val{height:16px;font-size:11px;font-weight:600;color:#0a4f8f;white-space:nowrap}
+.ind-zona{flex:1;width:100%;display:flex;align-items:flex-end;justify-content:center;gap:3px;border-bottom:1px solid #e2edf3}
+.ind-barra{flex:1;max-width:34px;border-radius:6px 6px 0 0;min-height:0}
+.ind-col small{font-size:11px;color:#718096;padding-bottom:2px}
+.ind-h{display:grid;grid-template-columns:130px 1fr 40px;gap:10px;align-items:center;margin-bottom:9px;font-size:12.5px;color:#102a43}
+.ind-hbar{height:10px;border-radius:6px;background:#eef3f6;overflow:hidden}
+.ind-hbar i{display:block;height:100%;border-radius:6px}
+.ind-h strong{text-align:right;color:#0a4f8f}
+.ind-vacio{padding:26px 0;text-align:center;font-size:13px;color:#8297a1}
+.ind-tabla{width:100%;border-collapse:collapse;font-size:13px}
+.ind-tabla th{padding:8px 10px;text-align:left;font-size:11px;text-transform:uppercase;letter-spacing:.4px;color:#8297a1;border-bottom:1px solid #e2edf3}
+.ind-tabla td{padding:10px;border-bottom:1px solid #eef3f6;color:#102a43}
+.ind-tabla .num{text-align:right;font-variant-numeric:tabular-nums}
+@media (max-width:760px){.ind-grid{grid-template-columns:1fr}.ind-h{grid-template-columns:100px 1fr 34px}}

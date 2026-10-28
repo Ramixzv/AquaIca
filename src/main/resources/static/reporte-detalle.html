@@ -2,39 +2,24 @@
 <html lang="es">
 
 <head>
-
     <meta charset="UTF-8">
-
-    <meta
-        name="viewport"
-        content="width=device-width, initial-scale=1.0">
-
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>AquaIca | Detalle del reporte</title>
 
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700;800&display=swap" rel="stylesheet">
 
-    <link
-        rel="stylesheet"
-        href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css">
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css">
 
-    <link
-        rel="stylesheet"
-        href="css/style.css">
-
-    <link
-        rel="stylesheet"
-        href="css/dashboard.css">
-
-    <link
-        rel="stylesheet"
-        href="css/detalle-reporte.css">
-
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="css/dashboard.css">
+    <link rel="stylesheet" href="css/sidebar-pro.css">
+    <link rel="stylesheet" href="css/dashboard-pro.css">
+    <link rel="stylesheet" href="css/panel-comun.css">
     <link rel="stylesheet" href="css/asignar-tecnico.css">
-
+    <link rel="stylesheet" href="css/reporte-detalle-pro.css">
 </head>
-
 
 <body class="dashboard-body">
 
@@ -46,678 +31,416 @@
         <span class="deco-bubble db5"></span>
     </div>
 
-    <aside class="sidebar">
-
+    <aside class="sidebar sidebar-pro">
 
         <div class="sidebar-brand">
-
-            <div class="brand-logo">
-                A
-            </div>
-
+            <div class="brand-logo"><img src="images/logo-aquaica.png" alt="Logo Aqualca"></div>
             <div>
-
-                <h2>
-                    AquaIca
-                </h2>
-
-                <span>
-                    Sistema de Gestión
-                </span>
-
+                <h2>AquaIca</h2>
+                <span>Sistema de Gestión</span>
             </div>
-
         </div>
 
-
-
-        <nav class="sidebar-menu">
-
-
-            <a
-                href="dashboard.html"
-                class="menu-item">
-
-                <span class="menu-icon">
-                    <svg class="icon-svg" viewBox="0 0 24 24"><rect x="3" y="3" width="7" height="9" rx="2"/><rect x="14" y="3" width="7" height="5" rx="2"/><rect x="14" y="12" width="7" height="9" rx="2"/><rect x="3" y="16" width="7" height="5" rx="2"/></svg>
-                </span>
-
-                Dashboard
-
-            </a>
-
-
-            <a
-                href="reportes.html"
-                class="menu-item active">
-
-                <span class="menu-icon">
-                    <svg class="icon-svg" viewBox="0 0 24 24"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><path d="M14 2v6h6"/><path d="M9 13h6M9 17h6"/></svg>
-                </span>
-
-                Reportes
-
-            </a>
-
-
-            <a
-                href="asignaciones.html"
-                class="menu-item">
-
-                <span class="menu-icon">
-                    <svg class="icon-svg" viewBox="0 0 24 24"><path d="M9 12l2 2 4-4"/><circle cx="12" cy="12" r="9"/></svg>
-                </span>
-
-                Asignaciones
-
-            </a>
-
-
-            <a
-                href="seguimientos.html"
-                class="menu-item">
-
-                <span class="menu-icon">
-                    <svg class="icon-svg" viewBox="0 0 24 24"><path d="M3 12a9 9 0 1 1 3 6.7"/><path d="M3 21v-6h6"/></svg>
-                </span>
-
-                Seguimientos
-
-            </a>
-
-
-            <a
-                href="evidencias.html"
-                class="menu-item">
-
-                <span class="menu-icon">
-                    <svg class="icon-svg" viewBox="0 0 24 24"><rect x="3" y="3" width="18" height="18" rx="3"/><circle cx="9" cy="9" r="2"/><path d="M21 15l-5-5L5 21"/></svg>
-                </span>
-
-                Evidencias
-
-            </a>
-
-
-        </nav>
-
-
+        <nav class="sidebar-menu" id="sidebarMenu"></nav>
 
         <div class="sidebar-bottom">
-
-            <button
-                id="logoutButton"
-                class="logout-button">
-
-                Cerrar sesión
-
-            </button>
-
+            <button id="logoutButton" class="logout-button">Cerrar sesión</button>
         </div>
-
 
     </aside>
 
-    <main class="dashboard-main">
+    <script src="js/menu.js"></script>
 
 
-        <!-- HEADER -->
+    <main class="dashboard-main dp-main">
 
-        <header class="dashboard-header">
+        <!-- ================= CABECERA ================= -->
+        <header class="dp-top">
 
-
-            <div>
-
-                <span class="header-subtitle">
-                    Gestión de incidencias
-                </span>
-
-                <h1>
-                    Detalle del reporte
-                </h1>
-
+            <div class="dp-titulo">
+                <span>Gestión de incidencias</span>
+                <h1>Detalle del reporte</h1>
             </div>
 
+            <div class="dp-acciones">
 
+                <div class="dp-campana">
+                    <button type="button" class="dp-campana-btn" id="campanaBtn" aria-label="Notificaciones" aria-haspopup="true" aria-expanded="false">
+                        <svg class="dp-ico" viewBox="0 0 24 24"><path d="M6 8a6 6 0 0 1 12 0c0 7 3 9 3 9H3s3-2 3-9"/><path d="M10.3 21a1.94 1.94 0 0 0 3.4 0"/></svg>
+                        <span class="dp-badge" id="campanaBadge" hidden>0</span>
+                    </button>
 
-            <div class="user-info">
-
-
-                <div class="user-avatar" id="userAvatar">
-                    U
+                    <div class="dp-menu dp-menu-notif" id="campanaMenu">
+                        <h4>Notificaciones</h4>
+                        <div id="campanaLista"></div>
+                    </div>
                 </div>
 
+                <div class="dp-usuario">
+                    <button type="button" class="dp-usuario-btn" id="usuarioBtn" aria-haspopup="true" aria-expanded="false">
+                        <span class="user-avatar" id="userAvatar">U</span>
+                        <span class="dp-usuario-txt">
+                            <strong id="usernameDisplay">Usuario</strong>
+                            <small id="roleDisplay">Usuario</small>
+                        </span>
+                        <svg class="dp-ico chev" viewBox="0 0 24 24"><path d="m6 9 6 6 6-6"/></svg>
+                    </button>
 
-                <div>
-
-                    <strong id="usernameDisplay">
-                        Usuario
-                    </strong>
-
-                    <span id="roleDisplay">
-                        Usuario
-                    </span>
-
+                    <div class="dp-menu" id="usuarioMenu">
+                        <button type="button" id="logoutMenu">
+                            <svg class="dp-ico" viewBox="0 0 24 24"><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"/><path d="m16 17 5-5-5-5M21 12H9"/></svg>
+                            Cerrar sesión
+                        </button>
+                    </div>
                 </div>
-
 
             </div>
-
 
         </header>
 
-        <div class="detail-back">
 
-            <a
-                href="reportes.html"
-                class="back-button">
+        <a href="reportes.html" class="pc-btn sec chico rd-volver">
+            <svg class="pc-ico" viewBox="0 0 24 24"><path d="M19 12H5M12 19l-7-7 7-7"/></svg>
+            Volver a reportes
+        </a>
 
-                ← Volver a reportes
 
-            </a>
+        <!-- ================= HERO ================= -->
+        <section class="rd-hero">
+
+            <div class="rd-hero-ico" id="heroIcono">
+                <svg class="dp-ico" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/></svg>
+            </div>
+
+            <div class="rd-hero-texto">
+                <span class="rd-kicker">Incidencia</span>
+                <h2>Reporte <span id="reporteId">#--</span></h2>
+                <p id="tipoProblema">Cargando...</p>
+            </div>
+
+            <div class="rd-hero-acciones">
+
+                <button type="button" id="reabrirButton" class="rd-hbtn glass" style="display: none;">
+                    <svg class="pc-ico" viewBox="0 0 24 24"><path d="M3 12a9 9 0 1 1 3 6.7"/><path d="M3 21v-6h6"/></svg>
+                    Reabrir caso
+                </button>
+
+                <button type="button" id="asignarButton" class="rd-hbtn solid">
+                    <svg class="pc-ico" viewBox="0 0 24 24"><path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M19 8v6M16 11h6"/></svg>
+                    Asignar técnico
+                </button>
+
+            </div>
+
+        </section>
+
+
+        <!-- ================= RESUMEN ================= -->
+        <section class="dp-kpis rd-kpis">
+
+            <article class="dp-kpi k-gris" id="kpiPrioridad">
+                <div class="dp-kpi-ico">
+                    <svg class="dp-ico" viewBox="0 0 24 24"><path d="M4 22V4"/><path d="M4 4h13l-2 4 2 4H4"/></svg>
+                </div>
+                <div class="dp-kpi-cuerpo">
+                    <span>Prioridad</span>
+                    <strong id="prioridadBadge">--</strong>
+                    <small>Nivel de urgencia</small>
+                </div>
+            </article>
+
+            <article class="dp-kpi k-gris" id="kpiEstado">
+                <div class="dp-kpi-ico">
+                    <svg class="dp-ico" viewBox="0 0 24 24"><path d="M22 12h-4l-3 9L9 3l-3 9H2"/></svg>
+                </div>
+                <div class="dp-kpi-cuerpo">
+                    <span>Estado</span>
+                    <strong id="estadoBadge">--</strong>
+                    <small>Situación actual</small>
+                </div>
+            </article>
+
+            <article class="dp-kpi k-azul" id="kpiTipo">
+                <div class="dp-kpi-ico" id="kpiTipoIcono">
+                    <svg class="dp-ico" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/></svg>
+                </div>
+                <div class="dp-kpi-cuerpo">
+                    <span>Tipo de problema</span>
+                    <strong id="tipoProblemaDetalle">--</strong>
+                    <small>Categoría de la incidencia</small>
+                </div>
+            </article>
+
+            <article class="dp-kpi k-morado">
+                <div class="dp-kpi-ico">
+                    <svg class="dp-ico" viewBox="0 0 24 24"><rect x="3" y="4" width="18" height="17" rx="2"/><path d="M16 2v4M8 2v4M3 10h18"/></svg>
+                </div>
+                <div class="dp-kpi-cuerpo">
+                    <span>Fecha de creación</span>
+                    <strong id="fechaCreacion">--</strong>
+                    <small id="horaCreacion">&nbsp;</small>
+                </div>
+            </article>
+
+        </section>
+
+
+        <!-- ================= CONTENIDO ================= -->
+        <div class="rd-grid">
+
+            <!-- ---------- Columna principal ---------- -->
+            <div class="rd-col">
+
+                <!-- Descripción -->
+                <section class="dp-card">
+                    <div class="dp-card-cab">
+                        <span class="dp-cab-ico c-naranja">
+                            <svg class="dp-ico" viewBox="0 0 24 24"><path d="M12 9v4"/><path d="M12 17h.01"/><path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"/></svg>
+                        </span>
+                        <div class="dp-cab-txt">
+                            <h3>Información del problema</h3>
+                            <p>Detalles proporcionados por el ciudadano.</p>
+                        </div>
+                    </div>
+
+                    <div class="rd-desc">
+                        <span>Descripción</span>
+                        <p id="descripcion">Cargando descripción...</p>
+                    </div>
+                </section>
+
+                <!-- Evidencias -->
+                <section class="dp-card">
+                    <div class="dp-card-cab">
+                        <span class="dp-cab-ico c-morado">
+                            <svg class="dp-ico" viewBox="0 0 24 24"><rect x="3" y="3" width="18" height="18" rx="3"/><circle cx="9" cy="9" r="2"/><path d="M21 15l-5-5L5 21"/></svg>
+                        </span>
+                        <div class="dp-cab-txt">
+                            <h3>Evidencias del reporte</h3>
+                            <p>Archivos adjuntados como evidencia del problema.</p>
+                        </div>
+                        <span class="dp-pill p-morado" id="evidenciasCount" hidden>0</span>
+                    </div>
+
+                    <div id="evidenciasContainer" class="rd-evidencias">
+                        <div class="rd-estado"><span class="rd-spinner"></span>Cargando evidencias...</div>
+                    </div>
+                </section>
+
+                <!-- Ubicación -->
+                <section class="dp-card">
+                    <div class="dp-card-cab">
+                        <span class="dp-cab-ico c-verde">
+                            <svg class="dp-ico" viewBox="0 0 24 24"><path d="M20 10c0 6-8 12-8 12s-8-6-8-12a8 8 0 0 1 16 0z"/><circle cx="12" cy="10" r="3"/></svg>
+                        </span>
+                        <div class="dp-cab-txt">
+                            <h3>Ubicación del suministro</h3>
+                            <p>Coordenadas registradas para la incidencia.</p>
+                        </div>
+                        <a id="abrirMaps" class="pc-btn sec chico" href="#" target="_blank" rel="noopener" hidden>
+                            <svg class="pc-ico" viewBox="0 0 24 24"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><path d="M15 3h6v6M10 14L21 3"/></svg>
+                            Abrir en Google Maps
+                        </a>
+                    </div>
+
+                    <div class="rd-coords">
+                        <div class="rd-coord">
+                            <span>Latitud</span>
+                            <strong id="latitud">--</strong>
+                        </div>
+                        <div class="rd-coord">
+                            <span>Longitud</span>
+                            <strong id="longitud">--</strong>
+                        </div>
+                    </div>
+
+                    <div class="rd-mapa">
+                        <div id="mapaReporte"></div>
+                    </div>
+                </section>
+
+                <!-- Informe técnico -->
+                <section class="dp-card">
+                    <div class="dp-card-cab">
+                        <span class="dp-cab-ico c-azul">
+                            <svg class="dp-ico" viewBox="0 0 24 24"><path d="M9 5H7a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V7a2 2 0 0 0-2-2h-2"/><rect x="9" y="3" width="6" height="4" rx="1"/><path d="M9 14l2 2 4-4"/></svg>
+                        </span>
+                        <div class="dp-cab-txt">
+                            <h3>Informe técnico</h3>
+                            <p>Resultado de la atención realizada por el personal técnico.</p>
+                        </div>
+                    </div>
+
+                    <div id="informeTecnicoContainer">
+                        <div class="rd-estado"><span class="rd-spinner"></span>Cargando informe técnico...</div>
+                    </div>
+                </section>
+
+            </div>
+
+
+            <!-- ---------- Columna lateral ---------- -->
+            <aside class="rd-col rd-lateral">
+
+                <!-- Titular -->
+                <section class="dp-card">
+                    <div class="dp-card-cab">
+                        <span class="dp-cab-ico c-azul">
+                            <svg class="dp-ico" viewBox="0 0 24 24"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
+                        </span>
+                        <div class="dp-cab-txt">
+                            <h3>Información del titular</h3>
+                            <p>Datos del suministro registrado.</p>
+                        </div>
+                    </div>
+
+                    <div class="rd-titular">
+                        <span class="rd-titular-avatar" id="titularAvatar">?</span>
+                        <div>
+                            <small>Nombre del titular</small>
+                            <strong id="nombreTitular">--</strong>
+                        </div>
+                    </div>
+
+                    <ul class="rd-datos">
+                        <li>
+                            <span class="rd-dato-ico c-celeste">
+                                <svg class="dp-ico" viewBox="0 0 24 24"><rect x="3" y="5" width="18" height="14" rx="2"/><circle cx="9" cy="11" r="2"/><path d="M14 10h4M14 14h4M6.5 16c.6-1.2 1.5-1.8 2.5-1.8s1.9.6 2.5 1.8"/></svg>
+                            </span>
+                            <div>
+                                <small>DNI</small>
+                                <strong id="dni">--</strong>
+                            </div>
+                        </li>
+                        <li>
+                            <span class="rd-dato-ico c-morado">
+                                <svg class="dp-ico" viewBox="0 0 24 24"><rect x="4" y="3" width="16" height="18" rx="2"/><path d="M9 8h6M9 12h6M9 16h3"/></svg>
+                            </span>
+                            <div>
+                                <small>Código de suministro</small>
+                                <strong id="codigoSuministro">--</strong>
+                            </div>
+                        </li>
+                        <li>
+                            <span class="rd-dato-ico c-verde">
+                                <svg class="dp-ico" viewBox="0 0 24 24"><path d="M3 11l9-8 9 8"/><path d="M5 10v10h14V10"/></svg>
+                            </span>
+                            <div>
+                                <small>Dirección</small>
+                                <strong id="direccion">--</strong>
+                            </div>
+                        </li>
+                    </ul>
+                </section>
+
+                <!-- Seguimiento -->
+                <section class="dp-card">
+                    <div class="dp-card-cab">
+                        <span class="dp-cab-ico c-celeste">
+                            <svg class="dp-ico" viewBox="0 0 24 24"><path d="M3 12a9 9 0 1 1 3 6.7"/><path d="M3 21v-6h6"/></svg>
+                        </span>
+                        <div class="dp-cab-txt">
+                            <h3>Seguimiento</h3>
+                            <p>Historial de avances de la atención.</p>
+                        </div>
+                    </div>
+
+                    <div id="seguimientoTimeline">
+                        <div class="rd-estado"><span class="rd-spinner"></span>Cargando seguimiento...</div>
+                    </div>
+                </section>
+
+            </aside>
 
         </div>
-
-        <section class="detail-header-card">
-
-
-            <div>
-
-                <span class="header-subtitle">
-                    Incidencia
-                </span>
-
-                <h2>
-                    Reporte
-                    <span id="reporteId">
-                        #--
-                    </span>
-                </h2>
-
-                <p id="tipoProblema">
-                    Cargando...
-                </p>
-
-            </div>
-
-
-            <div class="detail-status-container">
-
-                <span
-                    id="prioridadBadge"
-                    class="prioridad-badge">
-
-                    --
-
-                </span>
-
-
-                <span
-                    id="estadoBadge"
-                    class="estado-badge">
-
-                    --
-
-                </span>
-
-            </div>
-
-
-        </section>
-
-        <section class="detail-card titular-card">
-
-
-            <div class="detail-section-title">
-
-                <h2>
-                    <svg class="icon-svg" viewBox="0 0 24 24"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
-                    Información del titular
-                </h2>
-
-                <p>
-                    Datos asociados al suministro registrado.
-                </p>
-
-            </div>
-
-
-
-            <div class="detail-grid">
-
-
-                <div class="detail-field">
-
-                    <span>
-                        Nombre del titular
-                    </span>
-
-                    <strong id="nombreTitular">
-                        --
-                    </strong>
-
-                </div>
-
-
-                <div class="detail-field">
-
-                    <span>
-                        DNI
-                    </span>
-
-                    <strong id="dni">
-                        --
-                    </strong>
-
-                </div>
-
-
-                <div class="detail-field">
-
-                    <span>
-                        Código de suministro
-                    </span>
-
-                    <strong id="codigoSuministro">
-                        --
-                    </strong>
-
-                </div>
-
-
-                <div class="detail-field">
-
-                    <span>
-                        Dirección
-                    </span>
-
-                    <strong id="direccion">
-                        --
-                    </strong>
-
-                </div>
-
-
-            </div>
-
-
-        </section>
-
-        <section class="detail-card problema-card">
-
-
-            <div class="detail-section-title">
-
-                <h2>
-                    <svg class="icon-svg" viewBox="0 0 24 24"><path d="M12 9v4"/><path d="M12 17h.01"/><path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"/></svg>
-                    Información del problema
-                </h2>
-
-                <p>
-                    Detalles proporcionados por el ciudadano.
-                </p>
-
-            </div>
-
-
-
-            <div class="problem-description">
-
-                <span>
-                    Descripción
-                </span>
-
-                <p id="descripcion">
-                    Cargando descripción...
-                </p>
-
-            </div>
-
-
-
-            <div class="detail-grid">
-
-
-                <div class="detail-field">
-
-                    <span>
-                        Tipo de problema
-                    </span>
-
-                    <strong id="tipoProblemaDetalle">
-                        --
-                    </strong>
-
-                </div>
-
-
-                <div class="detail-field">
-
-                    <span>
-                        Fecha de creación
-                    </span>
-
-                    <strong id="fechaCreacion">
-                        --
-                    </strong>
-
-                </div>
-
-
-            </div>
-
-
-        </section>
-
-        <section class="detail-card evidencias-card">
-
-
-            <div class="detail-section-title">
-
-                <h2>
-                    <svg class="icon-svg" viewBox="0 0 24 24"><rect x="3" y="3" width="18" height="18" rx="3"/><circle cx="9" cy="9" r="2"/><path d="M21 15l-5-5L5 21"/></svg>
-                    Evidencias del reporte
-                </h2>
-
-                <p>
-                    Archivos adjuntados como evidencia del problema.
-                </p>
-
-            </div>
-
-            <div
-                id="evidenciasContainer"
-                class="evidencias-container">
-
-                <p class="evidencias-cargando">
-                    Cargando evidencias...
-                </p>
-
-            </div>
-
-        </section>
-
-        <section class="detail-card ubicacion-card">
-
-
-            <div class="detail-section-title">
-
-                <h2>
-                    <svg class="icon-svg" viewBox="0 0 24 24"><path d="M20 10c0 6-8 12-8 12s-8-6-8-12a8 8 0 0 1 16 0z"/><circle cx="12" cy="10" r="3"/></svg>
-                    Ubicación del suministro
-                </h2>
-
-                <p>
-                    Coordenadas registradas para la incidencia.
-                </p>
-
-            </div>
-
-
-
-            <div class="location-info">
-
-
-                <div class="location-coordinate">
-
-                    <span>
-                        Latitud
-                    </span>
-
-                    <strong id="latitud">
-                        --
-                    </strong>
-
-                </div>
-
-
-                <div class="location-coordinate">
-
-                    <span>
-                        Longitud
-                    </span>
-
-                    <strong id="longitud">
-                        --
-                    </strong>
-
-                </div>
-
-
-            </div>
-
-
-
-        <div class="map-container">
-
-    <div id="mapaReporte"></div>
-
-</div>
-
-
-        </section>
-        
-        <!-- INFORME TÉCNICO -->
-<section class="informe-tecnico-section">
-
-    <div class="section-header">
-
-        <div>
-
-            <span class="section-kicker">
-                Atención técnica
-            </span>
-
-            <h2>
-                <svg class="icon-svg" viewBox="0 0 24 24" style="width:18px;height:18px;vertical-align:-3px;margin-right:6px;"><path d="M9 12l2 2 4-4"/><path d="M21 12c0 4.97-4.03 9-9 9s-9-4.03-9-9 4.03-9 9-9c1.5 0 2.91.37 4.15 1.02"/><path d="M22 4l-9 9"/></svg>
-                Informe técnico
-            </h2>
-
-            <p>
-                Resultado de la atención realizada por el personal técnico.
-            </p>
-
-        </div>
-
-    </div>
-
-
-    <div id="informeTecnicoContainer">
-
-        <div class="informe-tecnico-loading">
-
-            <svg class="icon-svg" viewBox="0 0 24 24" style="width:26px;height:26px;color:#0077b6;"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><path d="M14 2v6h6"/><path d="M9 13h6M9 17h6"/></svg>
-
-            <p>
-                Cargando informe técnico...
-            </p>
-
-        </div>
-
-    </div>
-
-</section>
-         <!-- SEGUIMIENTO DEL REPORTE -->
-<section class="seguimiento-section">
-
-    <div class="section-header">
-        <span class="section-tag">Seguimiento</span>
-
-        <h2>
-            <svg class="icon-svg" viewBox="0 0 24 24" style="width:18px;height:18px;vertical-align:-3px;margin-right:6px;"><path d="M3 12a9 9 0 1 1 3 6.7"/><path d="M3 21v-6h6"/></svg>
-            Estado de tu reporte
-        </h2>
-
-        <p>
-            Consulta cómo avanza la atención de tu incidencia.
-        </p>
-    </div>
-
-    <div id="seguimientoTimeline" class="seguimiento-timeline">
-
-        <!-- Los seguimientos se cargarán aquí automáticamente -->
-
-        <div class="seguimiento-vacio">
-            <svg class="icon-svg" viewBox="0 0 24 24" style="width:24px;height:24px;color:#0077b6;"><path d="M3 12a9 9 0 1 1 3 6.7"/><path d="M3 21v-6h6"/></svg>
-            <p>Cargando seguimiento...</p>
-        </div>
-
-    </div>
-
-</section>
-
-        <section class="detail-actions">
-             
-            <button id="reabrirButton" class="secondary-button" style="display: none;">
-            <svg class="icon-svg" viewBox="0 0 24 24" style="width:14px;height:14px;vertical-align:-2px;margin-right:5px;"><path d="M3 12a9 9 0 1 1 3 6.7"/><path d="M3 21v-6h6"/></svg>Reabrir caso
-            </button>
-
-            <button
-                id="asignarButton"
-                class="primary-button">
-
-                Asignar técnico
-            </button>
-
-
-        
-
-        </section>
-
 
     </main>
 
 
+    <!-- ================= MODAL: ASIGNAR TÉCNICO ================= -->
+    <div id="asignacionModal" class="modal-overlay">
 
+        <div class="modal-card">
 
+            <div class="modal-header">
+                <div>
+                    <span class="modal-subtitle">Gestión de incidencia</span>
+                    <h2>Asignar técnico</h2>
+                </div>
 
-<div id="asignacionModal" class="modal-overlay">
-
-    <div class="modal-card">
-
-        <div class="modal-header">
-
-            <div>
-                <span class="modal-subtitle">
-                    Gestión de incidencia
-                </span>
-
-                <h2>
-                    Asignar técnico
-                </h2>
+                <button type="button" id="cerrarModal" class="modal-close" aria-label="Cerrar">×</button>
             </div>
 
-            <button
-                type="button"
-                id="cerrarModal"
-                class="modal-close">
+            <div class="modal-reporte-info">
+                <strong id="modalReporteId">Reporte #--</strong>
+                <span id="modalProblema">--</span>
+            </div>
 
-                ×
+            <div class="modal-form-group">
+                <label for="tecnicoSelect">Técnico</label>
 
-            </button>
+                <select id="tecnicoSelect" style="display:none;"></select>
 
-        </div>
+                <div class="tecnico-dropdown" id="tecnicoDropdown">
+                    <button type="button" class="tecnico-trigger" id="tecnicoTrigger">
+                        <span class="tecnico-trigger-texto" id="tecnicoTriggerTexto">Cargando técnicos...</span>
+                        <svg class="tecnico-chevron icon-svg" viewBox="0 0 24 24"><path d="M6 9l6 6 6-6"/></svg>
+                    </button>
 
+                    <div class="tecnico-lista" id="tecnicoLista"></div>
+                </div>
 
-        <div class="modal-reporte-info">
+                <small id="tecnicoAyuda">Solo se muestran técnicos de la especialidad del reporte.</small>
+            </div>
 
-            <strong id="modalReporteId">
-                Reporte #--
-            </strong>
+            <div class="modal-form-group">
+                <label for="observacionesAsignacion">Observaciones</label>
+                <textarea id="observacionesAsignacion" rows="4" placeholder="Agrega alguna indicación para el técnico..."></textarea>
+            </div>
 
-            <span id="modalProblema">
-                --
-            </span>
+            <div id="asignacionMensaje" class="asignacion-mensaje"></div>
 
-        </div>
-
-
-        <div class="modal-form-group">
-
-            <label for="tecnicoSelect">
-                Técnico
-            </label>
-
-            <select id="tecnicoSelect" style="display:none;"></select>
-
-<div class="tecnico-dropdown" id="tecnicoDropdown">
-
-    <button type="button" class="tecnico-trigger" id="tecnicoTrigger">
-
-        <span class="tecnico-trigger-texto" id="tecnicoTriggerTexto">
-            Cargando técnicos...
-        </span>
-
-        <svg class="tecnico-chevron icon-svg" viewBox="0 0 24 24"><path d="M6 9l6 6 6-6"/></svg>
-
-    </button>
-
-    <div class="tecnico-lista" id="tecnicoLista"></div>
-
-</div>
-
-<small id="tecnicoAyuda">
-    Solo se muestran técnicos de la especialidad del reporte.
-</small>
-
-        </div>
-
-
-        <div class="modal-form-group">
-
-            <label for="observacionesAsignacion">
-                Observaciones
-            </label>
-
-            <textarea
-                id="observacionesAsignacion"
-                rows="4"
-                placeholder="Agrega alguna indicación para el técnico..."></textarea>
-
-        </div>
-
-
-        <div
-            id="asignacionMensaje"
-            class="asignacion-mensaje">
-        </div>
-
-
-        <div class="modal-actions">
-
-            <button
-                type="button"
-                id="cancelarModal"
-                class="secondary-button">
-
-                Cancelar
-
-            </button>
-
-
-            <button
-                type="button"
-                id="confirmarAsignacion"
-                class="primary-button">
-
-                Asignar técnico
-
-            </button>
+            <div class="modal-actions">
+                <button type="button" id="cancelarModal" class="pc-btn sec">Cancelar</button>
+                <button type="button" id="confirmarAsignacion" class="pc-btn prim">Asignar técnico</button>
+            </div>
 
         </div>
 
     </div>
 
-</div>
+
+    <!-- ================= MODAL: CONFIRMAR ================= -->
+    <div class="pc-modal" id="modalConfirmar" hidden>
+        <div class="pc-modal-caja chica">
+            <div class="pc-icono-aviso">
+                <svg class="pc-ico" viewBox="0 0 24 24"><path d="M3 12a9 9 0 1 1 3 6.7"/><path d="M3 21v-6h6"/></svg>
+            </div>
+            <h3 id="confirmarTitulo">Confirmar</h3>
+            <p id="confirmarTexto"></p>
+            <div class="rd-confirmar-botones">
+                <button type="button" class="pc-btn sec" id="confirmarNo">Cancelar</button>
+                <button type="button" class="pc-btn prim" id="confirmarSi">Confirmar</button>
+            </div>
+        </div>
+    </div>
+
+
+    <!-- ================= VISOR DE IMAGEN ================= -->
+    <div class="rd-visor" id="visor" hidden>
+        <button type="button" class="rd-visor-cerrar" id="visorCerrar" aria-label="Cerrar">×</button>
+        <img id="visorImagen" alt="Evidencia ampliada">
+        <p id="visorNombre"></p>
+    </div>
+
+
+    <div class="toast" id="toast" role="status"></div>
+
 
     <script src="js/api.js"></script>
-
+    <script src="js/panel-comun.js"></script>
     <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
-
     <script src="js/reporte-detalle.js"></script>
-
-    <script src="js/menu-personal.js"></script>
-
 </body>
 
 </html>

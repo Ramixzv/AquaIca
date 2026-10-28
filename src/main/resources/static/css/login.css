@@ -445,3 +445,61 @@
         width: 200px;
     }
 }
+
+
+/* Separador entre el login tradicional y Google */
+.login-divider {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 12px;
+    width: 100%;
+    margin: 20px 0 16px;
+    color: #64748b;
+    font-family: inherit;
+    font-size: 13px;
+    font-weight: 400;
+    text-align: center;
+}
+
+.login-divider::before,
+.login-divider::after {
+    content: "";
+    flex: 1;
+    height: 1px;
+    background: #d8e2eb;
+}
+
+.login-divider span {
+    white-space: nowrap;
+}
+
+/* Centrar el botón oficial de Google */
+.google-login-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    margin: 0 auto 8px;
+}
+
+#googleSignIn {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    max-width: 100%;
+}
+
+/* Mensaje de error de Google */
+#googleMessage {
+    margin-top: 10px;
+    text-align: center;
+    font-family: inherit;
+    font-size: 13px;
+}
+
+/* Evitar que el bloque quede pegado al enlace de registro */
+.register-link {
+    text-align: center;
+    margin-top: 14px;
+}

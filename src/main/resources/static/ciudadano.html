@@ -13,6 +13,7 @@
 
     <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css">
     <link rel="stylesheet" href="css/ciudadano.css">
+    <link rel="stylesheet" href="css/reporte-modal.css">
 </head>
 
 <body>
@@ -65,11 +66,10 @@
                 <span>Mis reportes</span>
             </a>
 
-            <div class="p-link p-link-off" aria-disabled="true">
+            <a href="#recibos" class="p-link" data-vista="recibos">
                 <svg class="ico" viewBox="0 0 24 24"><rect x="2" y="5" width="20" height="14" rx="2"/><path d="M2 10h20M6 15h4"/></svg>
                 <span>Recibos y pagos</span>
-                <em>Próximamente</em>
-            </div>
+            </a>
 
             <hr>
 
@@ -163,7 +163,7 @@
                                 <svg class="ico flecha" viewBox="0 0 24 24"><path d="m9 6 6 6-6 6"/></svg>
                             </a>
 
-                            <a href="reporte.html" class="btn-hero borde">
+                            <a href="reporte.html" data-abrir-reporte class="btn-hero borde">
                                 <svg class="ico" viewBox="0 0 24 24"><path d="M10.3 3.9 1.8 18a2 2 0 0 0 1.7 3h17a2 2 0 0 0 1.7-3L13.7 3.9a2 2 0 0 0-3.4 0z"/><path d="M12 9v4M12 17h.01"/></svg>
                                 Reportar incidencia
                                 <svg class="ico flecha" viewBox="0 0 24 24"><path d="m9 6 6 6-6 6"/></svg>
@@ -214,8 +214,8 @@
                         </div>
                         <div>
                             <span>Recibos disponibles</span>
-                            <strong>0</strong>
-                            <small>Próximamente</small>
+                            <strong id="kpiRecibos">0</strong>
+                            <small id="kpiRecibosSub">Sin recibos por pagar</small>
                         </div>
                     </article>
 
@@ -264,7 +264,7 @@
                                 <svg class="ico flecha" viewBox="0 0 24 24"><path d="m9 6 6 6-6 6"/></svg>
                             </a>
 
-                            <a href="reporte.html" class="acceso">
+                            <a href="reporte.html" data-abrir-reporte class="acceso">
                                 <span class="acceso-ico rojo"><svg class="ico" viewBox="0 0 24 24"><path d="M10.3 3.9 1.8 18a2 2 0 0 0 1.7 3h17a2 2 0 0 0 1.7-3L13.7 3.9a2 2 0 0 0-3.4 0z"/><path d="M12 9v4M12 17h.01"/></svg></span>
                                 <span class="acceso-txt"><strong>Reportar problema</strong><small>Informa fugas, cortes u otras incidencias.</small></span>
                                 <svg class="ico flecha" viewBox="0 0 24 24"><path d="m9 6 6 6-6 6"/></svg>
@@ -433,7 +433,7 @@
                             <h3>Mis reportes</h3>
                             <p>Problemas que has comunicado y su estado de atención.</p>
                         </div>
-                        <a href="reporte.html" class="btn-prim chico">
+                        <a href="reporte.html" data-abrir-reporte class="btn-prim chico">
                             <svg class="ico" viewBox="0 0 24 24"><path d="M12 5v14M5 12h14"/></svg>
                             Nuevo reporte
                         </a>
@@ -479,6 +479,22 @@
                         <select id="selSuministro"></select>
                     </div>
                     <div id="consumoContenido"></div>
+                </section>
+            </section>
+
+
+                        <!-- ================= RECIBOS Y PAGOS ================= -->
+
+            <section class="vista" id="vista-recibos" hidden>
+                <section class="tarjeta">
+                    <header class="tarjeta-cab">
+                        <div class="cab-ico azul"><svg class="ico" viewBox="0 0 24 24"><rect x="2" y="5" width="20" height="14" rx="2"/><path d="M2 10h20M6 15h4"/></svg></div>
+                        <div>
+                            <h3>Recibos y pagos</h3>
+                            <p>Revisa lo que debes y paga tus recibos en línea.</p>
+                        </div>
+                    </header>
+                    <div id="listaRecibos"></div>
                 </section>
             </section>
 
@@ -543,7 +559,7 @@
                             </details>
                             <details>
                                 <summary>¿Cómo reporto una fuga o un corte?</summary>
-                                <p>Usa el botón <a href="reporte.html">Reportar incidencia</a> e indica tu código de suministro. Luego podrás ver su avance en <a href="#reportes">Mis reportes</a>.</p>
+                                <p>Usa el botón <a href="reporte.html" data-abrir-reporte>Reportar incidencia</a> e indica tu código de suministro. Luego podrás ver su avance en <a href="#reportes">Mis reportes</a>.</p>
                             </details>
                             <details>
                                 <summary>¿Qué significa que mi solicitud esté “Observada”?</summary>
@@ -579,6 +595,17 @@
 </div>
 
 
+<!-- MODAL RECIBO / PAGO -->
+<div class="modal" id="modalRecibo" hidden>
+    <div class="modal-caja comp-caja">
+        <div id="reciboCuerpo"></div>
+        <div class="modal-acc no-print">
+            <button type="button" class="btn-sec" id="reciboCerrar">Cerrar</button>
+            <button type="button" class="comp-print" id="reciboPagar" hidden>Pagar</button>
+        </div>
+    </div>
+</div>
+
 <!-- MODAL COMPROBANTE -->
 <div class="modal" id="modalComprobante" hidden>
     <div class="modal-caja comp-caja">
@@ -605,11 +632,218 @@
     </div>
 </div>
 
+<!-- MODAL REPORTAR UN PROBLEMA -->
+<div class="modal rp-modal" id="modalReporte" hidden>
+    <div class="rp-escena" role="dialog" aria-modal="true" aria-labelledby="rpTitulo">
+
+        <button type="button" class="rp-cerrar" id="rpCerrar" aria-label="Cerrar el formulario">
+            <svg class="ico" viewBox="0 0 24 24"><path d="M6 6l12 12M18 6 6 18"/></svg>
+        </button>
+
+        <img class="rp-olas" src="images/reporte/olas.png" alt="" aria-hidden="true"
+             onerror="this.onerror=null;this.src='images/reporte/olas.svg'">
+
+        <div class="rp-grid">
+
+            <!-- ===== Izquierda: mensaje y torre ===== -->
+            <aside class="rp-izq">
+                <div class="rp-izq-texto">
+                    <h2>
+                        <span>Tu reporte</span>
+                        <span>nos ayuda a</span>
+                        <span class="rp-azul">mejorar el servicio</span>
+                    </h2>
+                    <p>Informa sobre fugas, falta de agua, problemas de medidor u otras incidencias en tu zona.</p>
+                </div>
+                <img class="rp-torre" src="images/reporte/torre-agua.png" alt="" aria-hidden="true"
+                     onerror="this.onerror=null;this.src='images/reporte/torre-agua.svg'">
+            </aside>
+
+            <!-- ===== Centro: formulario ===== -->
+            <form class="rp-card" id="rpForm" novalidate>
+
+                <img class="rp-splash" src="images/reporte/salpicadura.png" alt="" aria-hidden="true"
+                     onerror="this.onerror=null;this.src='images/reporte/salpicadura.svg'">
+
+                <header class="rp-marca">
+                    <img src="images/logo-aquaica.png" alt="Logo Aqualca">
+                    <div>
+                        <strong>Aqualca</strong>
+                        <span>Servicio de agua</span>
+                    </div>
+                </header>
+
+                <span class="rp-pill">Atención ciudadana</span>
+                <h2 id="rpTitulo">Reportar un problema</h2>
+                <p class="rp-sub">Cuéntanos qué está ocurriendo con tu servicio de agua. Tu reporte será atendido por nuestro equipo técnico.</p>
+
+                <label class="rp-label" for="rpCodigo">
+                    <svg class="ico" viewBox="0 0 24 24"><rect x="3" y="4" width="18" height="16" rx="3"/><path d="M3 10h18M7 15h4"/></svg>
+                    Código de suministro
+                </label>
+                <div class="rp-buscar">
+                    <input type="text" id="rpCodigo" list="rpCodigos" autocomplete="off" maxlength="30"
+                           placeholder="Ej. 100000001" aria-describedby="rpAyudaCodigo">
+                    <datalist id="rpCodigos"></datalist>
+                    <button type="button" class="rp-btn-buscar" id="rpBuscar">
+                        <svg class="ico" viewBox="0 0 24 24"><circle cx="11" cy="11" r="7"/><path d="m21 21-4.3-4.3"/></svg>
+                        Buscar
+                    </button>
+                </div>
+                <small class="rp-ayuda" id="rpAyudaCodigo">Puedes encontrarlo en tu recibo de agua.</small>
+
+                <div class="rp-encontrado" id="rpEncontrado" hidden>
+                    <div class="rp-enc-titulo">
+                        <svg class="ico" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10" fill="currentColor" stroke="none"/><path d="M7.8 12.4l3 3 5.4-6" stroke="#fff"/></svg>
+                        Suministro encontrado
+                    </div>
+                    <dl class="rp-enc-datos">
+                        <div>
+                            <svg class="ico" viewBox="0 0 24 24"><circle cx="12" cy="8" r="4"/><path d="M4 21c0-4.4 3.6-7 8-7s8 2.6 8 7"/></svg>
+                            <dt>Titular</dt>
+                            <dd id="rpTitular">—</dd>
+                        </div>
+                        <div>
+                            <svg class="ico" viewBox="0 0 24 24"><rect x="3" y="5" width="18" height="14" rx="2.5"/><circle cx="9" cy="11" r="2"/><path d="M6.5 16c.6-1.6 4.4-1.6 5 0M14.5 10h3.5M14.5 14h3.5"/></svg>
+                            <dt>DNI</dt>
+                            <dd id="rpDni">—</dd>
+                        </div>
+                        <div>
+                            <svg class="ico" viewBox="0 0 24 24"><path d="M20 10c0 6-8 12-8 12s-8-6-8-12a8 8 0 0 1 16 0z"/><circle cx="12" cy="10" r="3"/></svg>
+                            <dt>Dirección</dt>
+                            <dd id="rpDireccion">—</dd>
+                        </div>
+                    </dl>
+                </div>
+
+                <label class="rp-label" for="rpTipo">
+                    <svg class="ico" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M12 7.5v5M12 16.2h.01"/></svg>
+                    Tipo de problema
+                </label>
+                <div class="rp-select">
+                    <select id="rpTipo" required>
+                        <option value="">Selecciona una opción</option>
+                        <option value="FUGA_AGUA">Fuga de agua</option>
+                        <option value="CORTE_AGUA">Corte de agua</option>
+                        <option value="BAJA_PRESION">Baja presión</option>
+                        <option value="FACTURACION">Problema de facturación</option>
+                        <option value="OTRO">Otro problema</option>
+                    </select>
+                    <svg class="ico" viewBox="0 0 24 24" aria-hidden="true"><path d="m6 9 6 6 6-6"/></svg>
+                </div>
+
+                <label class="rp-label" for="rpDescripcion">
+                    <svg class="ico" viewBox="0 0 24 24"><path d="M4 20h4L19.5 8.5a2.1 2.1 0 0 0-3-3L5 17z"/><path d="m14.5 7.5 3 3"/></svg>
+                    Describe el problema
+                </label>
+                <div class="rp-area">
+                    <textarea id="rpDescripcion" rows="3" maxlength="500"
+                              placeholder="Cuéntanos qué está ocurriendo con el servicio de agua..."></textarea>
+                    <span class="rp-contador" id="rpContador" aria-live="off">0/500</span>
+                </div>
+
+                <span class="rp-label" id="rpEtiquetaEvidencia">
+                    <svg class="ico" viewBox="0 0 24 24"><rect x="3" y="3" width="18" height="18" rx="3"/><circle cx="9" cy="9" r="2"/><path d="M21 15l-5-5L5 21"/></svg>
+                    Evidencia <em>(opcional)</em>
+                </span>
+                <div class="rp-drop" id="rpDrop">
+                    <input type="file" id="rpArchivo" accept="image/jpeg,image/png,image/webp"
+                           aria-labelledby="rpEtiquetaEvidencia">
+                    <label class="rp-drop-vacio" for="rpArchivo" id="rpDropVacio">
+                        <svg class="ico" viewBox="0 0 24 24"><path d="M7 18a4.5 4.5 0 0 1-.6-8.96A6 6 0 0 1 18 8.5a4 4 0 0 1-.5 9.5"/><path d="M12 21v-8m0 0-3 3m3-3 3 3"/></svg>
+                        <span>
+                            <strong>Arrastra una imagen aquí o haz clic para seleccionar</strong>
+                            <small>Formatos: JPG, PNG o WEBP. Máximo 5 MB.</small>
+                        </span>
+                    </label>
+                    <div class="rp-drop-lleno" id="rpDropLleno" hidden>
+                        <img id="rpMiniatura" alt="Vista previa de la evidencia">
+                        <span>
+                            <strong id="rpNombreArchivo"></strong>
+                            <small id="rpPesoArchivo"></small>
+                        </span>
+                        <button type="button" class="rp-quitar" id="rpQuitar" aria-label="Quitar la imagen">
+                            <svg class="ico" viewBox="0 0 24 24"><path d="M6 6l12 12M18 6 6 18"/></svg>
+                        </button>
+                    </div>
+                </div>
+
+                <p class="rp-mensaje" id="rpMensaje" role="alert" hidden></p>
+
+                <div class="rp-acciones">
+                    <button type="button" class="rp-btn-sec" id="rpLimpiar">
+                        <svg class="ico" viewBox="0 0 24 24"><path d="M3 12a9 9 0 0 1 15.5-6.2L21 8M21 3v5h-5M21 12a9 9 0 0 1-15.5 6.2L3 16M3 21v-5h5"/></svg>
+                        Limpiar formulario
+                    </button>
+                    <button type="submit" class="rp-btn-prim" id="rpEnviar">
+                        <svg class="ico" viewBox="0 0 24 24"><path d="m22 2-11 11M22 2l-7 20-4-9-9-4z"/></svg>
+                        Enviar reporte
+                    </button>
+                </div>
+            </form>
+
+            <!-- ===== Derecha: paneles de apoyo ===== -->
+            <aside class="rp-der">
+
+                <section class="rp-panel rp-mejor">
+                    <img class="rp-grifo" src="images/reporte/grifo.png" alt="" aria-hidden="true"
+                         onerror="this.onerror=null;this.src='images/reporte/grifo.svg'">
+                    <h3>Un mejor servicio para todos</h3>
+                    <p>Tu reporte nos ayuda a identificar problemas y mejorar la calidad del servicio de agua en tu comunidad.</p>
+                </section>
+
+                <section class="rp-panel">
+                    <h3 class="rp-panel-tit">
+                        <svg class="ico" viewBox="0 0 24 24"><rect x="3" y="4" width="18" height="6" rx="2"/><rect x="3" y="14" width="18" height="6" rx="2"/><path d="M7 7h.01M7 17h.01"/></svg>
+                        Tipos de problemas
+                    </h3>
+                    <ul class="rp-tipos">
+                        <li>
+                            <button type="button" data-tipo="CORTE_AGUA">
+                                <span class="rp-tipo-ico azul"><svg class="ico" viewBox="0 0 24 24"><path d="M12 2.7s6 6.1 6 10.3a6 6 0 0 1-12 0c0-4.2 6-10.3 6-10.3z" fill="currentColor" stroke="none"/></svg></span>
+                                <span><strong>Falta de agua</strong><small>No hay suministro en tu zona.</small></span>
+                            </button>
+                        </li>
+                        <li>
+                            <button type="button" data-tipo="FUGA_AGUA">
+                                <span class="rp-tipo-ico naranja"><svg class="ico" viewBox="0 0 24 24"><path d="M12 2.7s6 6.1 6 10.3a6 6 0 0 1-12 0c0-4.2 6-10.3 6-10.3z" fill="currentColor" stroke="none"/><path d="M12 11v3.5" stroke="#fff"/><path d="M12 17.2h.01" stroke="#fff"/></svg></span>
+                                <span><strong>Fuga de agua</strong><small>Fugas en la vía pública o conexión.</small></span>
+                            </button>
+                        </li>
+                        <li>
+                            <button type="button" data-tipo="OTRO">
+                                <span class="rp-tipo-ico morado"><svg class="ico" viewBox="0 0 24 24"><circle cx="12" cy="12" r="8.5"/><circle cx="12" cy="12" r="3.2"/><path d="M12 3.5v3M12 17.5v3M3.5 12h3M17.5 12h3"/></svg></span>
+                                <span><strong>Problemas de medidor</strong><small>Lectura incorrecta o medidor dañado.</small></span>
+                            </button>
+                        </li>
+                        <li>
+                            <button type="button" data-tipo="OTRO">
+                                <span class="rp-tipo-ico verde"><svg class="ico" viewBox="0 0 24 24"><circle cx="12" cy="12" r="3"/><circle cx="12" cy="4.5" r="1.8"/><circle cx="12" cy="19.5" r="1.8"/><circle cx="4.5" cy="12" r="1.8"/><circle cx="19.5" cy="12" r="1.8"/></svg></span>
+                                <span><strong>Otros</strong><small>Cualquier otra incidencia relacionada.</small></span>
+                            </button>
+                        </li>
+                    </ul>
+                </section>
+
+                <section class="rp-panel rp-seguro">
+                    <svg class="ico" viewBox="0 0 24 24"><path d="M12 3 4.5 6v5.5c0 4.5 3.1 8.2 7.5 9.5 4.4-1.3 7.5-5 7.5-9.5V6z"/><path d="m8.8 12 2.3 2.3 4.2-4.6"/></svg>
+                    <div>
+                        <strong>Tu información está segura</strong>
+                        <small>Utilizamos tus datos únicamente para atender tu reporte.</small>
+                    </div>
+                </section>
+
+            </aside>
+        </div>
+    </div>
+</div>
+
 <div class="toast" id="toast" role="status"></div>
 
 <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
 <script src="js/api.js"></script>
 <script src="js/ciudadano.js"></script>
+<script src="js/reporte-modal.js"></script>
 
 </body>
 </html>

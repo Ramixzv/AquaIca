@@ -140,3 +140,76 @@
 .sidebar-pro .logout-button:hover {
     background: rgba(255, 255, 255, .28);
 }
+
+/* ===== Menú lateral con desplazamiento propio ===== */
+
+.sidebar.sidebar-pro {
+    height: 100vh;
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+}
+
+.sidebar-pro .sidebar-brand {
+    flex: 0 0 auto;
+}
+
+.sidebar-pro .sidebar-menu {
+    flex: 1 1 auto;
+    min-height: 0;
+    overflow-y: auto;
+    overflow-x: hidden;
+    scrollbar-width: thin;
+    scrollbar-color: rgba(255, 255, 255, 0.65) transparent;
+    overscroll-behavior: contain;
+}
+
+.sidebar-pro .sidebar-menu::-webkit-scrollbar {
+    width: 6px;
+}
+
+.sidebar-pro .sidebar-menu::-webkit-scrollbar-track {
+    background: transparent;
+}
+
+.sidebar-pro .sidebar-menu::-webkit-scrollbar-thumb {
+    background: rgba(255, 255, 255, 0.55);
+    border-radius: 10px;
+}
+
+.sidebar-pro .sidebar-menu::-webkit-scrollbar-thumb:hover {
+    background: rgba(255, 255, 255, 0.85);
+}
+
+.sidebar-pro .sidebar-bottom {
+    flex: 0 0 auto;
+    min-height: 110px;
+}
+
+
+/* ===== Menú lateral: tamaño más compacto al 100% ===== */
+
+.sidebar.sidebar-pro .sidebar-brand {
+    padding: 18px 18px 14px;
+}
+
+.sidebar-pro .sidebar-menu {
+    gap: 3px;
+    padding: 6px 10px;
+}
+
+.sidebar-pro .menu-item {
+    padding: 10px 13px;
+    gap: 11px;
+    font-size: 13.5px;
+}
+
+.sidebar-pro .menu-item .menu-icon {
+    width: 22px;
+    height: 22px;
+}
+
+.sidebar-pro .menu-item .menu-icon .icon-svg {
+    width: 20px;
+    height: 20px;
+}

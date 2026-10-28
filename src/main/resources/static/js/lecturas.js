@@ -12,10 +12,31 @@ document.addEventListener("DOMContentLoaded", () => {
   $("usernameDisplay").textContent = username;
   $("roleDisplay").textContent = rol;
   $("userAvatar").textContent = username.charAt(0).toUpperCase();
-  $("logoutButton").addEventListener("click", () => {
+
+  function cerrarSesion() {
     ["token", "username", "rol", "personalId", "clienteId"].forEach(k => localStorage.removeItem(k));
     window.location.href = "login.html";
+  }
+  $("logoutButton")?.addEventListener("click", cerrarSesion);
+  $("logoutMenu")?.addEventListener("click", cerrarSesion);
+
+  function cerrarMenusCabecera() {
+    document.querySelectorAll(".dp-menu.abierto").forEach(menu => menu.classList.remove("abierto"));
+    document.querySelectorAll(".dp-acciones [aria-expanded='true']").forEach(boton => boton.setAttribute("aria-expanded", "false"));
+  }
+  [["usuarioBtn", "usuarioMenu"], ["campanaBtn", "campanaMenu"]].forEach(([botonId, menuId]) => {
+    const boton = $(botonId), menu = $(menuId);
+    if (!boton || !menu) return;
+    boton.addEventListener("click", evento => {
+      evento.stopPropagation();
+      const abrir = !menu.classList.contains("abierto");
+      cerrarMenusCabecera();
+      menu.classList.toggle("abierto", abrir);
+      boton.setAttribute("aria-expanded", String(abrir));
+    });
   });
+  document.addEventListener("click", cerrarMenusCabecera);
+  document.addEventListener("keydown", evento => { if (evento.key === "Escape") cerrarMenusCabecera(); });
 
   const ORIGEN = { INICIAL: ["Inicial", "e-APROBADA"], MANUAL: ["Manual", "e-ACTIVADA"], SIMULADA: ["SIMULADA", "e-EN_INSTALACION"] };
   const LECTURA = { SIN_INICIAL: "Sin lectura inicial", PENDIENTE: "Pendiente", LEIDO: "Leído", SIMULADO: "Simulado" };

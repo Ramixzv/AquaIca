@@ -1,0 +1,30 @@
+/* Recibos y tarifas. Reutiliza clientes-* y sol-* (solicitudes.css) */
+.rec-generar{display:grid;grid-template-columns:1fr auto;gap:18px;align-items:end;padding:20px 24px;margin-bottom:18px;background:linear-gradient(135deg,#f5fbfd,#f0faf7);border:1px solid #d6eefc}
+.rec-generar h3,.tar-form-card h3{margin:0 0 4px;font-size:16px;color:#102a43}
+.rec-generar p,.tar-form-card p{margin:0;font-size:12.5px;color:#526b82;max-width:62ch}
+.rec-generar-form{display:flex;gap:12px;align-items:end}
+.rec-generar label,.tar-form label{display:block;margin:0 0 6px;font-size:12.5px;font-weight:600;color:#102a43}
+.rec-generar input,.tar-form input,.tar-form select{width:100%;box-sizing:border-box;padding:10px 12px;border:1px solid #d5e1e8;border-radius:10px;font:13px 'Poppins',sans-serif;background:#fff}
+.rec-resumen{grid-column:1/-1;padding:12px 14px;border-radius:12px;background:#fff;border:1px solid #bfe3d6;font-size:13px;color:#12794e}
+.rec-resumen ul{margin:8px 0 0;padding-left:18px;color:#8a6d00}
+.rec-sub{display:block;margin-top:2px;font-size:11.5px;color:#718096;font-weight:400}
+.rec-aviso{margin:14px 0 0;padding:10px 14px;border-radius:12px;background:#efe8fd;color:#5a34b8;font-size:12.5px}
+.rec-desglose{width:100%;margin-top:16px;border-collapse:collapse;font-size:13px}
+.rec-desglose td{padding:9px 4px;border-bottom:1px solid #eef3f6;color:#102a43}
+.rec-desglose td:last-child{text-align:right;font-variant-numeric:tabular-nums}
+.rec-desglose small{color:#718096}
+.rec-desglose tr.total td{border-bottom:0;padding-top:14px;font-size:16px;font-weight:700;color:#0a3d7a}
+.rec-anular{margin-top:18px;padding:16px 18px;border:1px solid #f2c2c2;border-left:4px solid #c4312c;border-radius:14px;background:#fff6f6}
+.rec-anular label{margin-top:0;color:#9b2420}
+.rec-nota{margin:6px 0 12px;font-size:12px;color:#718096}
+.tar-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:16px;margin-bottom:18px}
+.tar-card{padding:20px 22px;border:1px solid #d6eefc;border-left:4px solid #0096c7;border-radius:16px;background:#fff;box-shadow:0 8px 25px rgba(16,42,67,.05)}
+.tar-card.comercial{border-left-color:#7c5cd6}
+.tar-card h3{margin:0;font-size:12px;text-transform:uppercase;letter-spacing:.5px;color:#718096}
+.tar-card strong{display:block;margin-top:8px;font-size:22px;color:#0a3d7a}
+.tar-card small{display:block;margin-top:2px;color:#718096;font-size:12px}
+.tar-card.vacia{border-left-color:#f0b429;background:#fffaf0}
+.tar-form-card{padding:20px 24px;margin-bottom:18px}
+.tar-form{display:grid;grid-template-columns:repeat(auto-fit,minmax(170px,1fr));gap:14px;align-items:end;margin-top:14px}
+.suministro-cat{padding:6px 10px;border:1px solid #d5e1e8;border-radius:8px;background:#fff;font:12.5px 'Poppins',sans-serif;color:#102a43;cursor:pointer}
+@media (max-width:760px){.rec-generar{grid-template-columns:1fr}.rec-generar-form{flex-wrap:wrap}}

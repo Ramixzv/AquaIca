@@ -220,3 +220,24 @@
         padding: 14px 17px;
     }
 }
+
+
+/* Integración visual con el panel administrativo */
+.dashboard-body .dashboard-main{min-width:0;padding:24px 32px 36px}
+.suministros-banner.dp-banner{min-height:130px;margin-bottom:18px;padding:26px 30px;background:linear-gradient(90deg,rgba(6,92,178,.96) 0%,rgba(8,118,204,.86) 38%,rgba(10,130,215,.32) 66%,rgba(10,130,215,0) 84%),url("../images/aquaica-hero2.png") center 40%/cover no-repeat}
+.suministros-banner.dp-banner h2{font-size:30px;font-weight:700;color:#fff}.suministros-banner.dp-banner p{font-size:14.5px;max-width:520px;color:#fff}.suministros-banner.dp-banner .suministros-add-button{position:relative;z-index:1;flex-shrink:0}
+.suministros-stats.dp-kpis{grid-template-columns:repeat(4,minmax(0,1fr));gap:16px}
+.suministros-stats .suministros-stat-card{position:relative;display:flex;align-items:center;gap:14px;min-height:104px;padding:18px;border:1px solid #e0eaf2;border-left:4px solid var(--kpi-color,#0787d1);border-radius:17px;background:#fff;box-shadow:0 8px 22px rgba(13,64,105,.06)}
+.suministros-stats .suministros-stat-card:hover{transform:translateY(-2px);box-shadow:0 12px 26px rgba(13,64,105,.1)}
+.suministros-stats .suministros-stat-icon{display:grid;place-items:center;width:48px;height:48px;flex:0 0 48px;border-radius:14px}
+.suministros-stats .suministros-stat-icon svg{width:22px;height:22px;fill:none;stroke:currentColor;stroke-width:1.9;stroke-linecap:round;stroke-linejoin:round}
+.suministros-stats .stat-total{--kpi-color:#0787d1}.suministros-stats .stat-total .suministros-stat-icon{background:#e1f1ff;color:#0787d1}
+.suministros-stats .stat-clientes{--kpi-color:#8b5cf6}.suministros-stats .stat-clientes .suministros-stat-icon{background:#f0e8ff;color:#7c3aed}
+.suministros-stats .stat-ubicado{--kpi-color:#059669}.suministros-stats .stat-ubicado .suministros-stat-icon{background:#dcfce9;color:#059669}
+.suministros-stats .stat-sin-ubicar{--kpi-color:#f59e0b}.suministros-stats .stat-sin-ubicar .suministros-stat-icon{background:#fff0d9;color:#d97706}
+.suministros-stats .suministros-stat-card span{font-size:12px;color:#45617b}.suministros-stats .suministros-stat-card strong{font-size:28px;font-weight:700;color:#09264a}
+.dp-menu-notif{min-width:260px;padding:14px}.dp-menu-notif h4{margin:2px 4px 10px;color:#0b2a4a;font-size:13px}.dp-notif-vacia{margin:0;padding:12px 6px;color:#62788d;font-size:12px}
+#usuarioMenu button{display:flex;align-items:center;gap:10px;width:100%;padding:12px;border:0;border-radius:9px;background:#fff;color:#b91c1c;text-align:left;font:inherit;font-size:13px;cursor:pointer}#usuarioMenu button:hover{background:#fff1f1}
+@media(max-width:1100px){.suministros-stats.dp-kpis{grid-template-columns:repeat(2,minmax(0,1fr))}.dashboard-body .dashboard-main{padding:22px 20px 30px}}
+@media(max-width:700px){.dashboard-body .dashboard-main{padding:18px 14px 26px}.suministros-banner.dp-banner{align-items:flex-start;flex-direction:column;padding:23px}.suministros-banner.dp-banner h2{font-size:24px}.suministros-stats.dp-kpis{grid-template-columns:repeat(2,minmax(0,1fr));gap:10px}.suministros-stats .suministros-stat-card{padding:12px;gap:9px;min-height:88px}.suministros-stats .suministros-stat-icon{width:38px;height:38px;flex-basis:38px}}
+@media(max-width:430px){.suministros-stats.dp-kpis{grid-template-columns:1fr}}

@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>AquaIca | Tarifas</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/style.css"><link rel="stylesheet" href="css/dashboard.css"><link rel="stylesheet" href="css/clientes.css"><link rel="stylesheet" href="css/solicitudes.css"><link rel="stylesheet" href="css/facturacion.css">
+  <link rel="stylesheet" href="css/sidebar-pro.css">
+  <link rel="stylesheet" href="css/dashboard-pro.css">
+  <link rel="stylesheet" href="css/panel-comun.css">
+  <link rel="stylesheet" href="css/tarifas.css">
+</head>
+<body class="dashboard-body">
+  <div class="dashboard-bg-decor" aria-hidden="true"><span class="deco-bubble db1"></span><span class="deco-bubble db2"></span><span class="deco-bubble db3"></span><span class="deco-bubble db4"></span></div>
+  <aside class="sidebar sidebar-pro">
+  <div class="sidebar-brand"><div class="brand-logo"><img src="images/logo-aquaica.png" alt="Logo AquaIca"></div><div><h2>AquaIca</h2><span>Sistema de Gestión</span></div></div>
+  <nav class="sidebar-menu" id="sidebarMenu"></nav>
+  <div class="sidebar-bottom"><button id="logoutButton" class="logout-button" type="button">Cerrar sesión</button></div>
+</aside>
+  <main class="dashboard-main">
+    <header class="dp-top">
+  <div class="dp-titulo"><span>Facturación</span><h1>Tarifas</h1></div>
+  <div class="dp-acciones">
+    <div class="dp-campana" id="campanaWrap"><button type="button" class="dp-campana-btn" id="campanaBtn" aria-label="Notificaciones" aria-haspopup="true" aria-expanded="false"><svg class="dp-ico" viewBox="0 0 24 24" aria-hidden="true"><path d="M6 8a6 6 0 0 1 12 0c0 7 3 9 3 9H3s3-2 3-9"/><path d="M10.3 21a1.94 1.94 0 0 0 3.4 0"/></svg></button><div class="dp-menu dp-menu-notif" id="campanaMenu"><h4>Notificaciones</h4><div id="campanaLista"><p class="dp-notif-vacia">No hay notificaciones nuevas.</p></div></div></div>
+    <div class="dp-usuario" id="usuarioWrap"><button type="button" class="dp-usuario-btn" id="usuarioBtn" aria-haspopup="true" aria-expanded="false"><span class="user-avatar" id="userAvatar">U</span><span class="dp-usuario-txt"><strong id="usernameDisplay">Usuario</strong><small id="roleDisplay">Usuario</small></span><svg class="dp-ico chev" viewBox="0 0 24 24" aria-hidden="true"><path d="m6 9 6 6 6-6"/></svg></button><div class="dp-menu" id="usuarioMenu"><button type="button" id="logoutMenu"><svg class="dp-ico" viewBox="0 0 24 24" aria-hidden="true"><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"/><path d="m16 17 5-5-5-5M21 12H9"/></svg>Cerrar sesión</button></div></div>
+  </div>
+</header>
+    <section class="dp-banner tarifas-intro clientes-intro"><div class="dp-banner-texto"><h2>Tarifas</h2><p>Cada categoría tiene un cargo fijo mensual y un precio por m³. Las tarifas no se editan: una nueva reemplaza a la anterior desde su fecha de vigencia, así los recibos pasados siempre se pueden explicar.</p></div></section>
+    <section class="tar-grid" id="tarCards"><p class="sol-nota">Cargando tarifas...</p></section>
+    <section class="content-card tar-form-card" id="tarFormCard" hidden>
+      <div><h3>Nueva tarifa</h3><p>Solo el administrador puede crear tarifas. La fecha no puede estar en el pasado.</p></div>
+      <form id="tarForm" class="tar-form" autocomplete="off">
+        <div><label for="tarCategoria">Categoría</label><select id="tarCategoria"><option value="DOMESTICO">Doméstico</option><option value="COMERCIAL">Comercial</option></select></div>
+        <div><label for="tarFijo">Cargo fijo mensual (S/)</label><input id="tarFijo" type="number" min="0" step="0.01" required></div>
+        <div><label for="tarPrecio">Precio por m³ (S/)</label><input id="tarPrecio" type="number" min="0" step="0.001" required></div>
+        <div><label for="tarDesde">Vigente desde</label><input id="tarDesde" type="date" required></div>
+        <button type="submit" class="sol-btn primario">Guardar tarifa</button>
+      </form>
+      <p class="sol-error" id="tarError" role="alert"></p>
+    </section>
+    <section class="content-card clientes-tabla-card"><div class="section-header"><div><h2><svg class="icon-svg" viewBox="0 0 24 24"><path d="M20.6 13.4l-7.2 7.2a2 2 0 0 1-2.8 0L3 13V3h10l7.6 7.6a2 2 0 0 1 0 2.8z"/><circle cx="7.5" cy="7.5" r="1.2"/></svg>Historial de tarifas</h2><p>De la más reciente a la más antigua, por categoría</p></div></div><div class="table-container"><table><thead><tr><th>Categoría</th><th>Cargo fijo</th><th>Precio por m³</th><th>Vigente desde</th><th>Estado</th><th>Creada por</th></tr></thead><tbody id="tarTabla"><tr><td colspan="6" class="clientes-vacio">Cargando...</td></tr></tbody></table></div></section>
+  </main>
+  <div class="clientes-toast" id="clientesToast" role="status"></div>
+  <script src="js/api.js"></script><script src="js/menu.js"></script><script src="js/tarifas.js"></script>
+</body></html>

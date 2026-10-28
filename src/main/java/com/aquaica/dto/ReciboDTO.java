@@ -1,11 +1,17 @@
 package com.aquaica.dto;
 
+import com.aquaica.entity.Pago;
 import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 
 import com.aquaica.entity.Recibo;
 
+/**
+ * estado = el guardado (PENDIENTE, PAGADO o ANULADO).
+ * estadoVisible = lo que se muestra: un PENDIENTE pasado de fecha se ve como VENCIDO.
+ * Crear dentro de una transacción.
+ */
 public record ReciboDTO(
         Long id,
         String codigo,
@@ -28,9 +34,16 @@ public record ReciboDTO(
         String generadoPor,
         String anuladoPor,
         LocalDateTime fechaAnulacion,
-        String motivoAnulacion) {
+        String motivoAnulacion,
+        LocalDateTime fechaPago,
+        String codigoOperacion,
+        String medioPago) {
 
     public static ReciboDTO de(Recibo r) {
+        return de(r, null);
+    }
+
+    public static ReciboDTO de(Recibo r, Pago pago) {
 
         String visible = "PENDIENTE".equals(r.getEstado())
                 && r.getFechaVencimiento().isBefore(LocalDate.now())
@@ -59,6 +72,9 @@ public record ReciboDTO(
                 r.getGeneradoPor() != null ? r.getGeneradoPor().getUsername() : null,
                 r.getAnuladoPor() != null ? r.getAnuladoPor().getUsername() : null,
                 r.getFechaAnulacion(),
-                r.getMotivoAnulacion());
+                r.getMotivoAnulacion(),
+                pago != null ? pago.getFechaPago() : null,
+                pago != null ? pago.getCodigo() : null,
+                pago != null ? pago.getMedio() : null);
     }
 }

@@ -5,19 +5,32 @@
   <title>AquaIca | Lecturas</title>
   <link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700;800&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="css/style.css"><link rel="stylesheet" href="css/dashboard.css"><link rel="stylesheet" href="css/clientes.css"><link rel="stylesheet" href="css/solicitudes.css"><link rel="stylesheet" href="css/lecturas.css">
+  <link rel="stylesheet" href="css/style.css">
+<link rel="stylesheet" href="css/dashboard.css">
+<link rel="stylesheet" href="css/sidebar-pro.css">
+<link rel="stylesheet" href="css/dashboard-pro.css">
+<link rel="stylesheet" href="css/panel-comun.css">
+<link rel="stylesheet" href="css/clientes.css">
+<link rel="stylesheet" href="css/solicitudes.css">
+<link rel="stylesheet" href="css/lecturas.css">
 </head>
 <body class="dashboard-body">
   <div class="dashboard-bg-decor" aria-hidden="true"><span class="deco-bubble db1"></span><span class="deco-bubble db2"></span><span class="deco-bubble db3"></span><span class="deco-bubble db4"></span></div>
-  <aside class="sidebar">
-    <div class="sidebar-brand"><div class="brand-logo">A</div><div><h2>AquaIca</h2><span>Sistema de Gestión</span></div></div>
+  <aside class="sidebar sidebar-pro">
+    <div class="sidebar-brand"><div class="brand-logo"><img src="images/logo-aquaica.png" alt="Logo AquaIca"></div><div><h2>AquaIca</h2><span>Sistema de Gestión</span></div></div>
     <nav class="sidebar-menu" id="sidebarMenu"></nav>
-    <div class="sidebar-bottom"><button id="logoutButton" class="logout-button">Cerrar sesión</button></div>
+    <div class="sidebar-bottom"><button id="logoutButton" class="logout-button" type="button">Cerrar sesión</button></div>
   </aside>
   <main class="dashboard-main">
-    <header class="dashboard-header"><div><span class="header-subtitle">Operación</span><h1>Lecturas</h1></div><div class="user-info"><div class="user-avatar" id="userAvatar">U</div><div><strong id="usernameDisplay">Usuario</strong><span id="roleDisplay">Usuario</span></div></div></header>
-    <section class="clientes-intro"><div><h2>Lecturas de medidores</h2><p>Registra la lectura mensual de cada medidor. El sistema calcula el consumo en m³ a partir de la lectura anterior.</p></div><button type="button" class="sol-btn peligro" id="lecBorrarTodas" hidden>Borrar todas las simuladas</button></section>
-    <section class="clientes-stats"><div class="clientes-stat-card stat-total"><div class="clientes-stat-icon"><svg class="icon-svg" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M12 12l4-4M12 6v1.5M6 12h1.5M18 12h-1.5"/></svg></div><div><span>Medidores activos</span><strong id="stActivos">0</strong></div></div><div class="clientes-stat-card stat-inactivo"><div class="clientes-stat-icon"><svg class="icon-svg" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M12 12l4-4M12 6v1.5M6 12h1.5M18 12h-1.5"/></svg></div><div><span>Sin lectura inicial</span><strong id="stSinInicial">0</strong></div></div><div class="clientes-stat-card stat-activo"><div class="clientes-stat-icon"><svg class="icon-svg" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M12 12l4-4M12 6v1.5M6 12h1.5M18 12h-1.5"/></svg></div><div><span>Leídos este mes</span><strong id="stLeidos">0</strong></div></div><div class="clientes-stat-card stat-correo"><div class="clientes-stat-icon"><svg class="icon-svg" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M12 12l4-4M12 6v1.5M6 12h1.5M18 12h-1.5"/></svg></div><div><span>Pendientes del mes</span><strong id="stPendientes">0</strong></div></div></section>
+    <header class="dp-top">
+      <div class="dp-titulo"><span>Operación</span><h1>Lecturas</h1></div>
+      <div class="dp-acciones">
+        <div class="dp-campana" id="campanaWrap"><button type="button" class="dp-campana-btn" id="campanaBtn" aria-label="Notificaciones" aria-haspopup="true" aria-expanded="false"><svg class="dp-ico" viewBox="0 0 24 24"><path d="M6 8a6 6 0 0 1 12 0c0 7 3 9 3 9H3s3-2 3-9"/><path d="M10.3 21a1.94 1.94 0 0 0 3.4 0"/></svg><span class="dp-badge" id="campanaBadge" hidden>0</span></button><div class="dp-menu dp-menu-notif" id="campanaMenu"><h4>Notificaciones</h4><div id="campanaLista"><p class="dp-notif-vacia">No hay notificaciones nuevas.</p></div></div></div>
+        <div class="dp-usuario" id="usuarioWrap"><button type="button" class="dp-usuario-btn" id="usuarioBtn" aria-haspopup="true" aria-expanded="false"><span class="user-avatar" id="userAvatar">U</span><span class="dp-usuario-txt"><strong id="usernameDisplay">Usuario</strong><small id="roleDisplay">Usuario</small></span><svg class="dp-ico chev" viewBox="0 0 24 24"><path d="m6 9 6 6 6-6"/></svg></button><div class="dp-menu" id="usuarioMenu"><button type="button" id="logoutMenu"><svg class="dp-ico" viewBox="0 0 24 24"><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"/><path d="m16 17 5-5-5-5M21 12H9"/></svg>Cerrar sesión</button></div></div>
+      </div>
+    </header>
+    <section class="dp-banner lec-banner"><div class="dp-banner-texto"><h2>Lecturas de medidores</h2><p>Registra la lectura mensual de cada medidor. El sistema calcula el consumo en m³ a partir de la lectura anterior.</p></div><button type="button" class="sol-btn peligro" id="lecBorrarTodas" hidden>Borrar todas las simuladas</button></section>
+    <section class="dp-kpis lec-kpis"><div class="dp-kpi k-azul clientes-stat-card stat-total"><div class="dp-kpi-ico clientes-stat-icon"><svg class="icon-svg" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M12 12l4-4M12 6v1.5M6 12h1.5M18 12h-1.5"/></svg></div><div><span>Medidores activos</span><strong id="stActivos">0</strong></div></div><div class="dp-kpi k-rojo clientes-stat-card stat-inactivo"><div class="dp-kpi-ico clientes-stat-icon"><svg class="icon-svg" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M12 12l4-4M12 6v1.5M6 12h1.5M18 12h-1.5"/></svg></div><div><span>Sin lectura inicial</span><strong id="stSinInicial">0</strong></div></div><div class="dp-kpi k-verde clientes-stat-card stat-activo"><div class="dp-kpi-ico clientes-stat-icon"><svg class="icon-svg" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M12 12l4-4M12 6v1.5M6 12h1.5M18 12h-1.5"/></svg></div><div><span>Leídos este mes</span><strong id="stLeidos">0</strong></div></div><div class="dp-kpi k-morado clientes-stat-card stat-correo"><div class="dp-kpi-ico clientes-stat-icon"><svg class="icon-svg" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M12 12l4-4M12 6v1.5M6 12h1.5M18 12h-1.5"/></svg></div><div><span>Pendientes del mes</span><strong id="stPendientes">0</strong></div></div></section>
     <section class="clientes-filtros">
       <div class="clientes-buscador"><label for="buscarMedidor">Buscar medidor</label><div class="clientes-buscador-input"><svg class="icon-svg" viewBox="0 0 24 24"><circle cx="11" cy="11" r="7"/><path d="M21 21l-4.3-4.3"/></svg><input type="search" id="buscarMedidor" placeholder="Código de suministro, serie o dirección..."></div></div>
       <div><label for="filtroLectura">Estado de lectura</label><select id="filtroLectura"><option value="">Todos</option><option value="PENDIENTE">Pendientes del mes</option><option value="SIN_INICIAL">Sin lectura inicial</option><option value="LEIDO">Leídos este mes</option><option value="SIMULADO">Con datos simulados</option></select></div>

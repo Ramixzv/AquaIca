@@ -39,6 +39,7 @@ public class OrdenInstalacionService {
     public static final String CANCELADA = "CANCELADA";
 
     private final OrdenInstalacionRepository ordenRepository;
+    private final NotificacionService notificacionService;
     private final SolicitudServicioRepository solicitudRepository;
     private final PersonalRepository personalRepository;
     private final UsuarioRepository usuarioRepository;
@@ -57,7 +58,9 @@ public class OrdenInstalacionService {
             MedidorRepository medidorRepository,
             SuministroService suministroService,
             MedidorService medidorService,
-            LecturaService lecturaService) {
+            LecturaService lecturaService,
+            NotificacionService notificacionService) {
+        this.notificacionService = notificacionService;
 
         this.ordenRepository = ordenRepository;
         this.solicitudRepository = solicitudRepository;
@@ -165,7 +168,25 @@ public class OrdenInstalacionService {
         solicitud.setEstado("EN_INSTALACION");
         solicitudRepository.save(solicitud);
 
-        return OrdenInstalacionDTO.de(ordenRepository.save(orden));
+        OrdenInstalacion guardada = ordenRepository.save(orden);
+
+        String cuando = fechaProgramada != null
+                ? "Visita programada: " + fechaProgramada.toString().replace('T', ' ') + "."
+                : "La fecha de la visita aún no está confirmada.";
+
+        notificacionService.notificarCliente(
+                solicitud.getCliente().getId(), NotificacionService.INSTALACION,
+                "Tu instalación fue programada",
+                "Asignamos un técnico a tu solicitud. " + cuando,
+                "ciudadano.html#solicitudes");
+
+        notificacionService.notificarPersonal(
+                tecnico.getId(), NotificacionService.INSTALACION,
+                "Nueva instalación asignada",
+                guardada.getCodigo() + " · " + solicitud.getDireccion(),
+                "instalaciones.html");
+
+        return OrdenInstalacionDTO.de(guardada);
     }
 
     @Transactional(readOnly = true)
@@ -271,7 +292,16 @@ public class OrdenInstalacionService {
         solicitud.setEstado("ACTIVADA");
         solicitudRepository.save(solicitud);
 
-        return OrdenInstalacionDTO.de(ordenRepository.save(orden));
+        OrdenInstalacion guardada = ordenRepository.save(orden);
+
+        notificacionService.notificarCliente(
+                solicitud.getCliente().getId(), NotificacionService.INSTALACION,
+                "¡Tu servicio fue activado!",
+                "Tu suministro " + suministro.getCodigoSuministro()
+                        + " ya está activo. Revísalo en Mis suministros.",
+                "ciudadano.html#suministros");
+
+        return OrdenInstalacionDTO.de(guardada);
     }
 
     // ---------------------------------------------------------------

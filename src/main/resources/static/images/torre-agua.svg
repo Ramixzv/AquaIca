@@ -1,0 +1,57 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 280 500" fill="none">
+  <defs>
+    <linearGradient id="cuerpo" x1="0" x2="1">
+      <stop offset="0" stop-color="#c9d9e8"/>
+      <stop offset=".35" stop-color="#ffffff"/>
+      <stop offset=".7" stop-color="#eef4fa"/>
+      <stop offset="1" stop-color="#b9cde0"/>
+    </linearGradient>
+    <linearGradient id="techo" x1="0" x2="0" y1="0" y2="1">
+      <stop offset="0" stop-color="#f4f8fc"/>
+      <stop offset="1" stop-color="#c3d5e6"/>
+    </linearGradient>
+    <linearGradient id="cerro" x1="0" x2="0" y1="0" y2="1">
+      <stop offset="0" stop-color="#9db9a6" stop-opacity=".85"/>
+      <stop offset="1" stop-color="#5f8f78" stop-opacity=".9"/>
+    </linearGradient>
+    <linearGradient id="gota" x1="0" x2="1" y1="0" y2="1">
+      <stop offset="0" stop-color="#2ab6f2"/>
+      <stop offset="1" stop-color="#0a74c9"/>
+    </linearGradient>
+  </defs>
+
+  <!-- cerros del fondo -->
+  <path d="M0 380 L60 300 L110 350 L170 270 L230 340 L280 310 V500 H0Z" fill="url(#cerro)" opacity=".55"/>
+
+  <!-- columnas -->
+  <g fill="#e4edf6" stroke="#b7c9da" stroke-width="1.5">
+    <rect x="62" y="238" width="16" height="230" rx="2"/>
+    <rect x="112" y="238" width="16" height="230" rx="2"/>
+    <rect x="152" y="238" width="16" height="230" rx="2"/>
+    <rect x="202" y="238" width="16" height="230" rx="2"/>
+  </g>
+  <!-- travesaños -->
+  <g stroke="#b7c9da" stroke-width="2">
+    <path d="M70 330 H210 M70 400 H210"/>
+    <path d="M70 330 L210 400 M210 330 L70 400" opacity=".7"/>
+  </g>
+  <!-- plataforma -->
+  <rect x="48" y="226" width="184" height="16" rx="4" fill="#d3e0ec" stroke="#b7c9da" stroke-width="1.5"/>
+
+  <!-- tanque -->
+  <path d="M52 92 V222 H228 V92Z" fill="url(#cuerpo)" stroke="#b7c9da" stroke-width="1.5"/>
+  <path d="M52 132 H228 M52 176 H228" stroke="#b7c9da" stroke-width="1.5"/>
+  <path d="M44 92 Q140 18 236 92Z" fill="url(#techo)" stroke="#b7c9da" stroke-width="1.5"/>
+  <rect x="132" y="38" width="16" height="22" rx="3" fill="#d3e0ec" stroke="#b7c9da" stroke-width="1.5"/>
+
+  <!-- emblema -->
+  <g transform="translate(140 150)">
+    <path d="M0 -34 C16 -14 22 -4 22 8 a22 22 0 0 1 -44 0 C-22 -4 -16 -14 0 -34Z" fill="url(#gota)"/>
+    <path d="M-17 10 Q-6 2 4 10 T22 8 V14 a22 22 0 0 1 -39 0Z" fill="#5fc15a"/>
+    <path d="M-12 -2 Q0 -12 12 -2" stroke="#fff" stroke-width="2" stroke-linecap="round" opacity=".7"/>
+  </g>
+  <text x="140" y="206" text-anchor="middle" font-family="Poppins, Arial, sans-serif" font-weight="700" font-size="17" fill="#0a4f9e">Aqualca</text>
+
+  <!-- piso -->
+  <ellipse cx="140" cy="470" rx="110" ry="10" fill="#0b2a4a" opacity=".08"/>
+</svg>

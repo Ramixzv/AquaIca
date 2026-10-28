@@ -15,6 +15,7 @@ import com.aquaica.repository.SolicitudServicioRepository;
 public class SolicitudServicioService {
 
     private final SolicitudServicioRepository solicitudRepository;
+    private final NotificacionService notificacionService;
     private final ClienteRepository clienteRepository;
     private final OrdenInstalacionService ordenInstalacionService;
 
@@ -32,7 +33,9 @@ public class SolicitudServicioService {
     public SolicitudServicioService(
             SolicitudServicioRepository solicitudRepository,
             ClienteRepository clienteRepository,
-            OrdenInstalacionService ordenInstalacionService) {
+            OrdenInstalacionService ordenInstalacionService,
+            NotificacionService notificacionService) {
+        this.notificacionService = notificacionService;
 
         this.solicitudRepository = solicitudRepository;
         this.clienteRepository = clienteRepository;
@@ -225,6 +228,10 @@ public SolicitudServicio cancelarPorCliente(
             ordenInstalacionService.cancelarPorSolicitud(guardada.getId());
         }
 
+        if (cambia) {
+            avisarCambioDeEstado(guardada, nuevoEstado);
+        }
+
         return guardada;
     }
 
@@ -289,5 +296,37 @@ public SolicitudServicio cancelarPorCliente(
 
             default -> false;
         };
+    }
+
+    /** Avisa al ciudadano de los cambios que le importan (aprobada, observada, etc.). */
+    private void avisarCambioDeEstado(SolicitudServicio solicitud, String estado) {
+
+        String codigo = String.format("SOL-%d-%06d",
+                solicitud.getFechaSolicitud().getYear(), solicitud.getId());
+        String obs = solicitud.getObservaciones();
+        String titulo = null;
+        String mensaje = null;
+
+        if ("EN_EVALUACION".equals(estado)) {
+            titulo = "Estamos revisando tu solicitud";
+            mensaje = "Tu solicitud " + codigo + " está en evaluación.";
+        } else if ("OBSERVADA".equals(estado)) {
+            titulo = "Tu solicitud tiene observaciones";
+            mensaje = obs != null ? obs : "Revisa las indicaciones del personal.";
+        } else if ("APROBADA".equals(estado)) {
+            titulo = "¡Tu solicitud fue aprobada!";
+            mensaje = "La solicitud " + codigo + " fue aprobada. Ya puedes ver tu comprobante.";
+        } else if ("RECHAZADA".equals(estado)) {
+            titulo = "Tu solicitud fue rechazada";
+            mensaje = obs != null ? obs : "Revisa los detalles en Mis solicitudes.";
+        }
+
+        if (titulo == null) {
+            return;
+        }
+
+        notificacionService.notificarCliente(
+                solicitud.getCliente().getId(), NotificacionService.SOLICITUD,
+                titulo, mensaje, "ciudadano.html#solicitudes");
     }
 }

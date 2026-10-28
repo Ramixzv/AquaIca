@@ -30,6 +30,32 @@ document.addEventListener("DOMContentLoaded", () => {
         ["token", "username", "rol", "personalId"].forEach(k => localStorage.removeItem(k));
         window.location.href = "login.html";
     });
+  document.getElementById("logoutMenu")?.addEventListener("click", () => {
+    ["token", "username", "rol", "personalId", "clienteId"].forEach(k => localStorage.removeItem(k));
+    window.location.href = "login.html";
+  });
+
+  function cerrarMenusPersonal() {
+    document.querySelectorAll(".dp-menu.abierto").forEach(menu => menu.classList.remove("abierto"));
+    document.querySelectorAll(".dp-acciones [aria-expanded='true']").forEach(boton => boton.setAttribute("aria-expanded", "false"));
+  }
+  [["usuarioBtn", "usuarioMenu"], ["campanaBtn", "campanaMenu"]].forEach(([botonId, menuId]) => {
+    const boton = document.getElementById(botonId);
+    const menu = document.getElementById(menuId);
+    if (!boton || !menu) return;
+    boton.addEventListener("click", evento => {
+      evento.stopPropagation();
+      const abrir = !menu.classList.contains("abierto");
+      cerrarMenusPersonal();
+      menu.classList.toggle("abierto", abrir);
+      boton.setAttribute("aria-expanded", String(abrir));
+    });
+  });
+  document.addEventListener("click", cerrarMenusPersonal);
+  document.addEventListener("keydown", evento => {
+    if (evento.key === "Escape") cerrarMenusPersonal();
+  });
+
 
 
     const tabla = document.getElementById("personalTable");

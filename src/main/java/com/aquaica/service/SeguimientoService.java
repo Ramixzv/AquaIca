@@ -20,13 +20,16 @@ import com.aquaica.security.CustomUserDetails;
 public class SeguimientoService {
 
     private final SeguimientoRepository seguimientoRepository;
+    private final NotificacionService notificacionService;
     private final ReporteRepository reporteRepository;
     private final PersonalRepository personalRepository;
 
     public SeguimientoService(
             SeguimientoRepository seguimientoRepository,
             ReporteRepository reporteRepository,
-            PersonalRepository personalRepository) {
+            PersonalRepository personalRepository,
+            NotificacionService notificacionService) {
+        this.notificacionService = notificacionService;
 
         this.seguimientoRepository = seguimientoRepository;
         this.reporteRepository = reporteRepository;
@@ -101,6 +104,14 @@ public class SeguimientoService {
 
         Seguimiento guardado =
                 seguimientoRepository.save(seguimiento);
+
+        notificacionService.notificarCliente(
+                reporte.getSuministroId().getCliente().getId(),
+                NotificacionService.REPORTE,
+                "Novedades en tu reporte #" + reporte.getId(),
+                "Estado: " + NotificacionService.humanizar(guardado.getEstado())
+                        + (comentario != null && !comentario.isBlank() ? " — " + comentario.trim() : ""),
+                "ciudadano.html#reportes");
 
         return new SeguimientoResponseDTO(
                 guardado.getId(),

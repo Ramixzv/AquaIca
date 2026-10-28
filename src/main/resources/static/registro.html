@@ -11,6 +11,7 @@
     <link rel="stylesheet" href="css/style.css">
     <link rel="stylesheet" href="css/login.css">
     <link rel="stylesheet" href="css/registro.css">
+    <script src="https://accounts.google.com/gsi/client" async defer></script>
 </head>
 
 <body class="login-body">
@@ -143,6 +144,57 @@
 
             </form>
 
+            
+<!-- Registro alternativo con Google -->
+<div class="login-divider">
+    <span>O regístrate con</span>
+</div>
+
+<div id="googleRegistroButton"
+     style="display:flex; justify-content:center; margin:16px 0;">
+</div>
+
+<div id="googleRegistroMessage" class="login-message" hidden></div>
+
+<form id="googleRegistroForm" hidden>
+
+    <div class="login-header">
+        <h3>Completa tus datos ciudadanos</h3>
+        <p>Ya verificamos tu cuenta de Google. Completa los datos necesarios para crear tu cuenta AquaIca.</p>
+    </div>
+
+    <div class="form-group">
+        <label for="googleDni">DNI</label>
+        <input id="googleDni" type="text"
+               inputmode="numeric" pattern="[0-9]{8}"
+               maxlength="8" required>
+    </div>
+
+    <div class="form-group">
+        <label for="googleNombre">Nombres y apellidos</label>
+        <input id="googleNombre" type="text"
+               maxlength="150" autocomplete="name" required>
+    </div>
+
+    <div class="form-group">
+        <label for="googleTelefono">Teléfono</label>
+        <input id="googleTelefono" type="tel"
+               maxlength="15" autocomplete="tel">
+    </div>
+
+    <div class="form-group">
+        <label for="googleUsername">Nombre de usuario</label>
+        <input id="googleUsername" type="text"
+               minlength="4" maxlength="50"
+               pattern="[a-zA-Z0-9._-]{4,50}" required>
+    </div>
+
+    <button type="submit" class="login-button" id="googleRegistroSubmit">
+        Crear cuenta con Google
+    </button>
+</form>
+
+
             <!-- Pie de página -->
             <div class="login-footer">
                 <span>AquaIca © 2026</span>
@@ -157,4 +209,3 @@
 
 </body>
 </html>
-```

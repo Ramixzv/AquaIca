@@ -13,6 +13,8 @@
         solicitudes: '<path d="M14 3H7a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V8z"/><path d="M14 3v5h5"/><path d="M12 12v5M9.5 14.5h5"/>',
         instalaciones: '<path d="M14.7 6.3a4 4 0 0 0-5.6 5.1L4 16.5V20h3.5l5.1-5.1a4 4 0 0 0 5.1-5.6l-2.6 2.6-2-2z"/>',
         lecturas: '<circle cx="12" cy="12" r="9"/><path d="M12 12l4-4M12 6v1.5M6 12h1.5M18 12h-1.5"/>',
+        tarifas: '<path d="M20.6 13.4l-7.2 7.2a2 2 0 0 1-2.8 0L3 13V3h10l7.6 7.6a2 2 0 0 1 0 2.8z"/><circle cx="7.5" cy="7.5" r="1.2"/>',
+        indicadores: '<path d="M4 20V10M10 20V4M16 20v-7M22 20H2"/>',
         suministros: '<rect x="4" y="3" width="16" height="18" rx="2"/><path d="M9 8h6M9 12h6M9 16h3"/>',
         clientes: '<path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M19 8v6M16 11h6"/>',
         personal: '<path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87M16 3.13a4 4 0 0 1 0 7.75"/>',
@@ -22,6 +24,7 @@
 
     const MODULOS = [
         { href: "dashboard.html",    etiqueta: "Dashboard",       icono: "dashboard",     roles: TODOS },
+        { href: "indicadores.html",  etiqueta: "Indicadores",    icono: "indicadores",   roles: GESTION },
         { href: "reportes.html",     etiqueta: "Reportes",        icono: "reportes",      roles: TODOS, tambien: ["reporte-detalle.html"] },
         { href: "asignaciones.html", etiqueta: "Asignaciones",    icono: "asignaciones",  roles: TODOS },
         { href: "seguimientos.html", etiqueta: "Seguimientos",    icono: "seguimientos",  roles: TODOS },
@@ -32,7 +35,8 @@
         { href: "suministros.html",  etiqueta: "Suministros",     icono: "suministros",   roles: GESTION },
         { href: "clientes.html",     etiqueta: "Clientes",        icono: "clientes",      roles: GESTION },
         { href: "personal.html",     etiqueta: "Personal",        icono: "personal",      roles: GESTION },
-        { href: "recibos.html",      etiqueta: "Recibos y pagos", icono: "recibos",       roles: GESTION, proximamente: true },
+        { href: "recibos.html",      etiqueta: "Recibos", icono: "recibos",       roles: GESTION },
+        { href: "tarifas.html",       etiqueta: "Tarifas",         icono: "tarifas",       roles: GESTION },
         { href: "configuracion.html",etiqueta: "Configuración",   icono: "configuracion", roles: SOLO_ADMIN, proximamente: true }
     ];
 
@@ -115,4 +119,16 @@
             </a>`;
     }).join("");
 
+})();
+
+// Campana de notificaciones: se carga sola en todas las pantallas que usan este menú
+(function () {
+    if (!localStorage.getItem("token")) return;
+    const estilos = document.createElement("link");
+    estilos.rel = "stylesheet";
+    estilos.href = "css/notificaciones.css";
+    document.head.appendChild(estilos);
+    const script = document.createElement("script");
+    script.src = "js/notificaciones.js";
+    document.body.appendChild(script);
 })();
