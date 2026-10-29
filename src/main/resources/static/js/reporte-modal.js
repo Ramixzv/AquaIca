@@ -1,15 +1,4 @@
-/* =========================================================
-   VENTANA "REPORTAR UN PROBLEMA" · PORTAL CIUDADANO
 
-   Cómo se abre: cualquier elemento con el atributo data-abrir-reporte.
-   Si además trae data-codigo="100000001", el suministro llega preseleccionado.
-
-   Flujo (el mismo que usaba reporte.html):
-     POST /api/reportes                        -> crea el reporte
-     POST /api/reportes/{id}/evidencias        -> sube la imagen (opcional)
-
-   Necesita que ciudadano.js publique window.AquaIcaPortal.
-   ========================================================= */
 
 (function () {
 
@@ -548,5 +537,32 @@
         evento.preventDefault();
         abrir(origen.dataset.codigo || "", origen);
     });
+
+
+    /* =====================================================
+       APERTURA DESDE EL LANDING
+       ciudadano.html?reportar=1#reportes abre la ventana al entrar.
+       Espera a que el portal termine de cargar sus datos.
+       ===================================================== */
+
+    if (new URLSearchParams(window.location.search).get("reportar") === "1") {
+
+        window.history.replaceState(null, "", window.location.pathname + window.location.hash);
+
+        let intentos = 0;
+
+        const espera = window.setInterval(() => {
+
+            intentos += 1;
+
+            const listo = window.AquaIcaPortal && window.AquaIcaPortal.datos && window.AquaIcaPortal.datos.perfil;
+
+            if (listo || intentos > 40) {
+                window.clearInterval(espera);
+                abrir("", null);
+            }
+
+        }, 150);
+    }
 
 })();

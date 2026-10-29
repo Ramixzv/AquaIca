@@ -148,6 +148,22 @@ public class OrdenInstalacionService {
                     "La persona seleccionada no tiene el rol de técnico.");
         }
 
+        if (!"INSTALACIONES_MEDIDORES".equals(tecnico.getEspecialidad())) {
+                throw new IllegalArgumentException(
+                "El técnico debe tener la especialidad Instalaciones y medidores.");
+        }
+
+        
+        List<String> estadosOcupados = List.of("ASIGNADA");
+
+        boolean ocupado = ordenRepository.existsByTecnicoIdAndEstadoIn(tecnicoId, estadosOcupados);
+
+        if (ocupado && !tecnicoId.equals(orden.getTecnico() != null ? orden.getTecnico().getId() : null)) {
+        throw new IllegalArgumentException(
+        "El técnico seleccionado ya tiene una instalación asignada.");
+        }
+
+
         if (fechaProgramada != null
                 && fechaProgramada.isBefore(LocalDateTime.now().minusMinutes(5))) {
             throw new IllegalArgumentException(

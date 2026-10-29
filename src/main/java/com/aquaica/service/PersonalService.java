@@ -15,6 +15,7 @@ import com.aquaica.entity.Especialidad;
 import com.aquaica.entity.Personal;
 import com.aquaica.entity.Usuario;
 import com.aquaica.repository.AsignacionRepository;
+import com.aquaica.repository.OrdenInstalacionRepository;
 import com.aquaica.repository.PersonalRepository;
 import com.aquaica.repository.UsuarioRepository;
 
@@ -28,16 +29,19 @@ public class PersonalService {
     private final UsuarioRepository usuarioRepository;
     private final AsignacionRepository asignacionRepository;
     private final PasswordEncoder passwordEncoder;
+    private final OrdenInstalacionRepository ordenInstalacionRepository;
 
     public PersonalService(
             PersonalRepository personalRepository,
             UsuarioRepository usuarioRepository,
             AsignacionRepository asignacionRepository,
+            OrdenInstalacionRepository ordenInstalacionRepository,
             PasswordEncoder passwordEncoder) {
 
         this.personalRepository = personalRepository;
         this.usuarioRepository = usuarioRepository;
         this.asignacionRepository = asignacionRepository;
+        this.ordenInstalacionRepository = ordenInstalacionRepository;
         this.passwordEncoder = passwordEncoder;
     }
 
@@ -222,11 +226,6 @@ public class PersonalService {
     }
 
 
-    /**
-     * Devuelve los técnicos cuya especialidad atiende el tipo
-     * de problema recibido, marcando con "disponible" (true/false)
-     * si tienen o no una asignación activa en este momento.
-     */
     public List<TecnicoDisponibleDTO> obtenerTecnicosPorTipoProblema(
             String tipoProblema) {
 
@@ -259,6 +258,45 @@ public class PersonalService {
 
         return resultado;
     }
+
+    
+public List<TecnicoDisponibleDTO> obtenerTecnicosDisponiblesParaInstalaciones() {
+
+    Especialidad especialidad = Especialidad.INSTALACIONES_MEDIDORES;
+
+    List<Personal> tecnicos = personalRepository
+            .obtenerTecnicosActivosPorEspecialidad(especialidad.name());
+
+    List<TecnicoDisponibleDTO> resultado = new ArrayList<>();
+
+    for (Personal tecnico : tecnicos) {
+
+        boolean ocupadoPorReporte = asignacionRepository
+                .existsByPersonalIdAndEstadoIn(
+                        tecnico.getId(),
+                        ESTADOS_OCUPADO
+                );
+
+        boolean ocupadoPorInstalacion = ordenInstalacionRepository
+                .existsByTecnicoIdAndEstadoIn(
+                        tecnico.getId(),
+                        List.of("ASIGNADA")
+                );
+
+        boolean disponible = !ocupadoPorReporte && !ocupadoPorInstalacion;
+
+        resultado.add(new TecnicoDisponibleDTO(
+                tecnico.getId(),
+                tecnico.getNombre(),
+                tecnico.getEspecialidad(),
+                especialidad.getEtiqueta(),
+                disponible
+        ));
+    }
+
+    return resultado;
+}
+
 
 
     private void validarDatosBasicos(

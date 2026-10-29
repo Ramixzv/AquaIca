@@ -132,13 +132,23 @@ document.addEventListener("DOMContentLoaded", () => {
     if (["APROBADA", "EN_INSTALACION", "ACTIVADA"].includes(s.estado)) cargarOrden(s);
   }
 
-  async function obtenerTecnicos() {
-    if (!tecnicos) {
-      const p = await apiFetch("/api/personal");
-      tecnicos = (Array.isArray(p) ? p : []).filter(x => x.rol === "TECNICO" && (x.estado || "").toUpperCase() === "ACTIVO");
-    }
-    return tecnicos;
+  
+
+async function obtenerTecnicos() {
+  if (!tecnicos) {
+    const p = await apiFetch(
+      "/api/personal/tecnicos-disponibles-instalaciones"
+    );
+
+    tecnicos = (Array.isArray(p) ? p : []).filter(t =>
+      t.disponible === true
+    );
   }
+
+  return tecnicos;
+}
+
+
 
   async function cargarOrden(s) {
     const cont = $("solOrden");

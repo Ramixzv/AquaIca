@@ -15,4 +15,8 @@ public interface OrdenInstalacionRepository
     List<OrdenInstalacion> findAllByOrderByFechaCreacionDesc();
 
     List<OrdenInstalacion> findByTecnicoIdOrderByFechaCreacionDesc(Long tecnicoId);
+
+    
+    boolean existsByTecnicoIdAndEstadoIn(Long tecnicoId, List<String> estados);
+
 }
