@@ -39,7 +39,7 @@ public class SecurityConfig {
 
                 // PÁGINAS Y RECURSOS PÚBLICOS
                 .requestMatchers(
-                    "/", "/index.html",
+                    "/", "/index.html", "/como-funciona.html",
                     "/instalaciones.html",
                     "/solicitudes.html", "/lecturas.html", "/indicadores.html", "/tarifas.html", "/recibos.html", "/login.html", "/registro.html", "/ciudadano.html","/reporte.html", "/reporte-detalle.html",
                     "/dashboard.html", "/reportes.html", "/asignaciones.html", "/mis-reportes.html",

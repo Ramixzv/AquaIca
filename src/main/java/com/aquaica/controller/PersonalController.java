@@ -102,4 +102,13 @@ public class PersonalController {
                 personalService.obtenerTecnicosPorTipoProblema(tipoProblema)
         );
     }
+
+    
+@GetMapping("/tecnicos-disponibles-instalaciones")
+public ResponseEntity<List<TecnicoDisponibleDTO>> obtenerTecnicosDisponiblesParaInstalaciones() {
+    return ResponseEntity.ok(
+            personalService.obtenerTecnicosDisponiblesParaInstalaciones()
+    );
+}
+
 }

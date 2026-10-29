@@ -12,111 +12,297 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700;800&display=swap" rel="stylesheet">
 
-    <link rel="stylesheet" href="css/mis-reportes.css">
-    <link rel="stylesheet" href="css/seguimiento.css">
+    <link rel="stylesheet" href="css/ciudadano.css">
+    <link rel="stylesheet" href="css/seguimiento-portal.css">
 </head>
 
-<body class="mis-reportes-body">
+<body>
 
-    <div class="mr-bg-decor" aria-hidden="true">
-        <span class="deco-bubble mb1"></span>
-        <span class="deco-bubble mb2"></span>
-        <span class="deco-bubble mb3"></span>
-        <span class="deco-bubble mb4"></span>
-        <span class="deco-bubble mb5"></span>
-        <span class="deco-bubble mb6"></span>
-    </div>
+<div class="portal">
 
-    <header class="mr-header">
+    <!-- =====================================================
+         MENÚ LATERAL (el mismo del portal ciudadano)
+         ===================================================== -->
 
-        <div class="mr-brand">
-            <div class="mr-logo">A</div>
+    <aside class="p-sidebar" id="sidebar">
+
+        <a href="ciudadano.html#inicio" class="p-brand">
+            <img src="images/logo-aquaica.png" alt="Logo Aqualca">
             <div>
-                <h2>Aqualca</h2>
-                <span>Atención ciudadana</span>
+                <strong>Aqualca</strong>
+                <span>Portal Ciudadano</span>
             </div>
-        </div>
-
-        <nav class="mr-nav">
-            <a href="index.html">Inicio</a>
-            <a href="reporte.html">Nuevo reporte</a>
-            <a href="mis-reportes.html">Mis reportes</a>
-        </nav>
-
-    </header>
-
-    <main class="mr-main seguimiento-main">
-
-        <a href="#" id="volverLink" class="seg-back-link">
-            <svg class="icon-svg" viewBox="0 0 24 24" style="width:15px;height:15px"><path d="M15 6l-6 6 6 6"/></svg>
-            Volver a mis reportes
         </a>
 
-        <!-- ESTADO: CARGANDO -->
-        <section id="segCargando" class="seg-card seg-loading">
-            <div class="seg-spinner"></div>
-            <p>Cargando información de tu reporte...</p>
-        </section>
+        <nav class="p-nav" id="portalNav">
 
-        <!-- ESTADO: ERROR / NO ENCONTRADO -->
-        <section id="segError" class="seg-card seg-empty" style="display:none;">
-            <div class="mr-empty-icon">
-                <svg class="icon-svg" viewBox="0 0 24 24" style="width:26px;height:26px"><circle cx="12" cy="12" r="9"/><path d="M12 8v5M12 16h.01"/></svg>
+            <a href="ciudadano.html#inicio" class="p-link">
+                <svg class="ico" viewBox="0 0 24 24"><path d="M3 10.5 12 3l9 7.5"/><path d="M5 9.5V21h14V9.5"/><path d="M10 21v-6h4v6"/></svg>
+                <span>Inicio</span>
+            </a>
+
+            <a href="ciudadano.html#solicitar" class="p-link">
+                <svg class="ico" viewBox="0 0 24 24"><path d="M14 3H7a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V8z"/><path d="M14 3v5h5"/><path d="M12 12v5M9.5 14.5h5"/></svg>
+                <span>Solicitar servicio</span>
+            </a>
+
+            <a href="ciudadano.html#solicitudes" class="p-link">
+                <svg class="ico" viewBox="0 0 24 24"><rect x="4" y="3" width="16" height="18" rx="2"/><path d="M8 8h8M8 12h8M8 16h5"/></svg>
+                <span>Mis solicitudes</span>
+            </a>
+
+            <a href="ciudadano.html#suministros" class="p-link">
+                <svg class="ico" viewBox="0 0 24 24"><path d="M12 2.7s6 6.1 6 10.3a6 6 0 0 1-12 0c0-4.2 6-10.3 6-10.3z"/></svg>
+                <span>Mis suministros</span>
+            </a>
+
+            <a href="ciudadano.html#consumo" class="p-link">
+                <svg class="ico" viewBox="0 0 24 24"><path d="M4 20V10M10 20V4M16 20v-7M22 20H2"/></svg>
+                <span>Mi consumo</span>
+            </a>
+
+            <a href="ciudadano.html#reportes" class="p-link activo" aria-current="page">
+                <svg class="ico" viewBox="0 0 24 24"><path d="M10.3 3.9 1.8 18a2 2 0 0 0 1.7 3h17a2 2 0 0 0 1.7-3L13.7 3.9a2 2 0 0 0-3.4 0z"/><path d="M12 9v4M12 17h.01"/></svg>
+                <span>Mis reportes</span>
+            </a>
+
+            <a href="ciudadano.html#recibos" class="p-link">
+                <svg class="ico" viewBox="0 0 24 24"><rect x="2" y="5" width="20" height="14" rx="2"/><path d="M2 10h20M6 15h4"/></svg>
+                <span>Recibos y pagos</span>
+            </a>
+
+            <hr>
+
+            <a href="ciudadano.html#perfil" class="p-link">
+                <svg class="ico" viewBox="0 0 24 24"><circle cx="12" cy="8" r="4"/><path d="M4 21c0-4.4 3.6-7 8-7s8 2.6 8 7"/></svg>
+                <span>Mi perfil</span>
+            </a>
+
+            <a href="ciudadano.html#ayuda" class="p-link">
+                <svg class="ico" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M9.1 9a3 3 0 0 1 5.8 1c0 2-3 2.5-3 4.5M12 17.5h.01"/></svg>
+                <span>Ayuda</span>
+            </a>
+
+        </nav>
+
+        <div class="p-sidebar-foot">
+            <svg class="p-olas" viewBox="0 0 280 150" preserveAspectRatio="none" aria-hidden="true">
+                <path d="M0 90C50 60 90 130 150 100S240 50 280 85V150H0Z" fill="rgba(255,255,255,.16)"/>
+                <path d="M0 115C60 85 110 150 170 120S250 85 280 110V150H0Z" fill="rgba(255,255,255,.14)"/>
+                <circle cx="118" cy="62" r="17" fill="rgba(255,255,255,.28)"/>
+                <circle cx="168" cy="95" r="8" fill="rgba(255,255,255,.3)"/>
+                <circle cx="40" cy="80" r="6" fill="rgba(255,255,255,.28)"/>
+            </svg>
+            <p><strong>Agua para todos</strong><span>Ica, un futuro sostenible</span></p>
+        </div>
+
+    </aside>
+
+    <div class="p-backdrop" id="backdrop"></div>
+
+
+    <!-- =====================================================
+         CONTENIDO
+         ===================================================== -->
+
+    <div class="p-content">
+
+        <header class="p-top">
+
+            <button type="button" class="p-menu-btn" id="menuBtn" aria-label="Abrir menú">
+                <svg class="ico" viewBox="0 0 24 24"><path d="M4 6h16M4 12h16M4 18h16"/></svg>
+            </button>
+
+            <div class="p-saludo">
+                <span>Incidencias</span>
+                <h1>Seguimiento del reporte</h1>
+                <p>Consulta cómo avanza la atención de tu incidencia.</p>
             </div>
-            <h3>No pudimos encontrar este reporte</h3>
-            <p>Revisa que el enlace sea correcto, o consulta de nuevo desde "Mis reportes".</p>
-            <a href="mis-reportes.html" class="new-report-button">Ir a Mis reportes</a>
-        </section>
 
-        <!-- ESTADO: CONTENIDO -->
-        <section id="segContenido" class="seg-card" style="display:none;">
+            <div class="p-user" id="userMenu">
 
-            <div class="seg-header">
-                <div>
-                    <span class="reporte-numero" id="segNumero">REPORTE #--</span>
-                    <h1 id="segTipoProblema">-</h1>
+                <button type="button" class="p-user-btn" id="userBtn" aria-haspopup="true" aria-expanded="false">
+                    <span class="p-avatar" id="userAvatar">C</span>
+                    <span class="p-user-txt">
+                        <strong id="userName">Ciudadano</strong>
+                        <small>CIUDADANO</small>
+                    </span>
+                    <svg class="ico chev" viewBox="0 0 24 24"><path d="m6 9 6 6 6-6"/></svg>
+                </button>
+
+                <div class="p-dropdown" id="userDropdown">
+                    <a href="ciudadano.html#perfil">
+                        <svg class="ico" viewBox="0 0 24 24"><circle cx="12" cy="8" r="4"/><path d="M4 21c0-4.4 3.6-7 8-7s8 2.6 8 7"/></svg>
+                        Mi perfil
+                    </a>
+                    <button type="button" id="logoutBtn">
+                        <svg class="ico" viewBox="0 0 24 24"><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"/><path d="m16 17 5-5-5-5M21 12H9"/></svg>
+                        Cerrar sesión
+                    </button>
                 </div>
-                <span id="segEstadoBadge" class="estado-badge estado-default">-</span>
+
             </div>
 
-            <div class="reporte-card-info seg-info-grid">
-                <div>
-                    <span>Prioridad</span>
-                    <strong id="segPrioridad">-</strong>
+            <a href="login.html" class="btn-link" id="loginLink" hidden>Iniciar sesión</a>
+
+        </header>
+
+
+        <main class="p-main">
+
+            <a href="ciudadano.html#reportes" id="volverLink" class="btn-link sg-volver">
+                <svg class="ico" viewBox="0 0 24 24"><path d="M19 12H5M12 19l-7-7 7-7"/></svg>
+                Volver a mis reportes
+            </a>
+
+
+            <!-- ESTADO: CARGANDO -->
+            <section id="segCargando" class="tarjeta sg-estado-vista">
+                <span class="sg-spinner"></span>
+                <p>Cargando información de tu reporte...</p>
+            </section>
+
+            <!-- ESTADO: ERROR / NO ENCONTRADO -->
+            <section id="segError" class="tarjeta sg-estado-vista" hidden>
+                <div class="vacio">
+                    <div class="ico-g">
+                        <svg class="ico" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M12 8v5M12 16h.01"/></svg>
+                    </div>
+                    <h4>No pudimos encontrar este reporte</h4>
+                    <p>Revisa que el enlace sea correcto, o consulta de nuevo desde "Mis reportes".</p>
+                    <a href="ciudadano.html#reportes" class="btn-prim chico">Ir a Mis reportes</a>
                 </div>
-                <div>
-                    <span>Fecha</span>
-                    <strong id="segFecha">-</strong>
+            </section>
+
+
+            <!-- ESTADO: CONTENIDO -->
+            <div id="segContenido" hidden>
+
+                <!-- Banner -->
+                <section class="sg-hero">
+
+                    <div class="sg-hero-ico" id="segIcono"></div>
+
+                    <div class="sg-hero-texto">
+                        <span class="sg-kicker" id="segNumero">Reporte #--</span>
+                        <h2 id="segTipoProblema">-</h2>
+                        <p id="segSubtitulo">-</p>
+                    </div>
+
+                    <span class="sg-estado" id="segEstadoBadge">
+                        <i></i><b>-</b>
+                    </span>
+
+                </section>
+
+
+                <!-- Avance -->
+                <section class="tarjeta sg-avance">
+                    <div class="tarjeta-cab">
+                        <div class="cab-ico azul">
+                            <svg class="ico" viewBox="0 0 24 24"><path d="M22 12h-4l-3 9L9 3l-3 9H2"/></svg>
+                        </div>
+                        <div>
+                            <h3>Avance de tu reporte</h3>
+                            <p id="segAvanceTexto">-</p>
+                        </div>
+                    </div>
+
+                    <ol class="sg-pasos" id="segPasos"></ol>
+                </section>
+
+
+                <div class="sg-grid">
+
+                    <!-- Línea de tiempo -->
+                    <section class="tarjeta">
+                        <div class="tarjeta-cab">
+                            <div class="cab-ico celeste">
+                                <svg class="ico" viewBox="0 0 24 24"><path d="M3 12a9 9 0 1 1 3 6.7"/><path d="M3 21v-6h6"/></svg>
+                            </div>
+                            <div>
+                                <h3>Estado de tu reporte</h3>
+                                <p>Historial de las actualizaciones de la atención.</p>
+                            </div>
+                        </div>
+
+                        <div id="segTimeline">
+                            <div class="sg-cargando-mini"><span class="sg-spinner"></span>Cargando actualizaciones...</div>
+                        </div>
+                    </section>
+
+
+                    <!-- Detalles -->
+                    <aside class="tarjeta">
+                        <div class="tarjeta-cab">
+                            <div class="cab-ico rojo">
+                                <svg class="ico" viewBox="0 0 24 24"><path d="M10.3 3.9 1.8 18a2 2 0 0 0 1.7 3h17a2 2 0 0 0 1.7-3L13.7 3.9a2 2 0 0 0-3.4 0z"/><path d="M12 9v4M12 17h.01"/></svg>
+                            </div>
+                            <div>
+                                <h3>Detalles del reporte</h3>
+                                <p>Lo que nos comunicaste.</p>
+                            </div>
+                        </div>
+
+                        <ul class="sg-datos">
+
+                            <li>
+                                <span class="sg-dato-ico azul">
+                                    <svg class="ico" viewBox="0 0 24 24"><path d="M12 2.7s6 6.1 6 10.3a6 6 0 0 1-12 0c0-4.2 6-10.3 6-10.3z"/></svg>
+                                </span>
+                                <div><small>Tipo de problema</small><strong id="segTipoDetalle">-</strong></div>
+                            </li>
+
+                            <li>
+                                <span class="sg-dato-ico naranja">
+                                    <svg class="ico" viewBox="0 0 24 24"><path d="M4 22V4"/><path d="M4 4h13l-2 4 2 4H4"/></svg>
+                                </span>
+                                <div><small>Prioridad</small><span id="segPrioridad" class="pill pill-gris">-</span></div>
+                            </li>
+
+                            <li>
+                                <span class="sg-dato-ico morado">
+                                    <svg class="ico" viewBox="0 0 24 24"><rect x="3" y="4" width="18" height="17" rx="2"/><path d="M16 2v4M8 2v4M3 10h18"/></svg>
+                                </span>
+                                <div><small>Fecha del reporte</small><strong id="segFecha">-</strong></div>
+                            </li>
+
+                            <li>
+                                <span class="sg-dato-ico verde">
+                                    <svg class="ico" viewBox="0 0 24 24"><path d="M20 10c0 6-8 12-8 12s-8-6-8-12a8 8 0 0 1 16 0z"/><circle cx="12" cy="10" r="3"/></svg>
+                                </span>
+                                <div><small>Dirección</small><strong id="segDireccion">-</strong></div>
+                            </li>
+
+                            <li>
+                                <span class="sg-dato-ico celeste">
+                                    <svg class="ico" viewBox="0 0 24 24"><rect x="4" y="3" width="16" height="18" rx="2"/><path d="M9 8h6M9 12h6M9 16h3"/></svg>
+                                </span>
+                                <div><small>Código de suministro</small><strong id="segCodigo">-</strong></div>
+                            </li>
+
+                        </ul>
+
+                        <div class="sg-desc">
+                            <span>Descripción</span>
+                            <p id="segDescripcion">-</p>
+                        </div>
+                    </aside>
+
                 </div>
-                <div>
-                    <span>Dirección</span>
-                    <strong id="segDireccion">-</strong>
-                </div>
+
             </div>
 
-            <div class="reporte-card-description">
-                <span>Descripción</span>
-                <p id="segDescripcion">-</p>
-            </div>
+        </main>
 
-        </section>
+        <footer class="p-footer">Aqualca · Tu servicio de agua, más cerca.</footer>
 
-        <section id="segTimelineSection" class="seg-card seg-timeline-card" style="display:none;">
-
-    <div class="seg-timeline-header">
-        <span class="reporte-numero">Seguimiento</span>
-        <h2>Estado de tu reporte</h2>
-        <p>Consulta cómo avanza la atención de tu incidencia.</p>
     </div>
 
-    <div id="segTimeline" class="seg-timeline"></div>
+</div>
 
-</section>
-
-    </main>
-
-    <script src="js/api.js"></script>
-    <script src="js/seguimiento.js"></script>
+<script src="js/api.js"></script>
+<script src="js/seguimiento.js"></script>
 
 </body>
 
