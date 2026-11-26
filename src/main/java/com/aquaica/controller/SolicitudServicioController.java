@@ -96,6 +96,7 @@ public class SolicitudServicioController {
                 clienteId,
                 solicitud.getDireccion(),
                 solicitud.getReferencia(),
+                solicitud.getCategoriaServicio(),
                 solicitud.getLatitud(),
                 solicitud.getLongitud(),
                 solicitud.getDescripcion());
@@ -172,6 +173,7 @@ public ResponseEntity<SolicitudServicioDTO> cancelarMiSolicitud(
 
         private String direccion;
         private String referencia;
+        private String categoriaServicio;
         private Double latitud;
         private Double longitud;
         private String descripcion;
@@ -190,6 +192,14 @@ public ResponseEntity<SolicitudServicioDTO> cancelarMiSolicitud(
 
         public void setReferencia(String referencia) {
             this.referencia = referencia;
+        }
+
+        public String getCategoriaServicio() {
+            return categoriaServicio;
+        }
+
+        public void setCategoriaServicio(String categoriaServicio) {
+            this.categoriaServicio = categoriaServicio;
         }
 
         public Double getLatitud() {

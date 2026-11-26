@@ -80,6 +80,7 @@ public class SolicitudServicioService {
             Long clienteId,
             String direccion,
             String referencia,
+            String categoriaServicio,
             Double latitud,
             Double longitud,
             String descripcion) {
@@ -88,6 +89,17 @@ public class SolicitudServicioService {
                 !clienteRepository.existsById(clienteId)) {
             throw new IllegalArgumentException(
                     "El cliente indicado no existe.");
+        }
+
+        if (categoriaServicio == null || categoriaServicio.isBlank()) {
+            throw new IllegalArgumentException(
+                    "Debes seleccionar la categoría del servicio.");
+        }
+
+        String categoriaNormalizada = categoriaServicio.trim().toUpperCase(java.util.Locale.ROOT);
+        if (!Set.of("DOMESTICO", "COMERCIAL").contains(categoriaNormalizada)) {
+            throw new IllegalArgumentException(
+                    "La categoría debe ser DOMESTICO o COMERCIAL.");
         }
 
         if (direccion == null || direccion.isBlank()) {
@@ -137,6 +149,7 @@ public class SolicitudServicioService {
         solicitud.setReferencia(
                 referencia == null || referencia.isBlank()
                         ? null : referencia.trim());
+        solicitud.setCategoriaServicio(categoriaNormalizada);
         solicitud.setLatitud(latitud);
         solicitud.setLongitud(longitud);
         solicitud.setDescripcion(

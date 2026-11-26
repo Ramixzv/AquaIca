@@ -446,6 +446,7 @@
 
                 <dl class="item-datos">
                     <div><dt>Dirección</dt><dd>${esc(s.direccion || "—")}</dd></div>
+                    <div><dt>Categoría del servicio</dt><dd>${esc(s.categoriaServicio === "COMERCIAL" ? "Comercial" : s.categoriaServicio === "DOMESTICO" ? "Doméstico" : "—")}</dd></div>
                     ${s.referencia ? `<div><dt>Referencia</dt><dd>${esc(s.referencia)}</dd></div>` : ""}
                     ${s.descripcion ? `<div><dt>Detalles</dt><dd>${esc(s.descripcion)}</dd></div>` : ""}
                     ${s.latitud != null && s.longitud != null ? `<div><dt>Ubicación</dt><dd>${Number(s.latitud).toFixed(5)}, ${Number(s.longitud).toFixed(5)}</dd></div>` : ""}
@@ -809,8 +810,14 @@
 
     const formulario = $("#formSolicitud");
     const campoDireccion = $("#solDireccion");
+    const campoCategoria = $("#solCategoria");
     const campoReferencia = $("#solReferencia");
     const campoDescripcion = $("#solDescripcion");
+
+    campoCategoria.addEventListener("change", () => {
+        campoCategoria.classList.remove("error");
+        $("#solError").textContent = "";
+    });
 
     [
         [campoDireccion, "#cntDireccion"],
@@ -980,6 +987,14 @@
         }
 
         const direccion = campoDireccion.value.trim();
+        const categoriaServicio = campoCategoria.value;
+
+        if (!categoriaServicio) {
+            campoCategoria.classList.add("error");
+            error.textContent = "Debes seleccionar la categoría del servicio.";
+            campoCategoria.focus();
+            return;
+        }
 
         if (!direccion) {
             campoDireccion.classList.add("error");
@@ -990,6 +1005,7 @@
 
         const carga = {
             direccion,
+            categoriaServicio,
             referencia: campoReferencia.value.trim() || null,
             descripcion: campoDescripcion.value.trim() || null,
             latitud: coordenadas ? coordenadas.lat : null,

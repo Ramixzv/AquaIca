@@ -33,6 +33,9 @@ public class SolicitudServicio {
     @Column(length = 250)
     private String referencia;
 
+    @Column(name = "categoria_servicio", length = 20)
+    private String categoriaServicio;
+
     private Double latitud;
 
     private Double longitud;
@@ -99,6 +102,14 @@ public class SolicitudServicio {
 
     public String getReferencia() {
         return referencia;
+    }
+
+    public String getCategoriaServicio() {
+        return categoriaServicio;
+    }
+
+    public void setCategoriaServicio(String categoriaServicio) {
+        this.categoriaServicio = categoriaServicio;
     }
 
     public void setReferencia(String referencia) {

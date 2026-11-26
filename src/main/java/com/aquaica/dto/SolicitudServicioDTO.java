@@ -11,6 +11,7 @@ public class SolicitudServicioDTO {
     private Long clienteId;
     private String direccion;
     private String referencia;
+    private String categoriaServicio;
     private Double latitud;
     private Double longitud;
     private String descripcion;
@@ -24,6 +25,7 @@ public class SolicitudServicioDTO {
         this.clienteId = solicitud.getCliente().getId();
         this.direccion = solicitud.getDireccion();
         this.referencia = solicitud.getReferencia();
+        this.categoriaServicio = solicitud.getCategoriaServicio();
         this.latitud = solicitud.getLatitud();
         this.longitud = solicitud.getLongitud();
         this.descripcion = solicitud.getDescripcion();
@@ -47,6 +49,10 @@ public class SolicitudServicioDTO {
 
     public String getReferencia() {
         return referencia;
+    }
+
+    public String getCategoriaServicio() {
+        return categoriaServicio;
     }
 
     public Double getLatitud() {

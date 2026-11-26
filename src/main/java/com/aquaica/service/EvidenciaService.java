@@ -181,4 +181,17 @@ public class EvidenciaService {
     return evidenciaRepository
             .obtenerTodasLasEvidencias();
 }
+
+public Evidencia obtenerEvidenciaArchivo(
+        Long reporteId,
+        String nombreArchivo) {
+
+    return evidenciaRepository
+            .findFirstByReporte_IdAndNombreArchivoOrderByFechaCreacionDesc(
+                    reporteId,
+                    nombreArchivo
+            )
+            .orElseThrow(() ->
+                    new RuntimeException("Evidencia no encontrada"));
+}
 }
